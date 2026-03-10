@@ -23,6 +23,8 @@ export class Filter {
   minPrice = signal<number | null>(null);
   maxPrice = signal<number | null>(null);
   sortBy = signal<string>('date_desc');
+  selectedBrands = signal<number[]>([]); 
+  minRating = signal<number | null>(null);
 
   // --- MÉTODOS DE ACTUALIZACIÓN ---
 
@@ -56,7 +58,9 @@ export class Filter {
       categoryId: this.selectedCategory(),
       minPrice: this.minPrice(),
       maxPrice: this.maxPrice(),
-      sortBy: this.sortBy()
+      sortBy: this.sortBy(),
+      brands: this.selectedBrands ? this.selectedBrands() : [], 
+      minRating: this.minRating ? this.minRating() : null
     });
   }
 
