@@ -1,0 +1,71 @@
+<div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+  <h2 class="mb-4 text-lg font-bold text-gray-900">Filtros</h2>
+
+  <div class="mb-6">
+    <label class="mb-2 block text-sm font-semibold text-gray-700">Ordenar por</label>
+    <select 
+      class="w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+      (change)="updateSort($event)"
+      [value]="sortBy()">
+      <option value="date_desc">Más recientes</option>
+      <option value="price_asc">Precio: Menor a Mayor</option>
+      <option value="price_desc">Precio: Mayor a Menor</option>
+      <option value="name_asc">Nombre: A - Z</option>
+    </select>
+  </div>
+
+  <hr class="my-4 border-gray-200" />
+
+  <div class="mb-6">
+    <label class="mb-3 block text-sm font-semibold text-gray-700">Categorías</label>
+    <div class="flex flex-col gap-2">
+      
+      @for (category of categories(); track category.id) {
+        <label class="flex cursor-pointer items-center gap-3 rounded-md p-1 hover:bg-gray-50">
+          <input 
+            type="checkbox" 
+            class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            [checked]="selectedCategory() === category.id"
+            (change)="updateCategory(category.id)"
+          />
+          <span class="text-sm text-gray-700">{{ category.name }}</span>
+        </label>
+      }
+      
+      @if (categories().length === 0) {
+        <p class="text-xs italic text-gray-400">Cargando categorías...</p>
+      }
+    </div>
+  </div>
+
+  <hr class="my-4 border-gray-200" />
+
+  <div class="mb-6">
+    <label class="mb-3 block text-sm font-semibold text-gray-700">Rango de Precio (MXN)</label>
+    <div class="flex items-center gap-2">
+      <input 
+        type="number" 
+        placeholder="Mínimo" 
+        class="w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-sm focus:border-blue-500 focus:ring-blue-500"
+        (input)="updateMinPrice($event)"
+        [value]="minPrice() || ''"
+      />
+      <span class="text-gray-500">-</span>
+      <input 
+        type="number" 
+        placeholder="Máximo" 
+        class="w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-sm focus:border-blue-500 focus:ring-blue-500"
+        (input)="updateMaxPrice($event)"
+        [value]="maxPrice() || ''"
+      />
+    </div>
+  </div>
+
+  <app-button 
+    class="block w-full"
+    variant="primary" 
+    [isLoading]="isLoading()"
+    (onClick)="applyFilters()">
+    Aplicar Filtros
+  </app-button>
+</div>

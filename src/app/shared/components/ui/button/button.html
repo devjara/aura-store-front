@@ -1,0 +1,13 @@
+<button 
+  [type]="type()"
+  [disabled]="disabled() || isLoading()"
+  (click)="onClick.emit($event)"
+  [class]="computedClasses()">
+  
+  @if (isLoading()) {
+    <app-spinner size="sm" />
+  }
+  
+  <ng-content></ng-content>
+  
+</button>

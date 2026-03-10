@@ -1,0 +1,13 @@
+// Valores por defecto de Aura (Variables CSS en la raíz)
+:root {
+  // Color principal de la marca (Ej: para el Navbar, links)
+  --color-brand-primary: #2563eb; // Azul por defecto
+  --color-brand-primary-hover: #1d4ed8;
+
+  // Color de acción/conversión (Ej: "Añadir al carrito", "Pagar")
+  --color-brand-action: #10b981;  // Verde por defecto
+  --color-brand-action-hover: #059669;
+
+  // Color de peligro/error
+  --color-brand-danger: #ef4444;
+}

@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
+@import url('./styles/_theme-variables.scss');
+
+
+@theme {
+  --color-brand-primary: var(--color-brand-primary);
+  --color-brand-primary-hover: var(--color-brand-primary-hover);
+  
+  --color-brand-action: var(--color-brand-action);
+  --color-brand-action-hover: var(--color-brand-action-hover);
+
+  --color-brand-danger: var(--color-brand-danger);
+
+  // Recreamos tu sombra suave para las tarjetas aquí de forma limpia
+  --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.05); 
+}
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased;
+  }
+}

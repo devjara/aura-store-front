@@ -1,0 +1,35 @@
+@if (totalPages() > 1) {
+  <nav class="my-8 flex items-center justify-center gap-2">
+    
+    <button
+      (click)="goToPage(currentPage() - 1)"
+      [disabled]="currentPage() === 1"
+      class="flex h-10 w-10 items-center justify-center rounded-md border border-gray-300 bg-white text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50">
+      <span class="sr-only">Anterior</span>
+      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+
+    @for (page of visiblePages(); track page) {
+      <button
+        (click)="goToPage(page)"
+        [class]="currentPage() === page 
+          ? 'flex h-10 w-10 items-center justify-center rounded-md border border-blue-600 bg-blue-600 text-sm font-bold text-white shadow-sm' 
+          : 'flex h-10 w-10 items-center justify-center rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50'">
+        {{ page }}
+      </button>
+    }
+
+    <button
+      (click)="goToPage(currentPage() + 1)"
+      [disabled]="currentPage() === totalPages()"
+      class="flex h-10 w-10 items-center justify-center rounded-md border border-gray-300 bg-white text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50">
+      <span class="sr-only">Siguiente</span>
+      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+
+  </nav>
+}
