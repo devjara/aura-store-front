@@ -3,20 +3,22 @@ import { TenantConfig } from '../../models/tenant.model';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
+import { LoggerService } from '../logger/logger.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 
 export class TenantService {
+  //Signals
   public tenant = signal<TenantConfig | null>(null);
   
+  //Inyecciones
   private http = inject(HttpClient);
   private platformId = inject(PLATFORM_ID); 
-
-  constructor() {
-    console.log('2️⃣ [TenantService] Servicio instanciado en memoria.');
-  }
+  private logger = inject(LoggerService);
+  private router = inject(Router);
 
   async loadTenantConfig(): Promise<void> {
     const isBrowser = isPlatformBrowser(this.platformId);
@@ -28,24 +30,23 @@ export class TenantService {
     }
     
     try {
-      console.log('4️⃣ [TenantService] Intentando descargar /tenants.json...');
       const currentDomain = window.location.hostname;
       const directory = await firstValueFrom(
         this.http.get<Record<string, TenantConfig>>(`/tenants.json`)
       );
 
-      console.log('5️⃣ [TenantService] JSON descargado con éxito:', directory);
 
-      const activeTenant = directory[currentDomain] || directory['localhost'];
+      const activeTenant = directory[currentDomain];
       
       if(activeTenant) {
         this.tenant.set(activeTenant);
-        console.log(`✅ [TenantService] Cliente configurado: ${activeTenant.tenantId}`); 
+        this.logger.log(`Cliente autenticado: ${activeTenant.tenantId}`);
       } else {
-        console.warn('⚠️ [TenantService] Dominio no registrado.');
+        this.logger.error(`Dominio intruso o no configurado: ${currentDomain}`);
+        this.router.navigate(['/no-found']); // TODO: Crear una página de error específica para tenant no encontrado, en lugar de un genérico 404.
       }
     } catch (error) { 
-      console.error('🚨 [TenantService] Falla catastrófica al descargar JSON:', error);
+     this.logger.error('Error al cargar la configuración del tenant:', error);
     }
   }
 
