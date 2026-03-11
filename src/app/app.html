@@ -1,33 +1,33 @@
-<app-navbar [categories]="mockCategories" [cartItemCount]="2" />
+<aura-navbar [categories]="mockCategories" [cartItemCount]="2" />
 
 <main class="mx-auto flex min-h-screen max-w-7xl flex-col gap-8 px-4 py-8 sm:px-6 md:flex-row lg:px-8">
   
   <aside class="w-full md:w-1/4">
-    <app-filter 
+    <aura-filter 
       [categories]="mockCategories" 
       [isLoading]="false"
-      (onFilterApply)="onFilterApplied($event)" />
+      (FilterApply)="onFilterApplied($event)" />
   </aside>
 
   <section class="flex-1">
     
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       @for (product of mockProducts; track product.id) {
-        <app-product-card 
+        <aura-product-card 
           [product]="product" 
-          (onAddToCart)="onProductAdded($event)" />
+          (AddToCart)="onProductAdded($event)" />
       }
     </div>
 
     <div class="mt-8">
-      <app-pagination 
+      <aura-pagination 
         [currentPage]="1" 
         [totalPages]="5" 
-        (onPageChange)="onPageChanged($event)" />
+        (PageChange)="onPageChanged($event)" />
     </div>
 
   </section>
 
 </main>
 
-<app-footer />
+<aura-footer />

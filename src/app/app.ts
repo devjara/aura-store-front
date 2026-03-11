@@ -1,21 +1,18 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Category } from '@core/models/category.model';
-import { Product } from '@core/models/product.model';
-import { Filter } from '@shared/components/filter/filter';
-import { Footer } from '@shared/components/footer/footer';
-import { Navbar } from '@shared/components/navbar/navbar';
-import { Pagination } from '@shared/components/pagination/pagination';
-import { ProductCard } from '@shared/components/product-card/product-card';
+import { Category } from 'core/src/lib/models/category.model';
+import { Product } from '@aura-store-front/core';
+import { Filter, Footer, Navbar, Pagination, ProductCard } from '@aura-store-front/shared-ui';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,
-    Navbar, 
-    Footer, 
+  imports: [
+    RouterOutlet,
     Filter, 
-    ProductCard, 
-    Pagination
+    Footer, 
+    Navbar, 
+    Pagination,
+    ProductCard 
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',

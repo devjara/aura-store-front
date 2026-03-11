@@ -1,0 +1,21 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "preserve",
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "@environments/*": ["src/environments/*"],
+      "@core/*": ["src/app/core/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@features/*": ["src/app/features/*"],
+      "shared-ui": ["shared-ui/src/index.ts"],
+      "core": ["core/src/index.ts"],
+      "@aura-store-front/core": ["core/src/index.ts"],
+      "@aura-store-front/shared-ui": ["shared-ui/src/index.ts"]
+    }
+  }
+}
