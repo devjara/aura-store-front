@@ -1,0 +1,8 @@
+{
+ "localhost": {
+    "tenantId": "dev-local",
+    "apiKey": "RYTGI4ZSKWKUET762R9MBQ",
+    "shopId": 1,
+    "themeClass": "bg-gray-900 text-white"
+  }   
+}
