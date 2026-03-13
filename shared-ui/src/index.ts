@@ -9,8 +9,14 @@ export { Navbar } from './lib/components/navbar/navbar';
 export { Footer } from './lib/components/footer/footer';
 export { Pagination } from './lib/components/pagination/pagination';
 
+
+
 // --- EXPORTAMOS LOS PIPES ---
 export { FallbackImagePipe } from './lib/pipes/fallback-image-pipe';
 export { FormatPricePipe } from './lib/pipes/format-price-pipe';
 export { StockBadgePipe } from './lib/pipes/stock-badge-pipe';
 export { SafeHtmlPipe } from './lib/pipes/safe-html-pipe';
+
+
+// --- EXPORTAMOS LOS MODELOS ---
+export * from './lib/models/navigation.model';

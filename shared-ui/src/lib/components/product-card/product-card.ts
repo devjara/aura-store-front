@@ -1,7 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { FallbackImagePipe } from '../../pipes/fallback-image-pipe';
 import { FormatPricePipe } from '../../pipes/format-price-pipe';
-import { StockBadgePipe } from '../../pipes/stock-badge-pipe';
 import { Button } from '../ui/button/button';
 import { Product } from '@aura-store-front/core';
 
@@ -11,7 +10,6 @@ import { Product } from '@aura-store-front/core';
   imports: [
     FormatPricePipe,
     FallbackImagePipe,
-    StockBadgePipe,
     Button
   ],
   templateUrl: './product-card.html',

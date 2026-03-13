@@ -1,67 +1,57 @@
-import { Component, input, output, signal } from '@angular/core';
-import { Button } from '../ui/button/button';
-import { Category } from 'core/src/lib/models/category.model';
-import { FilterState } from 'core/src/lib/models/filter.model';
+import { Component, input, output } from '@angular/core';
+import { FilterState, FilterConfig } from '@aura-store-front/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'aura-filter',
   standalone: true,
-  imports: [Button],
-  templateUrl: './filter.html',
-  styleUrl: './filter.scss',
+  imports: [CommonModule],
+  templateUrl: './filter.html'
 })
 export class Filter {
-  // Entradas
-  categories = input<Category[]>([]);
-  isLoading = input<boolean>(false);
+  //Recibe la configuracioin de filtros - no sabe si son categorias, tallas o material
+  filters = input<FilterConfig[]>([]);
 
-  // Salida tipada con el modelo de filtro
-  FilterApply = output<FilterState>();
+  //Estado actual de los filtros seleccionado
+  currentState = input<FilterState>({});
 
-  // Estado interno reactivo
-  selectedCategory = signal<number | null>(null);
-  minPrice = signal<number | null>(null);
-  maxPrice = signal<number | null>(null);
-  sortBy = signal<string>('date_desc');
-  selectedBrands = signal<number[]>([]); 
-  minRating = signal<number | null>(null);
+  //Emite el nuevo estado cada vez que el usuario interactua
+  stateChange = output<FilterState>();
 
-  // --- MÉTODOS DE ACTUALIZACIÓN ---
+  // Maneja cualquier tipo de filtro checkbox
+  toggleCheckbox(key:string, value: string) {
+    const current = this.currentState();
+    const currentValues = (current[key] as string[]) ?? [];
 
-  // 1. Alternar la selección de categoría (Checkbox)
-  updateCategory(id: number) {
-    // Si hace clic en la categoría que ya estaba seleccionada, la limpiamos (null)
-    this.selectedCategory.set(this.selectedCategory() === id ? null : id);
+    const updated = currentValues.includes(value) 
+      ? currentValues.filter(v => v !== value)
+      :[...currentValues, value];
+
+      this.stateChange.emit({...current, [key]: updated});
+
   }
 
-  // 2. Actualizar el ordenamiento (Select)
-  updateSort(event: Event) {
-    const value = (event.target as HTMLSelectElement).value;
-    this.sortBy.set(value);
+  //Maneja filtros de rango(precio, metros, peso, etc)
+  updateRange(key: string, event: Event) {
+    const value = Number((event.target as HTMLInputElement).value);
+    this.stateChange.emit({...this.currentState(), [key]: value});
   }
 
-  // 3. Actualizar el precio mínimo (Input de texto/número)
-  updateMinPrice(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.minPrice.set(value ? Number(value) : null);
+  //Helper para saber si un checkbox esta activo
+  isChecked(key: string, value: string) : boolean {
+    return ((this.currentState()[key] as string[]) ?? []).includes(value);
   }
 
-  // 4. Actualizar el precio máximo (Input de texto/número)
-  updateMaxPrice(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.maxPrice.set(value ? Number(value) : null);
+  // Helper para obtener el valor actual de un rango 
+  getRangeValue(key: string) : number {
+    return (this.currentState()[key] as number) ?? 0;
   }
 
-  // 5. Emitir el estado completo al Layout padre (Botón Aplicar)
-  applyFilters() {
-    this.FilterApply.emit({
-      categoryId: this.selectedCategory(),
-      minPrice: this.minPrice(),
-      maxPrice: this.maxPrice(),
-      sortBy: this.sortBy(),
-      brands: this.selectedBrands ? this.selectedBrands() : [], 
-      minRating: this.minRating ? this.minRating() : null
-    });
+  onSelectChange(key: string, event: Event) {
+  const value = (event.target as HTMLSelectElement).value;
+    if (value) {
+      this.toggleCheckbox(key, value);
+    }
   }
 
 }

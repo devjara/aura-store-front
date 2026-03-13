@@ -1,8 +1,16 @@
 {
  "localhost": {
     "tenantId": "dev-local",
-    "apiKey": "RYTGI4ZSKWKUET762R9MBQ",
+    "apiKey": "RYTGI4ZSKWKUET762R9MBQUPZJH6L4CD",
+    "apiUrl": "http://localhost/api",
     "shopId": 1,
     "themeClass": "bg-gray-900 text-white"
+  },
+  "aura-market.com": {
+    "tenantId": "aura-market",
+    "apiKey": "KEY_PRODUCCION",
+    "apiUrl": "https://aura-market.com/api",
+    "shopId": 1,
+    "themeClass": "bg-white text-gray-900"
   }   
 }

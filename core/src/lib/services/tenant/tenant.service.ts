@@ -6,6 +6,27 @@ import { isPlatformBrowser } from '@angular/common';
 import { LoggerService } from '../logger/logger.service';
 import { Router } from '@angular/router';
 
+
+/**
+ * TenantService — Servicio central de multi-tenancy.
+ *
+ * Responsabilidad única: identificar qué tienda está activa basándose en el
+ * dominio actual y cargar su configuración desde `tenants.json`.
+ *
+ * Este servicio es el punto de entrada para cualquier dato específico del tenant
+ * (URL del API, apiKey, shopId). Ningún otro servicio debe leer `environment`
+ * directamente — todo pasa por aquí.
+ *
+ * Ciclo de vida:
+ * 1. La app llama a `loadTenantConfig()` en el bootstrap (APP_INITIALIZER).
+ * 2. Se lee el dominio actual del navegador.
+ * 3. Se busca ese dominio en `tenants.json`.
+ * 4. Si existe, se carga la config en el signal `tenant`.
+ * 5. Si no existe, se redirige a `/no-found`.
+ *
+ * ⚠️ Solo se ejecuta en el navegador — en SSR se detiene inmediatamente
+ * para evitar errores por ausencia de `window`.
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -50,8 +71,31 @@ export class TenantService {
     }
   }
 
+  /**
+   * Retorna la API Key del tenant activo para autenticación con Prestashop.
+   * Retorna string vacío si el tenant aún no ha cargado.
+   */
   getApiKey(): string {
     const config = this.tenant();
     return config ? config.apiKey : '';
+  }
+
+  /**
+   * Retorna la URL base del API de Prestashop del tenant activo.
+   * Ej: "https://aura-market.com/api"
+   * Retorna string vacío si el tenant aún no ha cargado.
+   */
+  getApiUrl(): string {
+    return this.tenant()?.apiUrl ?? '';
+  }
+
+  /**
+   * Retorna el ID de la tienda en Prestashop del tenant activo.
+   * Prestashop puede manejar múltiples tiendas bajo una misma instalación (multistore).
+   * Retorna 1 como default si el tenant aún no ha cargado.
+   */
+
+  getShopApi(): number {
+    return this.tenant()?.shopId ?? 1;
   }
 }

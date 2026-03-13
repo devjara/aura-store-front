@@ -1,32 +1,27 @@
-import { Component, input, output } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { Category } from 'core/src/lib/models/category.model';
-
+import { CommonModule } from '@angular/common';
+import { Component, input, signal } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { NavLink } from '../../models/navigation.model';
 
 @Component({
   selector: 'aura-navbar',
   standalone: true,
-  imports: [RouterLink],
+  imports: [CommonModule, RouterModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
 export class Navbar {
-  categories = input<Category[]>([]);
-  
-  // 2. Estado temporal (Luego lo conectaremos a un Signal global)
-  cartItemCount = input<number>(0);
+  public storeName = input<string>('TIENDA');
+  public announcementText = input<string>('');
+  public announcementLinkText = input<string>('');
+  public links = input<NavLink[]>([]);
+  public cartItemCount = input<number>(0);
+  public containerClass = input<string>('');
 
-  // 3. Eventos de salida
-  Search = output<string>();
+  public isMobileMenuOpen = signal<boolean>(false);
 
-  // Manejador del buscador
-  handleSearch(event: Event) {
-    event.preventDefault(); // Evita que el formulario recargue la página
-    const form = event.target as HTMLFormElement;
-    const input = form.elements.namedItem('searchInput') as HTMLInputElement;
-    if (input.value.trim()) {
-      this.Search.emit(input.value.trim());
-      input.value = ''; // Limpiamos la barra
-    }
+  toggleMobileMenu() {
+    this.isMobileMenuOpen.update((isOpen) => !isOpen);
   }
+
 }
