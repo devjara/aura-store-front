@@ -3,6 +3,15 @@
   [announcementText]="storeConfig.announcement"
   [announcementLinkText]="storeConfig.announcementLink"
   [links]="storeConfig.menu"
-  [cartItemCount]="2"
-  [containerClass]="'max-w-[1700px] mx-auto px-8 lg:px-[80px]'">
+  [cartItemCount]="cartItems().length"
+  [containerClass]="'max-w-[1700px] mx-auto px-8 lg:px-[80px]'"
+  (cartClick)="openCart()">
 </aura-navbar>
+
+<aura-cart-drawer
+  [isOpen]="isCartOpen()"
+  [items]="cartItems()"
+  (closeCart)="closeCart()"
+  (remove)="removeItem($event)"
+  (checkout)="goToCheckout()">
+</aura-cart-drawer>

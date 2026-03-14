@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, signal } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NavLink } from '../../models/navigation.model';
 
@@ -23,5 +23,7 @@ export class Navbar {
   toggleMobileMenu() {
     this.isMobileMenuOpen.update((isOpen) => !isOpen);
   }
+
+  cartClick = output<void>();
 
 }

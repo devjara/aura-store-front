@@ -4,6 +4,8 @@
 // --- EXPORTAMOS LOS COMPONENTES ---
 export { ProductCard } from './lib/components/product-card/product-card';
 export { Filter } from './lib/components/filter/filter';
+export { CartDrawer } from './lib/components/cart-drawer/cart-drawer';
+
 export { Button } from './lib/components/ui/button/button';
 export { Navbar } from './lib/components/navbar/navbar';
 export { Footer } from './lib/components/footer/footer';

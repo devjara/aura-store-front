@@ -23,3 +23,4 @@ export * from './lib/services/tenant/tenant.service';
 export * from './lib/services/product/product.service';
 
 export type { FilterConfig, FilterOption, FilterState, FilterType } from './lib/models/filter.model';
+export type { CartItemView, CartItemVariation, Cart } from './lib/models/cart.model';
