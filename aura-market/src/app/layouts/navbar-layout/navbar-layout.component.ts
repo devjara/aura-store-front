@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Navbar, CartDrawer } from '@aura-store-front/shared-ui';
-import { CartItemView } from '@aura-store-front/core';
+import { CartItemView, CartService } from '@aura-store-front/core';
 
 @Component({
   selector: 'aura-navbar-layout',
@@ -11,6 +11,7 @@ import { CartItemView } from '@aura-store-front/core';
   styleUrl: './navbar-layout.component.scss',
 })
 export class NavbarLayoutComponent {
+  public cartService = inject(CartService)
 
   //Estado del drawer
   public isCartOpen = signal<boolean>(false);
@@ -30,17 +31,7 @@ export class NavbarLayoutComponent {
     ]
   };
 
-  openCart() {
-    this.isCartOpen.set(true);
-  }
 
-  closeCart() {
-    this.isCartOpen.set(false);
-  }
-
-  removeItem(productId: number){
-    this.cartItems.update(items => items.filter( i => i.productId !== productId));
-  }
 
   goToCheckout() {
     //TODO: Logica para ir al checkout

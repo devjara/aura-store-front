@@ -1,30 +1,343 @@
 <section class="relative w-full h-[calc(100vh-64px)] bg-[#0a0a0a] overflow-hidden flex items-end">
-  
   <div class="absolute inset-0 z-0">
-    <img 
-      src="https://images.unsplash.com/photo-1511511450040-677116ff389e?q=80&w=2073&auto=format&fit=crop" 
-      alt="Aura Streetwear Model" 
+    <img
+      src="https://images.unsplash.com/photo-1511511450040-677116ff389e?q=80&w=2073&auto=format&fit=crop"
+      alt="Aura Streetwear Model"
       class="w-full h-full object-cover object-top opacity-60"
     />
     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
   </div>
 
   <div class="relative z-10 w-full max-w-7xl mx-auto px-8 lg:px-16 pb-16 md:pb-24 flex flex-col md:flex-row md:items-end justify-between gap-10 md:gap-0">
-    
     <div class="max-w-3xl">
       <h1 class="text-white text-6xl md:text-[6.5rem] font-black uppercase leading-[0.9] tracking-tighter mb-6">
-        Redefining <br/> The Void
+        Redefining <br />The Void
       </h1>
       <p class="text-gray-300 text-sm md:text-base max-w-md font-light leading-relaxed">
         Luxury streetwear engineered with brutalist precision. Designed in Tokyo, crafted in Portugal. Limited drops only.
       </p>
     </div>
-
     <div class="shrink-0 mb-2 md:mb-0">
       <a routerLink="/catalogo" class="inline-block bg-[#F55216] hover:bg-[#D4410E] text-white text-xs sm:text-sm font-bold tracking-[0.2em] uppercase px-10 py-5 transition-colors duration-300 cursor-pointer">
         Shop Selection 001
       </a>
     </div>
+  </div>
+</section>
 
+<!-- ─── NUEVAS LLEGADAS ─────────────────────────────────────────────────────── -->
+<section class="w-full bg-[#f5f5f3] px-4 sm:px-8 lg:px-16 xl:px-24 2xl:px-32 py-12 md:py-16 lg:py-24">
+
+  <div class="flex items-center justify-between mb-6 md:mb-10">
+    <div class="pointer-events-none select-none">
+      <span class="text-[4rem] sm:text-[5rem] md:text-[6rem] lg:text-[7rem] font-black uppercase text-gray-200 tracking-tighter leading-none whitespace-nowrap">
+        NUEVAS LLEGADAS
+      </span>
+    </div>
+    <div class="hidden lg:flex items-center gap-2">
+      <button (click)="scrollLeft()" class="w-9 h-9 border border-gray-300 flex items-center justify-center hover:border-black hover:bg-black hover:text-white transition-all duration-200">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button (click)="scrollRight()" class="w-9 h-9 border border-gray-300 flex items-center justify-center hover:border-black hover:bg-black hover:text-white transition-all duration-200">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile/Tablet -->
+  <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:hidden gap-x-3 sm:gap-x-5 gap-y-8 md:gap-y-10">
+    @for (product of newArrivals(); track product.id) {
+      <div class="group cursor-pointer" [routerLink]="['/product', product.id]">
+        <div class="aspect-[4/5] bg-gray-100 overflow-hidden mb-3 relative">
+          <img [src]="product.imageUrl" [alt]="product.name" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"/>
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 px-4">
+            <button (click)="addToCart(product); $event.stopPropagation()" class="w-full bg-white text-black text-[10px] font-bold tracking-[0.15em] uppercase py-3 hover:bg-black hover:text-white transition-colors duration-200 flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/></svg>
+              Agregar al carrito
+            </button>
+            <button (click)="$event.stopPropagation()" class="w-full bg-transparent border border-white text-white text-[10px] font-bold tracking-[0.15em] uppercase py-3 hover:bg-white hover:text-black transition-colors duration-200 flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 3h-1.5m1.5 0l-.5 5m.5-5h14.25m-14.25 0l.25 2.5M18 3l-.5 5m.5-5H3.75m14.25 0l-.25 2.5M5.5 8.5h13M5.5 8.5L4.5 18h15l-1-9.5M9 13h6m-3-3v6"/></svg>
+              Comprar ahora
+            </button>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-2">
+          <div class="min-w-0">
+            <h3 class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-900 truncate">{{ product.name }}</h3>
+            <p class="text-[10px] sm:text-xs text-gray-400 mt-0.5 uppercase tracking-wider truncate">{{ product.category }}</p>
+          </div>
+          <span class="text-[10px] sm:text-xs font-semibold text-gray-900 whitespace-nowrap shrink-0">${{ product.price }}</span>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- LG/2XL Carrusel -->
+  <div #carousel class="hidden lg:flex gap-6 2xl:gap-8 overflow-x-auto scroll-smooth scrollbar-hide">
+    @for (product of newArrivals(); track product.id) {
+      <div class="group cursor-pointer flex-shrink-0 w-[260px] xl:w-[280px] 2xl:w-[320px]" [routerLink]="['/product', product.id]">
+        <div class="aspect-[4/5] bg-gray-100 overflow-hidden mb-4 relative">
+          <img [src]="product.imageUrl" [alt]="product.name" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"/>
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 px-4">
+            <button (click)="addToCart(product); $event.stopPropagation()" class="w-full bg-white text-black text-[10px] font-bold tracking-[0.15em] uppercase py-3 hover:bg-black hover:text-white transition-colors duration-200 flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/></svg>
+              Agregar al carrito
+            </button>
+            <button (click)="$event.stopPropagation()" class="w-full bg-transparent border border-white text-white text-[10px] font-bold tracking-[0.15em] uppercase py-3 hover:bg-white hover:text-black transition-colors duration-200 flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 3h-1.5m1.5 0l-.5 5m.5-5h14.25m-14.25 0l.25 2.5M18 3l-.5 5m.5-5H3.75m14.25 0l-.25 2.5M5.5 8.5h13M5.5 8.5L4.5 18h15l-1-9.5M9 13h6m-3-3v6"/></svg>
+              Comprar ahora
+            </button>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-2">
+          <div class="min-w-0">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-gray-900 truncate">{{ product.name }}</h3>
+            <p class="text-xs text-gray-400 mt-0.5 uppercase tracking-wider truncate">{{ product.category }}</p>
+          </div>
+          <span class="text-xs font-semibold text-gray-900 whitespace-nowrap shrink-0">${{ product.price }}</span>
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (newArrivals().length === 0) {
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:hidden gap-x-3 sm:gap-x-5 gap-y-8">
+      @for (item of [1,2,3,4,5,6]; track item) {
+        <div>
+          <div class="aspect-[4/5] bg-gray-200 animate-pulse mb-3"></div>
+          <div class="h-2.5 bg-gray-200 animate-pulse rounded mb-2 w-3/4"></div>
+          <div class="h-2.5 bg-gray-200 animate-pulse rounded w-1/2"></div>
+        </div>
+      }
+    </div>
+  }
+</section>
+
+<!-- ─── BANNER PROMOCIONAL ─────────────────────────────────────────────────── -->
+<section class="w-full bg-[#e5e5e5] px-4 sm:px-8 lg:px-16 xl:px-24 2xl:px-32 py-12 md:py-16">
+  <div class="w-full bg-black text-white flex flex-col md:flex-row items-center justify-between px-8 py-12 md:py-16 md:px-16 lg:px-24">
+    <div class="w-full md:w-auto text-center md:text-left mb-8 md:mb-0">
+      <h2 class="text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter mb-4">
+        La Venta <br class="hidden md:block"/> de Archivo
+      </h2>
+      <p class="text-gray-400 text-xs sm:text-sm font-bold tracking-[0.2em] uppercase">
+        Hasta 40% de descuento en artefactos de colecciones previas.
+      </p>
+    </div>
+    <div class="shrink-0">
+      <a routerLink="/archivo" class="inline-block bg-white text-black hover:bg-gray-200 text-xs sm:text-sm font-black tracking-[0.2em] uppercase px-10 py-5 transition-colors duration-300 cursor-pointer">
+        Entrar a la coleccion
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── XIV COLECCION ──────────────────────────────────────────────────────── -->
+<section class="w-full bg-[#f5f5f3] px-4 sm:px-8 lg:px-16 xl:px-24 2xl:px-32 py-12 md:py-16 lg:py-24">
+
+  <div class="mb-2 pointer-events-none select-none">
+    <span class="text-[4rem] sm:text-[5rem] md:text-[6rem] lg:text-[7rem] font-black uppercase text-gray-200 tracking-tighter leading-none whitespace-nowrap">
+      XIV COLECCION
+    </span>
+  </div>
+
+  <div class="flex items-center justify-between mb-8 md:mb-12">
+    <div class="flex items-center gap-4 sm:gap-6 md:gap-8">
+      @for (tab of tabs; track tab) {
+        <button (click)="activeTab.set(tab)" class="text-xs sm:text-sm font-medium uppercase tracking-widest transition-colors duration-200"
+          [class.text-gray-900]="activeTab() === tab"
+          [class.font-black]="activeTab() === tab"
+          [class.text-gray-400]="activeTab() !== tab">
+          {{ tab }}
+        </button>
+      }
+    </div>
+    <div class="hidden lg:flex items-center gap-2">
+      <button (click)="scrollLeftDrop()" class="w-9 h-9 border border-gray-300 flex items-center justify-center hover:border-black hover:bg-black hover:text-white transition-all duration-200">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button (click)="scrollRightDrop()" class="w-9 h-9 border border-gray-300 flex items-center justify-center hover:border-black hover:bg-black hover:text-white transition-all duration-200">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile/Tablet -->
+  <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:hidden gap-x-3 sm:gap-x-5 gap-y-8 md:gap-y-12">
+    @for (product of filteredByTab(); track product.id) {
+      <div class="group cursor-pointer" [routerLink]="['/product', product.id]">
+        <div class="aspect-[3/4] bg-gray-100 overflow-hidden mb-3 md:mb-4 relative">
+          <img [src]="product.imageUrl" [alt]="product.name" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"/>
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 px-4">
+            <button (click)="addToCart(product); $event.stopPropagation()" class="w-full bg-white text-black text-[10px] font-bold tracking-[0.15em] uppercase py-3 hover:bg-black hover:text-white transition-colors duration-200 flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/></svg>
+              Agregar al carrito
+            </button>
+            <button (click)="$event.stopPropagation()" class="w-full bg-transparent border border-white text-white text-[10px] font-bold tracking-[0.15em] uppercase py-3 hover:bg-white hover:text-black transition-colors duration-200 flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 3h-1.5m1.5 0l-.5 5m.5-5h14.25m-14.25 0l.25 2.5M18 3l-.5 5m.5-5H3.75m14.25 0l-.25 2.5M5.5 8.5h13M5.5 8.5L4.5 18h15l-1-9.5M9 13h6m-3-3v6"/></svg>
+              Comprar ahora
+            </button>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-2">
+          <div class="min-w-0">
+            <p class="text-[10px] sm:text-xs text-gray-400 uppercase tracking-wider truncate mb-0.5">{{ product.category }}</p>
+            <h3 class="text-xs sm:text-sm font-semibold text-gray-900 truncate">{{ product.name }}</h3>
+          </div>
+          <span class="text-xs sm:text-sm font-semibold text-gray-900 whitespace-nowrap shrink-0">${{ product.price }}</span>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- LG/2XL Carrusel -->
+  <div id="carouselDrop" class="hidden lg:flex gap-6 2xl:gap-8 overflow-x-auto scroll-smooth scrollbar-hide">
+    @for (product of filteredByTab(); track product.id) {
+      <div class="group cursor-pointer flex-shrink-0 w-[260px] xl:w-[280px] 2xl:w-[320px]" [routerLink]="['/product', product.id]">
+        <div class="aspect-[3/4] bg-gray-100 overflow-hidden mb-4 relative">
+          <img [src]="product.imageUrl" [alt]="product.name" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"/>
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 px-4">
+            <button (click)="addToCart(product); $event.stopPropagation()" class="w-full bg-white text-black text-[10px] font-bold tracking-[0.15em] uppercase py-3 hover:bg-black hover:text-white transition-colors duration-200 flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/></svg>
+              Agregar al carrito
+            </button>
+            <button (click)="$event.stopPropagation()" class="w-full bg-transparent border border-white text-white text-[10px] font-bold tracking-[0.15em] uppercase py-3 hover:bg-white hover:text-black transition-colors duration-200 flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 3h-1.5m1.5 0l-.5 5m.5-5h14.25m-14.25 0l.25 2.5M18 3l-.5 5m.5-5H3.75m14.25 0l-.25 2.5M5.5 8.5h13M5.5 8.5L4.5 18h15l-1-9.5M9 13h6m-3-3v6"/></svg>
+              Comprar ahora
+            </button>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-2">
+          <div class="min-w-0">
+            <p class="text-[10px] sm:text-xs text-gray-400 uppercase tracking-wider truncate mb-0.5">{{ product.category }}</p>
+            <h3 class="text-xs sm:text-sm font-semibold text-gray-900 truncate">{{ product.name }}</h3>
+          </div>
+          <span class="text-xs sm:text-sm font-semibold text-gray-900 whitespace-nowrap shrink-0">${{ product.price }}</span>
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- ─── LO MÁS COMPRADO ────────────────────────────────────────────────────── -->
+<section class="w-full bg-[#f5f5f3] px-4 sm:px-8 lg:px-16 xl:px-24 2xl:px-32 py-12 md:py-16 lg:py-24">
+
+  <div class="mb-8 md:mb-12 pointer-events-none select-none flex items-center justify-between">
+    <span class="text-[4rem] sm:text-[5rem] md:text-[6rem] lg:text-[7rem] font-black uppercase text-gray-200 tracking-tighter leading-none whitespace-nowrap">
+      LO MÁS COMPRADO
+    </span>
+    <div class="hidden lg:flex items-center gap-2 pointer-events-auto">
+      <button (click)="scrollLeftPopular()" class="w-9 h-9 border border-gray-300 flex items-center justify-center hover:border-black hover:bg-black hover:text-white transition-all duration-200">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button (click)="scrollRightPopular()" class="w-9 h-9 border border-gray-300 flex items-center justify-center hover:border-black hover:bg-black hover:text-white transition-all duration-200">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile/Tablet -->
+  <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:hidden gap-x-3 sm:gap-x-5 gap-y-8 md:gap-y-12">
+    @for (product of newArrivals(); track product.id) {
+      <div class="group cursor-pointer" [routerLink]="['/product', product.id]">
+        <div class="aspect-[3/4] bg-gray-100 overflow-hidden mb-3 md:mb-4 relative">
+          <img [src]="product.imageUrl" [alt]="product.name" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"/>
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 px-4">
+            <button (click)="addToCart(product); $event.stopPropagation()" class="w-full bg-white text-black text-[10px] font-bold tracking-[0.15em] uppercase py-3 hover:bg-black hover:text-white transition-colors duration-200 flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/></svg>
+              Agregar al carrito
+            </button>
+            <button (click)="$event.stopPropagation()" class="w-full bg-transparent border border-white text-white text-[10px] font-bold tracking-[0.15em] uppercase py-3 hover:bg-white hover:text-black transition-colors duration-200 flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 3h-1.5m1.5 0l-.5 5m.5-5h14.25m-14.25 0l.25 2.5M18 3l-.5 5m.5-5H3.75m14.25 0l-.25 2.5M5.5 8.5h13M5.5 8.5L4.5 18h15l-1-9.5M9 13h6m-3-3v6"/></svg>
+              Comprar ahora
+            </button>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-2">
+          <div class="min-w-0">
+            <p class="text-[10px] sm:text-xs text-gray-400 uppercase tracking-wider truncate mb-0.5">{{ product.category }}</p>
+            <h3 class="text-xs sm:text-sm font-semibold text-gray-900 truncate">{{ product.name }}</h3>
+          </div>
+          <span class="text-xs sm:text-sm font-semibold text-gray-900 whitespace-nowrap shrink-0">${{ product.price }}</span>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- LG/2XL Carrusel -->
+  <div id="carouselPopular" class="hidden lg:flex gap-6 2xl:gap-8 overflow-x-auto scroll-smooth scrollbar-hide">
+    @for (product of newArrivals(); track product.id) {
+      <div class="group cursor-pointer flex-shrink-0 w-[260px] xl:w-[280px] 2xl:w-[320px]" [routerLink]="['/product', product.id]">
+        <div class="aspect-[3/4] bg-gray-100 overflow-hidden mb-4 relative">
+          <img [src]="product.imageUrl" [alt]="product.name" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"/>
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 px-4">
+            <button (click)="addToCart(product); $event.stopPropagation()" class="w-full bg-white text-black text-[10px] font-bold tracking-[0.15em] uppercase py-3 hover:bg-black hover:text-white transition-colors duration-200 flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/></svg>
+              Agregar al carrito
+            </button>
+            <button (click)="$event.stopPropagation()" class="w-full bg-transparent border border-white text-white text-[10px] font-bold tracking-[0.15em] uppercase py-3 hover:bg-white hover:text-black transition-colors duration-200 flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 3h-1.5m1.5 0l-.5 5m.5-5h14.25m-14.25 0l.25 2.5M18 3l-.5 5m.5-5H3.75m14.25 0l-.25 2.5M5.5 8.5h13M5.5 8.5L4.5 18h15l-1-9.5M9 13h6m-3-3v6"/></svg>
+              Comprar ahora
+            </button>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-2">
+          <div class="min-w-0">
+            <p class="text-[10px] sm:text-xs text-gray-400 uppercase tracking-wider truncate mb-0.5">{{ product.category }}</p>
+            <h3 class="text-xs sm:text-sm font-semibold text-gray-900 truncate">{{ product.name }}</h3>
+          </div>
+          <span class="text-xs sm:text-sm font-semibold text-gray-900 whitespace-nowrap shrink-0">${{ product.price }}</span>
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- ─── EDITORIAL ──────────────────────────────────────────────────────────── -->
+<section class="w-full px-4 sm:px-8 lg:px-16 xl:px-24 2xl:px-32 py-8 md:py-12 lg:py-16">
+  <div class="relative w-full h-[400px] sm:h-[480px] md:h-[560px] overflow-hidden">
+    <img
+      src="https://images.unsplash.com/photo-1608228088998-57828365d486?q=80&w=1682&auto=format&fit=crop"
+      alt="Editorial Aura"
+      class="w-full h-full object-cover object-center"/>
+    <div class="absolute inset-0 bg-black/50"></div>
+    <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-6 md:px-16">
+      <h2 class="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight mb-4 md:mb-6 max-w-3xl leading-tight">
+        La Ropa Que Usas Dice Quién Eres
+      </h2>
+      <p class="text-gray-300 text-sm md:text-base max-w-xl leading-relaxed mb-8 md:mb-10 font-light">
+        Cada prenda nace de la convicción de que el estilo no se compra, se construye. Piezas diseñadas para quienes saben exactamente quiénes son.
+      </p>
+      <a routerLink="/catalogo" class="border border-white text-white text-xs font-bold tracking-[0.25em] uppercase px-10 py-4 hover:bg-white hover:text-black transition-all duration-300">
+        Ver Colección
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT / COLLAGE ────────────────────────────────────────────────────── -->
+<section class="w-full px-4 sm:px-8 lg:px-16 xl:px-24 2xl:px-32 py-16 md:py-24">
+  <div class="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+    <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight text-gray-900 mb-6 leading-tight">
+      Nuestra Visión del Diseño
+    </h2>
+    <p class="text-xs sm:text-sm text-gray-500 leading-relaxed tracking-wider font-light">
+      En Aura, fusionamos creatividad con precisión para crear moda que trasciende las tendencias.
+      Cada pieza es concebida con intención, construida con los mejores materiales y diseñada para perdurar más allá de las temporadas.
+    </p>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
+    <div class="col-span-1 mt-0">
+      <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=800&auto=format&fit=crop" alt="Aura Fashion 1" class="w-full h-[280px] sm:h-[340px] md:h-[420px] object-cover object-top"/>
+    </div>
+    <div class="col-span-1 mt-12 sm:mt-16 md:mt-20">
+      <img src="https://images.unsplash.com/photo-1516826957135-700dedea698c?q=80&w=800&auto=format&fit=crop" alt="Aura Fashion 2" class="w-full h-[280px] sm:h-[340px] md:h-[420px] object-cover object-top"/>
+    </div>
+    <div class="col-span-1 mt-0">
+      <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=2073&auto=format&fit=crop" alt="Aura Fashion 3" class="w-full h-[280px] sm:h-[340px] md:h-[420px] object-cover object-top"/>
+    </div>
+    <div class="col-span-1 mt-12 sm:mt-16 md:mt-20">
+      <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=800&auto=format&fit=crop" alt="Aura Fashion 4" class="w-full h-[280px] sm:h-[340px] md:h-[420px] object-cover object-top"/>
+    </div>
   </div>
 </section>

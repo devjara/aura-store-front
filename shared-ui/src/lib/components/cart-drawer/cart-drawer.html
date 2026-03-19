@@ -90,12 +90,12 @@
             </div>
 
             <div class="flex items-center justify-between mt-2">
-              <span class="text-xs text-gray-400">Qty {{ item.quantity }}</span>
+              <span class="text-xs text-gray-400">Cantidad: {{ item.quantity }}</span>
               <button
                 (click)="remove.emit(item.productId)"
                 class="text-xs text-indigo-600 hover:text-indigo-800 transition-colors font-medium"
               >
-                Remove
+                Remover
               </button>
             </div>
           </div>
@@ -113,7 +113,7 @@
             {{ currencySymbol() }}{{ subtotal().toFixed(2) }}
           </span>
         </div>
-        <p class="text-xs text-gray-400 -mt-2">Shipping and taxes calculated at checkout.</p>
+        <p class="text-xs text-gray-400 -mt-2 text-justify">Los gastos de envío y los impuestos se calcularan al finalizar la compra.</p>
 
         <!-- Checkout -->
         <button
@@ -128,7 +128,7 @@
           (click)="continueShopping.emit()"
           class="text-sm text-center text-gray-500 hover:text-black transition-colors"
         >
-          or {{ continueLabel() }} &rarr;
+          {{ continueLabel() }} &rarr;
         </button>
       </div>
     }

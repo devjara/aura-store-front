@@ -1,17 +1,18 @@
-<aura-navbar 
+<aura-navbar
   [storeName]="storeConfig.name"
   [announcementText]="storeConfig.announcement"
   [announcementLinkText]="storeConfig.announcementLink"
   [links]="storeConfig.menu"
   [cartItemCount]="cartItems().length"
   [containerClass]="'max-w-[1700px] mx-auto px-8 lg:px-[80px]'"
-  (cartClick)="openCart()">
+  [cartItemCount]="cartService.itemCount()"
+  (cartClick)="cartService.openCart()">
 </aura-navbar>
 
 <aura-cart-drawer
-  [isOpen]="isCartOpen()"
-  [items]="cartItems()"
-  (closeCart)="closeCart()"
-  (remove)="removeItem($event)"
+  [isOpen]="cartService.isOpen()"
+  [items]="cartService.items()"
+  (closeCart)="cartService.closeCart()"
+  (remove)="cartService.removeItem($event)"
   (checkout)="goToCheckout()">
 </aura-cart-drawer>
