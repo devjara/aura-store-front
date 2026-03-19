@@ -16,6 +16,7 @@ export * from './lib/dto/ps-language-string.dto';
 export * from './lib/services/prestashop-api';
 export * from './lib/interceptors/api-interceptor';
 export * from './lib/utils/prestashop-mapper.util';
+export * from './lib/utils/console-protection.util';
 export * from './lib/hooks/use-catalog-filter';
 
 
