@@ -1,0 +1,96 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// AURA DESIGN SYSTEM — TOKENS
+// Variables base del sistema. Nunca se modifican directamente.
+// Cada tienda sobreescribe SOLO --color-* y --font-* en su _theme.scss
+// ─────────────────────────────────────────────────────────────────────────────
+
+:root {
+
+  // ─── Espaciado fluido ───────────────────────────────────────────────────
+  --space-xs: clamp(0.25rem, 0.5vw, 0.5rem);
+  --space-sm: clamp(0.5rem, 1vw, 1rem);
+  --space-md: clamp(1rem, 2vw, 2rem);
+  --space-lg: clamp(1.5rem, 3vw, 3rem);
+  --space-xl: clamp(2rem, 4vw, 4rem);
+  --space-2xl: clamp(3rem, 6vw, 6rem);
+  --space-3xl: clamp(4rem, 8vw, 8rem);
+
+  // ─── Contenedor y secciones ─────────────────────────────────────────────
+  --container-max: min(1920px, 90vw);
+  --section-px: clamp(1rem, 5vw, 10rem);
+  --section-py: clamp(2rem, 4vw, 6rem);
+
+  // ─── Grid ───────────────────────────────────────────────────────────────
+  --grid-gap: clamp(0.75rem, 2vw, 1.5rem);
+
+  // ─── Aspect Ratios ──────────────────────────────────────────────────────
+  --ratio-product: 3/4;
+  --ratio-category: 3/4;
+  --ratio-hero: 16/9;
+  --ratio-hero-mobile: 4/5;
+  --ratio-banner: 21/9;
+  --ratio-editorial: 4/3;
+  --ratio-square: 1/1;
+
+  // ─── Tipografía fluida ──────────────────────────────────────────────────
+  --text-xs: clamp(0.65rem, 0.5vw + 0.5rem, 0.75rem);
+  --text-sm: clamp(0.75rem, 0.6vw + 0.6rem, 0.875rem);
+  --text-base: clamp(0.875rem, 0.7vw + 0.7rem, 1rem);
+  --text-lg: clamp(1rem, 1vw + 0.75rem, 1.25rem);
+  --text-xl: clamp(1.125rem, 1.2vw + 0.8rem, 1.5rem);
+  --text-2xl: clamp(1.25rem, 1.5vw + 0.9rem, 1.875rem);
+  --text-3xl: clamp(1.5rem, 2vw + 1rem, 2.25rem);
+  --text-4xl: clamp(1.875rem, 3vw + 1rem, 3rem);
+  --text-5xl: clamp(2.25rem, 4vw + 1rem, 4rem);
+  --text-6xl: clamp(2.5rem, 5vw + 1rem, 5rem);
+  --text-7xl: clamp(3rem, 6vw + 1rem, 6rem);
+  --text-hero: clamp(3.5rem, 8vw + 1rem, 8rem);
+
+  // ─── Colores base ───────────────────────────────────────────────────────
+  --color-primary: #000000;
+  --color-primary-hover: #1a1a1a;
+  --color-accent: #F55216;
+  --color-accent-hover: #D4410E;
+  --color-bg: #ffffff;
+  --color-bg-soft: #f5f5f3;
+  --color-text: #111111;
+  --color-text-muted: #6b7280;
+  --color-border: #e5e7eb;
+  --color-border-soft: #f3f4f6;
+
+  // ─── Tipografía ─────────────────────────────────────────────────────────
+  --font-sans: system-ui, -apple-system, sans-serif;
+  --font-serif: Georgia, 'Times New Roman', serif;
+
+  // ─── Bordes y radios ────────────────────────────────────────────────────
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+  --radius-card: var(--radius-md);
+
+  // ─── Sombras ────────────────────────────────────────────────────────────
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  // ─── Transiciones ───────────────────────────────────────────────────────
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+  --transition-img: 700ms ease-out;
+
+  // ─── Z-index ────────────────────────────────────────────────────────────
+  --z-base: 0;
+  --z-above: 10;
+  --z-dropdown: 20;
+  --z-sticky: 40;
+  --z-overlay: 50;
+  --z-modal: 60;
+  --z-toast: 70;
+
+
+
+}
+

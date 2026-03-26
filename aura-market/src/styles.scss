@@ -1,8 +1,21 @@
+// ─── 1. Design system de shared-ui PRIMERO ───────────────────────────────
+@use '../../shared-ui/src/styles/index';
+
+// ─── 2. Tailwind DESPUÉS — sobreescribe lo necesario ─────────────────────
 @import 'tailwindcss';
 
-
-@layer base {
-  body {
-    @apply bg-gray-50 text-gray-900 antialiased;
-  }
+// ─── 3. Tema de la tienda AL FINAL ───────────────────────────────────────
+:root {
+  --color-primary: #111111;
+  --color-primary-hover: #000000;
+  --color-accent: #F55216;
+  --color-accent-hover: #D4410E;
+  --color-bg: #ffffff;
+  --color-bg-soft: #f5f5f3;
+  --color-text: #111111;
+  --color-text-muted: #6b7280;
+  --color-border: #e5e7eb;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --radius-card: 0.5rem;
 }

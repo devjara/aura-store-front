@@ -1,0 +1,80 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// AURA DESIGN SYSTEM — IMAGES
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ─── Base compartida — placeholder interno ───────────────────────────────────
+%aura-img-base {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+
+// ─── Imagen de producto ───────────────────────────────────────────────────────
+.aura-img-product {
+  @extend %aura-img-base;
+  aspect-ratio: var(--ratio-product);
+  object-position: top center;
+}
+
+// ─── Imagen de categoría ──────────────────────────────────────────────────────
+.aura-img-category {
+  @extend %aura-img-base;
+  aspect-ratio: var(--ratio-category);
+  object-position: top center;
+}
+
+// ─── Imagen fullwidth ─────────────────────────────────────────────────────────
+.aura-img-hero {
+  @extend %aura-img-base;
+  height: 100%;
+  object-position: center;
+}
+
+// ─── Imagen de banner ─────────────────────────────────────────────────────────
+.aura-img-banner {
+  @extend %aura-img-base;
+  aspect-ratio: var(--ratio-banner);
+  object-position: center;
+
+  @media (max-width: 640px) {
+    aspect-ratio: var(--ratio-editorial);
+  }
+}
+
+// ─── Imagen editorial ─────────────────────────────────────────────────────────
+.aura-img-editorial {
+  @extend %aura-img-base;
+  aspect-ratio: var(--ratio-editorial);
+  object-position: center;
+}
+
+// ─── Imagen cuadrada ──────────────────────────────────────────────────────────
+.aura-img-square {
+  @extend %aura-img-base;
+  aspect-ratio: var(--ratio-square);
+  object-position: center;
+}
+
+// ─── Hover zoom ───────────────────────────────────────────────────────────────
+.aura-img-zoom {
+  transition: transform var(--transition-img);
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+// ─── Contenedor con overflow hidden ───────────────────────────────────────────
+.aura-img-wrap {
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background-color: var(--color-bg-soft);
+
+  img {
+    transition: transform var(--transition-img);
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}

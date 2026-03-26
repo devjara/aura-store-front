@@ -1,0 +1,11 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// AURA DESIGN SYSTEM — INDEX
+// Punto de entrada del sistema de diseño de shared-ui.
+// Importar en el styles.scss de cada tienda ANTES de Tailwind.
+// ─────────────────────────────────────────────────────────────────────────────
+
+@use 'tokens'; // CSS variables — espaciado, tipografía, colores, ratios
+@use 'typography'; // Clases fluidas de texto y familias
+@use 'layout'; // Contenedores, grids y carrusel
+@use 'images'; // Aspect ratios y reglas de imágenes
+@use 'cards'; // Componente base de card de producto

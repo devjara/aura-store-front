@@ -1,0 +1,287 @@
+<!-- ─── HERO WOMEN ──────────────────────────────────────────────────────────── -->
+<section class="relative w-full bg-[#e8ece9] overflow-hidden">
+
+  <!-- MOBILE — texto sobre imagen -->
+  <div class="md:hidden relative w-full h-[100svh]">
+    <img src="https://images.unsplash.com/photo-1574015974293-817f0ebebb74?q=80&w=973&auto=format&fit=crop" alt="Colección Mujer Aura" class="aura-img-hero">
+    <div class="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+    <div class="absolute bottom-0 left-0 right-0 px-6 pb-10 flex flex-col">
+      <p class="aura-eyebrow text-white/60 mb-3">Colección Mujer — 2025</p>
+      <h1 class="aura-font-serif aura-text-5xl font-normal text-white leading-[1.05] mb-3">Moda que resalta <br/>la belleza</h1>
+      <p class="aura-text-xs text-white/70 font-light leading-relaxed mb-6">Confeccionada con cuidado, diseñada para durar. Telas conscientes y siluetas refinadas.</p>
+      <div class="flex items-center gap-4 mb-6 border-t border-white/20 pt-4">
+        <div><p class="aura-text-sm font-black text-white">+2,400</p><p class="aura-eyebrow text-white/50 mt-0.5">Prendas vendidas</p></div>
+        <div class="w-px h-6 bg-white/20"></div>
+        <div><p class="aura-text-sm font-black text-white">98%</p><p class="aura-eyebrow text-white/50 mt-0.5">Satisfacción</p></div>
+        <div class="w-px h-6 bg-white/20"></div>
+        <div><p class="aura-text-sm font-black text-white">Envío</p><p class="aura-eyebrow text-white/50 mt-0.5">Gratis +$999</p></div>
+      </div>
+      <div class="flex items-center gap-3">
+        <a routerLink="/catalogo" class="inline-block bg-white text-gray-900 aura-text-xs font-bold tracking-[0.3em] uppercase px-6 py-3 hover:bg-gray-100 transition-colors duration-300">Comprar ahora</a>
+        <a routerLink="/catalogo" class="inline-block border border-white/60 text-white aura-text-xs font-bold tracking-[0.3em] uppercase px-6 py-3 hover:border-white hover:bg-white/10 transition-colors duration-300">Ver colección</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESKTOP -->
+  <div class="hidden md:flex h-[calc(100vh-64px)] items-center">
+    <div class="absolute left-0 top-0 w-[55%] h-full">
+      <img src="https://images.unsplash.com/photo-1574015974293-817f0ebebb74?q=80&w=973&auto=format&fit=crop" alt="Colección Mujer Aura" class="aura-img-hero">
+      <div class="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#e8ece9]"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#e8ece9]"></div>
+      <div class="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#e8ece9] via-[#e8ece9]/60 to-transparent"></div>
+    </div>
+    <div class="absolute right-0 top-0 h-full flex items-center w-[45%] px-10 lg:px-14 xl:px-16 2xl:px-20">
+      <div class="flex flex-col w-full">
+        <p class="aura-eyebrow mb-6">Colección Mujer — 2025</p>
+        <h1 class="aura-font-serif aura-text-7xl font-normal text-gray-900 leading-[1.05] mb-6">Moda que resalta <br/>la belleza</h1>
+        <p class="aura-subtitle mb-8">Confeccionada con cuidado, diseñada para durar. Telas conscientes, siluetas refinadas y detalles que se mueven contigo.</p>
+        <div class="flex items-center gap-8 mb-10 border-t border-b border-gray-200 py-5">
+          <div><p class="aura-text-xl font-black text-gray-900">+2,400</p><p class="aura-eyebrow mt-0.5">Prendas vendidas</p></div>
+          <div class="w-px h-8 bg-gray-200"></div>
+          <div><p class="aura-text-xl font-black text-gray-900">98%</p><p class="aura-eyebrow mt-0.5">Satisfacción</p></div>
+          <div class="w-px h-8 bg-gray-200"></div>
+          <div><p class="aura-text-xl font-black text-gray-900">Envío</p><p class="aura-eyebrow mt-0.5">Gratis +$999</p></div>
+        </div>
+        <div class="flex items-center gap-4 flex-wrap">
+          <a routerLink="/catalogo" class="inline-block bg-gray-900 text-white aura-text-xs font-bold tracking-[0.3em] uppercase px-8 py-4 hover:bg-black transition-colors duration-300">Comprar ahora</a>
+          <a routerLink="/catalogo" class="inline-block border border-gray-400 text-gray-600 aura-text-xs font-bold tracking-[0.3em] uppercase px-8 py-4 hover:border-gray-900 hover:text-gray-900 transition-colors duration-300">Ver colección</a>
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-6 right-8 pointer-events-none select-none hidden lg:block">
+      <span class="aura-text-hero font-black text-gray-900/[0.04] leading-none">01</span>
+    </div>
+  </div>
+
+</section>
+
+<!-- ─── BENEFICIOS ──────────────────────────────────────────────────────────── -->
+<section class="w-full bg-white border-b border-gray-100">
+  <div class="aura-section" style="padding-block: var(--space-lg)">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 justify-items-center">
+      @for (benefit of benefits; track benefit.label) {
+        <div class="flex items-center gap-3">
+          <svg class="w-8 h-8 flex-shrink-0 text-gray-700" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="benefit.icon"/>
+          </svg>
+          <div>
+            <p class="aura-text-xs font-bold text-gray-900">{{ benefit.label }}</p>
+            <p class="aura-text-xs text-gray-400">{{ benefit.description }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ─── CATEGORÍAS POPULARES ───────────────────────────────────────────────── -->
+<section class="w-full bg-white">
+  <div class="aura-section">
+    <div class="flex items-start justify-between mb-8 md:mb-12">
+      <div class="pointer-events-none select-none">
+        <span class="text-[1.5rem] sm:text-[5rem] md:text-[6rem] lg:text-[3rem] font-black uppercase text-gray-200 tracking-tighter leading-none whitespace-nowrap">
+          Categorias Top
+        </span>
+      </div>
+      <p class="hidden md:block aura-text-xs text-gray-400 max-w-xs text-right leading-relaxed">Explora esenciales atemporales y favoritos de nuestras colecciones.</p>
+    </div>
+    <div class="aura-grid-categories">
+      @for (cat of categories; track cat.name) {
+        <div class="group cursor-pointer" [routerLink]="['/catalogo']">
+          <div class="aura-img-wrap mb-3">
+            <img [src]="cat.image" [alt]="cat.name" class="aura-img-category aura-img-zoom">
+          </div>
+          <div class="text-center">
+            <h3 class="aura-text-sm font-bold text-gray-900">{{ cat.name }}</h3>
+            <p class="aura-text-xs text-gray-400 mt-0.5">{{ cat.count }} Productos</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ─── SPLIT SECTION ──────────────────────────────────────────────────────── -->
+<section class="w-full">
+  <div class="aura-grid-split">
+    <div class="relative h-[300px] md:h-[480px] lg:h-[520px] overflow-hidden">
+      <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=988&auto=format&fit=crop" alt="Colección Exclusiva" class="aura-img-hero">
+      <div class="absolute top-6 left-6 bg-black text-white px-4 py-2">
+        <p class="aura-eyebrow text-white">Colección Exclusiva</p>
+      </div>
+      <div class="absolute bottom-6 left-6 bg-[#F55216] text-white px-4 py-2 flex items-center gap-2">
+        <span class="aura-text-lg font-black">-40%</span>
+        <span class="aura-eyebrow">En prendas seleccionadas</span>
+      </div>
+    </div>
+    <div class="bg-[#f5f5f3] flex flex-col justify-center h-[480px] lg:h-[520px] px-8 sm:px-12 lg:px-16 xl:px-20 py-8">
+      <p class="aura-eyebrow mb-3">Oferta por tiempo limitado</p>
+      <h2 class="aura-font-serif aura-text-4xl font-normal text-gray-900 leading-tight mb-3">
+        Formas contemporáneas para un estilo <em class="not-italic text-[#F55216]">seguro.</em>
+      </h2>
+      <p class="aura-text-xs text-gray-500 font-light leading-relaxed mb-5">Esenciales atemporales con detalles refinados y telas elevadas.</p>
+      <div class="flex items-center gap-3 mb-5">
+        <div class="flex flex-col items-center bg-white px-3 py-2 min-w-[56px]">
+          <span class="aura-text-xl font-black text-gray-900">{{ hours() }}</span>
+          <span class="aura-eyebrow mt-0.5">Horas</span>
+        </div>
+        <span class="aura-text-lg font-black text-gray-300">:</span>
+        <div class="flex flex-col items-center bg-white px-3 py-2 min-w-[56px]">
+          <span class="aura-text-xl font-black text-gray-900">{{ minutes() }}</span>
+          <span class="aura-eyebrow mt-0.5">Minutos</span>
+        </div>
+        <span class="aura-text-lg font-black text-gray-300">:</span>
+        <div class="flex flex-col items-center bg-white px-3 py-2 min-w-[56px]">
+          <span class="aura-text-xl font-black text-gray-900">{{ seconds() }}</span>
+          <span class="aura-eyebrow mt-0.5">Segundos</span>
+        </div>
+      </div>
+      <div class="mb-5">
+        <div class="flex justify-between mb-1.5">
+          <span class="aura-text-xs text-gray-500 font-medium">68 vendidos de 100</span>
+          <span class="aura-text-xs font-bold text-[#F55216]">32 restantes</span>
+        </div>
+        <div class="w-full h-1.5 bg-gray-200 rounded-full">
+          <div class="h-1.5 bg-[#F55216] rounded-full" style="width: 68%"></div>
+        </div>
+      </div>
+      <a routerLink="/catalogo" class="inline-block bg-gray-900 text-white aura-text-xs font-bold tracking-[0.3em] uppercase px-8 py-4 hover:bg-black transition-colors duration-300 self-start">Ver Todos</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── REDEFINE TU GUARDARROPA ────────────────────────────────────────────── -->
+<section class="w-full bg-white">
+  <div class="aura-section">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 md:mb-12">
+      <div class="pointer-events-none select-none">
+        <span class="text-[1.5rem] sm:text-[5rem] md:text-[6rem] lg:text-[3rem] font-black uppercase text-gray-200 tracking-tighter leading-none whitespace-nowrap">
+          Redefine tu guardaropa
+        </span>
+      </div>
+      <div class="flex items-center gap-4 sm:gap-6 overflow-x-auto scrollbar-hide pb-1">
+        @for (tab of productTabs; track tab) {
+          <button (click)="activeProductTab.set(tab)"
+            class="aura-text-xs font-medium uppercase tracking-widest whitespace-nowrap transition-colors duration-200"
+            [class.text-gray-900]="activeProductTab() === tab"
+            [class.font-black]="activeProductTab() === tab"
+            [class.text-gray-400]="activeProductTab() !== tab">
+            {{ tab }}
+          </button>
+        }
+      </div>
+    </div>
+    <div class="aura-grid-products">
+      @for (product of featuredProducts; track product.name) {
+        <div class="aura-card">
+          <div class="aura-card__image">
+            <img [src]="product.image" [alt]="product.name" class="aura-img-product aura-img-zoom">
+            @if (product.discount) { <span class="aura-card__badge">{{ product.discount }}%</span> }
+            <button class="aura-card__favorite">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+            </button>
+            <div class="aura-card__overlay">
+              <button class="aura-card__action" (click)="addToCartFeatured(product)">Agregar al carrito</button>
+            </div>
+          </div>
+          <div class="aura-card__info">
+            <div class="aura-card__rating">
+              @for (star of [1,2,3,4,5]; track star) {
+                <svg [class.text-yellow-400]="star <= product.rating" [class.text-gray-200]="star > product.rating" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+              }
+              <span>{{ product.rating }}.0 ({{ product.reviews }})</span>
+            </div>
+            <h3 class="aura-card__name">{{ product.name }}</h3>
+            <div class="aura-card__prices">
+              <span class="aura-card__price">${{ product.price }}</span>
+              @if (product.originalPrice) { <span class="aura-card__price--original">${{ product.originalPrice }}</span> }
+            </div>
+            <p class="aura-card__brand">{{ product.brand }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ─── BANNER OFERTA ──────────────────────────────────────────────────────── -->
+<section class="w-full bg-white">
+  <div class="aura-section" style="padding-block: var(--space-lg)">
+    <div class="relative w-full rounded-lg overflow-hidden" style="height: clamp(180px, 20vw, 280px)">
+      <div class="absolute inset-0">
+        <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=1471&auto=format&fit=crop" alt="Colección Destacada" class="aura-img-hero object-[center_30%]">
+        <div class="absolute inset-0 bg-gradient-to-r from-[#8a8678]/95 via-[#8a8678]/70 to-transparent"></div>
+      </div>
+      <div class="relative z-10 h-full flex items-center px-8 sm:px-12 lg:px-16">
+        <div class="max-w-lg">
+          <p class="aura-eyebrow text-white/60 mb-3">Colección Destacada</p>
+          <h2 class="aura-text-4xl font-black text-white leading-tight mb-3">Siluetas modernas, <br/>lujo cotidiano.</h2>
+          <p class="aura-text-xs text-white/70 font-light leading-relaxed mb-5 hidden sm:block">Descubre esenciales premium con cortes sin esfuerzo y detalles atemporales.</p>
+          <a routerLink="/catalogo" class="inline-flex items-center gap-2 text-white aura-text-xs font-bold uppercase tracking-[0.25em] border-b border-white pb-0.5 hover:text-white/70 transition-colors duration-200">
+            Comprar ahora
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── COLECCIONES DE DISEÑADOR ────────────────────────────────────────────── -->
+<section class="w-full bg-white">
+  <div class="aura-section">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 md:mb-12">
+      <div class="pointer-events-none select-none">
+        <span class="text-[1.5rem] sm:text-[5rem] md:text-[6rem] lg:text-[3rem] font-black uppercase text-gray-200 tracking-tighter leading-none whitespace-nowrap">
+          Top de Diseñador
+        </span>
+      </div>
+      <div class="flex items-center gap-4 sm:gap-6 overflow-x-auto scrollbar-hide pb-1">
+        @for (tab of designerTabs; track tab) {
+          <button (click)="activeDesignerTab.set(tab)"
+            class="aura-text-xs font-medium uppercase tracking-widest whitespace-nowrap transition-colors duration-200"
+            [class.text-gray-900]="activeDesignerTab() === tab"
+            [class.font-black]="activeDesignerTab() === tab"
+            [class.text-gray-400]="activeDesignerTab() !== tab">
+            {{ tab }}
+          </button>
+        }
+      </div>
+    </div>
+    <div class="aura-grid-products">
+      @for (product of filteredDesignerProducts(); track product.name) {
+        <div class="aura-card">
+          <div class="aura-card__image">
+            <img [src]="product.image" [alt]="product.name" class="aura-img-product aura-img-zoom">
+            @if (product.discount) { <span class="aura-card__badge">{{ product.discount }}%</span> }
+            <button class="aura-card__favorite">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+            </button>
+            <div class="aura-card__overlay">
+              <button class="aura-card__action" (click)="addToCartFeatured(product)">Agregar al carrito</button>
+            </div>
+          </div>
+          <div class="aura-card__info">
+            <div class="aura-card__rating">
+              @for (star of [1,2,3,4,5]; track star) {
+                <svg [class.text-yellow-400]="star <= product.rating" [class.text-gray-200]="star > product.rating" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+              }
+              <span>{{ product.rating }}.0 ({{ product.reviews }})</span>
+            </div>
+            <h3 class="aura-card__name">{{ product.name }}</h3>
+            <div class="aura-card__prices">
+              <span class="aura-card__price">${{ product.price }}</span>
+              @if (product.originalPrice) { <span class="aura-card__price--original">${{ product.originalPrice }}</span> }
+            </div>
+            <p class="aura-card__brand">{{ product.brand }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

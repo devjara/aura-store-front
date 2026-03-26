@@ -1,0 +1,26 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// AURA MARKET — THEME
+// Sobreescribe SOLO los tokens de color y tipografía.
+// NUNCA modifica espaciados, grids ni aspect ratios — esos son globales.
+// ─────────────────────────────────────────────────────────────────────────────
+
+:root {
+  // ─── Colores de marca ─────────────────────────────────────────────────
+  --color-primary: #111111;
+  --color-primary-hover: #000000;
+  --color-accent: #F55216;
+  --color-accent-hover: #D4410E;
+  --color-bg: #ffffff;
+  --color-bg-soft: #f5f5f3;
+  --color-text: #111111;
+  --color-text-muted: #6b7280;
+  --color-border: #e5e7eb;
+
+  // ─── Tipografía de marca ──────────────────────────────────────────────
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+
+  // ─── Radio de cards ───────────────────────────────────────────────────
+  // aura-market usa cards con esquinas ligeramente redondeadas
+  --radius-card: 0.5rem;
+}

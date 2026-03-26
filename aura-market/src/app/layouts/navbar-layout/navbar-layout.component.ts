@@ -24,10 +24,10 @@ export class NavbarLayoutComponent {
     announcement: 'Accede a ofertas exclusivas, lanzamientos y más. No te lo pierdas.',
     announcementLink: 'Ingresa para tus ofertas',
     menu: [
-      { label: 'Women', url: '/women' },
-      { label: 'Men', url: '/men' },
+      { label: 'Mujeres', url: '/woman' },
+      { label: 'Hombres', url: '/men' },
       { label: 'Catálogo', url: '/catalogo' },
-      { label: 'About', url: '/about' }
+      { label: 'Acerca de', url: '/about' }
     ]
   };
 

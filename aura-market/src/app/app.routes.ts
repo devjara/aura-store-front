@@ -2,6 +2,7 @@ import { Route } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { CatalogComponent } from './pages/catalog/catalog.component';
 import { LayoutComponent } from './layouts/layout.component';
+import { WomanComponent } from './pages/woman/woman.component';
 
 export const appRoutes: Route[] = [
   {
@@ -9,6 +10,7 @@ export const appRoutes: Route[] = [
     component: LayoutComponent,
     children: [
       { path: '', component: HomeComponent, title: 'Aura Market | Inicio' },
+      { path: 'woman', component: WomanComponent, title: 'Aura Market | Mujer' },
       { path: 'catalogo', component: CatalogComponent, title: 'Aura Market | Catálogo' },
     ]
   }

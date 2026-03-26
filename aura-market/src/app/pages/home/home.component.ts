@@ -1,7 +1,7 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Component, computed, ElementRef, inject, OnInit, PLATFORM_ID, signal, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ProductService, Product, CartItemView, CartService } from '@aura-store-front/core';
+import { ProductService, Product, CartService } from '@aura-store-front/core';
 
 @Component({
   selector: 'aura-home-component',
