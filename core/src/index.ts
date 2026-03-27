@@ -23,6 +23,7 @@ export * from './lib/hooks/use-catalog-filter';
 export * from './lib/services/tenant/tenant.service';
 export * from './lib/services/product/product.service';
 export * from './lib/services/cart/cart.service';
+export * from './lib/services/category/category.service';
 
 export type { FilterConfig, FilterOption, FilterState, FilterType } from './lib/models/filter.model';
 export type { CartItemView, CartItemVariation, Cart } from './lib/models/cart.model';

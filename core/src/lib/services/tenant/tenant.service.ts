@@ -30,44 +30,37 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
-
 export class TenantService {
   //Signals
   public tenant = signal<TenantConfig | null>(null);
-  
+
   //Inyecciones
   private http = inject(HttpClient);
-  private platformId = inject(PLATFORM_ID); 
+  private platformId = inject(PLATFORM_ID);
   private logger = inject(LoggerService);
   private router = inject(Router);
 
   async loadTenantConfig(): Promise<void> {
     const isBrowser = isPlatformBrowser(this.platformId);
-    console.log(`3️⃣ [TenantService] Entrando a loadTenantConfig. ¿Es navegador?: ${isBrowser}`);
 
-    if (!isBrowser) {
-      console.log('🛑 [TenantService] Detenido por SSR (Ejecución en servidor).');
-      return; 
-    }
-    
+    if (!isBrowser) return;
+
     try {
       const currentDomain = window.location.hostname;
       const directory = await firstValueFrom(
-        this.http.get<Record<string, TenantConfig>>(`/tenants.json`)
+        this.http.get<Record<string, TenantConfig>>(`/tenants.json`),
       );
-
-
       const activeTenant = directory[currentDomain];
-      
-      if(activeTenant) {
+
+      if (activeTenant) {
         this.tenant.set(activeTenant);
         this.logger.log(`Cliente autenticado: ${activeTenant.tenantId}`);
       } else {
-        this.logger.error(`Dominio intruso o no configurado: ${currentDomain}`);
-        this.router.navigate(['/no-found']); // TODO: Crear una página de error específica para tenant no encontrado, en lugar de un genérico 404.
+        this.logger.error(`Dominio no configurado: ${currentDomain}`);
+        await this.router.navigate(['/no-found']);
       }
-    } catch (error) { 
-     this.logger.error('Error al cargar la configuración del tenant:', error);
+    } catch (error) {
+      this.logger.error('Error al cargar tenant:', error);
     }
   }
 
@@ -86,7 +79,9 @@ export class TenantService {
    * Retorna string vacío si el tenant aún no ha cargado.
    */
   getApiUrl(): string {
-    return this.tenant()?.apiUrl ?? '';
+    const url = this.tenant()?.apiUrl ?? '';
+    console.log('🔍 getApiUrl():', url, '| tenant:', this.tenant());
+    return url;
   }
 
   /**

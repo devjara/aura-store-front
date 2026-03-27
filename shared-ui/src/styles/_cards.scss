@@ -189,3 +189,51 @@
     }
   }
 }
+
+// ─── Skeleton loader ──────────────────────────────────────────────────────────
+.aura-card--skeleton {
+  .aura-card__image {
+    background: linear-gradient(90deg,
+        var(--color-bg-soft) 25%,
+        #e0e0e0 50%,
+        var(--color-bg-soft) 75%);
+    background-size: 200% 100%;
+    animation: aura-shimmer 1.5s infinite linear;
+  }
+
+  .aura-card__name,
+  .aura-card__price,
+  .aura-card__brand {
+    height: 0.75rem;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(90deg,
+        var(--color-bg-soft) 25%,
+        #e0e0e0 50%,
+        var(--color-bg-soft) 75%);
+    background-size: 200% 100%;
+    animation: aura-shimmer 1.5s infinite linear;
+    color: transparent;
+  }
+
+  .aura-card__name {
+    width: 80%;
+  }
+
+  .aura-card__price {
+    width: 40%;
+  }
+
+  .aura-card__brand {
+    width: 30%;
+  }
+}
+
+@keyframes aura-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}

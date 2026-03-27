@@ -1,14 +1,18 @@
-import { ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig, inject, provideAppInitializer, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { apiInterceptor } from '@aura-store-front/core'
+import { apiInterceptor, TenantService } from '@aura-store-front/core'
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZonelessChangeDetection(), 
+    provideZonelessChangeDetection(),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([apiInterceptor]))
+    provideHttpClient(withInterceptors([apiInterceptor])),
+    provideAppInitializer(() => {
+      const tenantService = inject(TenantService);
+      return tenantService.loadTenantConfig();
+    })
   ]
 };

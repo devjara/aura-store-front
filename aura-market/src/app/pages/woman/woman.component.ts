@@ -1,10 +1,19 @@
-import { ChangeDetectionStrategy, Component, computed, inject, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
-import { CartService, Product, ProductService } from 'core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+  signal,
+} from '@angular/core';
+import { CartService, Category, CategoryService, Product, ProductService } from 'core';
 import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'aura-women.component',
+  selector: 'aura-women',
   imports: [RouterLink],
   standalone: true,
   templateUrl: './woman.component.html',
@@ -12,18 +21,24 @@ import { RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WomanComponent implements OnInit, OnDestroy {
-  //Inyecciones
+  // ─── Inyecciones ─────────────────────────────────────────────────────────────
   private productService = inject(ProductService);
   private platformId = inject(PLATFORM_ID);
   private cartService = inject(CartService);
+  private categoryService = inject(CategoryService);
 
+  // ─── Estado ──────────────────────────────────────────────────────────────────
   public products = signal<Product[]>([]);
+  public isLoading = signal<boolean>(true);
+  public categories = signal<Category[]>([]);
 
+  // ─── Countdown ───────────────────────────────────────────────────────────────
   public hours = signal<string>('23');
   public minutes = signal<string>('59');
   public seconds = signal<string>('59');
   private timer: ReturnType<typeof setInterval> | null = null;
 
+  // ─── Tabs de productos ────────────────────────────────────────────────────────
   public productTabs = [
     'Todos',
     'Blusas & Camisas',
@@ -36,251 +51,29 @@ export class WomanComponent implements OnInit, OnDestroy {
   ];
   public activeProductTab = signal<string>('Todos');
 
+  // ─── Tabs de diseñadores ──────────────────────────────────────────────────────
   public designerTabs = ['Todos', 'Solenne', 'Maison', 'Valenne', 'Noctra', 'Cavren'];
   public activeDesignerTab = signal<string>('Todos');
 
-  async ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.startCountdown();
-      try {
-        const data = await this.productService.getProducts();
-        this.products.set(
-          data.filter(
-            (p) => p.category.toLowerCase() === 'women' || p.category.toLowerCase() === 'mujer',
-          ),
-        );
-      } catch (error) {
-        console.error('Error cargando productos de mujer:', error);
-      }
-    }
-  }
+  // ─── Productos computados ─────────────────────────────────────────────────────
+  // Primeros 8 productos — sección "Redefine Tu Guardarropa"
+  public featuredProducts = computed(() => this.products().slice(0, 8));
 
-  addToCart(product: Product) {
-    this.cartService.addItem({
-      productId: product.id,
-      productAttributeId: 0,
-      quantity: 1,
-      name: product.name,
-      price: product.price,
-      imageUrl: product.imageUrl,
-    });
-  }
+  // Últimos productos — sección "Colecciones de Diseñador"
+  public designerProducts = computed(() => this.products().slice(8, 16));
 
-  addToCartFeatured(product: any) {
-    this.cartService.addItem({
-      productId: Math.random(),
-      productAttributeId: 0,
-      quantity: 1,
-      name: product.name,
-      price: parseFloat(product.price),
-      imageUrl: product.image,
-    });
-  }
+  // Filtrado por tab de diseñador
+  public filteredDesignerProducts = computed(() => {
+    const tab = this.activeDesignerTab();
+    const products = this.designerProducts();
+    if (tab === 'Todos') return products;
+    return products.filter((p) => p.category === tab);
+  });
 
-  public categories = [
-    {
-      name: 'Tops',
-      count: 7,
-      image:
-        'https://images.unsplash.com/photo-1564257631407-4deb1f99d992?q=80&w=400&auto=format&fit=crop',
-    },
-    {
-      name: 'Blusas y Camisas',
-      count: 5,
-      image:
-        'https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    },
-    {
-      name: 'Vestidos',
-      count: 4,
-      image:
-        'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?q=80&w=1164&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    },
-    {
-      name: 'Tejidos',
-      count: 4,
-      image:
-        'https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=400&auto=format&fit=crop',
-    },
-    {
-      name: 'Loungewear',
-      count: 3,
-      image:
-        'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=400&auto=format&fit=crop',
-    },
-  ];
+  // ─── Skeletons para loading ───────────────────────────────────────────────────
+  public skeletons = [1, 2, 3, 4, 5];
 
-  public featuredProducts = [
-    {
-      name: 'Pantalón Wide-Leg Escarlata',
-      price: '159.00',
-      originalPrice: '199.00',
-      discount: 20,
-      rating: 4,
-      reviews: 4,
-      brand: 'Vireon',
-      image:
-        'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=400&auto=format&fit=crop',
-    },
-    {
-      name: 'Pantalón Wide-Leg Leopardo',
-      price: '89.00',
-      originalPrice: '119.00',
-      discount: 25,
-      rating: 4,
-      reviews: 4,
-      brand: 'Cavren',
-      image:
-        'https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=400&auto=format&fit=crop',
-    },
-    {
-      name: 'Vestido Camisero Botánico',
-      price: '149.00',
-      originalPrice: '189.00',
-      discount: 21,
-      rating: 4,
-      reviews: 4,
-      brand: 'Maison',
-      image:
-        'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=400&auto=format&fit=crop',
-    },
-    {
-      name: 'Vestido Midi Smockeado',
-      price: '89.00',
-      originalPrice: '119.00',
-      discount: 25,
-      rating: 4,
-      reviews: 4,
-      brand: 'Maison',
-      image:
-        'https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=400&auto=format&fit=crop',
-    },
-    {
-      name: 'Blusa Floral Bordada',
-      price: '79.00',
-      originalPrice: '99.00',
-      discount: 20,
-      rating: 4,
-      reviews: 6,
-      brand: 'Solenne',
-      image:
-        'https://images.unsplash.com/photo-1564257631407-4deb1f99d992?q=80&w=400&auto=format&fit=crop',
-    },
-
-    {
-      name: 'Pantalón Wide-Leg Escarlata',
-      price: '159.00',
-      originalPrice: '199.00',
-      discount: 20,
-      rating: 4,
-      reviews: 4,
-      brand: 'Vireon',
-      image:
-        'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=400&auto=format&fit=crop',
-    },
-    {
-      name: 'Pantalón Wide-Leg Leopardo',
-      price: '89.00',
-      originalPrice: '119.00',
-      discount: 25,
-      rating: 4,
-      reviews: 4,
-      brand: 'Cavren',
-      image:
-        'https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=400&auto=format&fit=crop',
-    },
-    {
-      name: 'Vestido Camisero Botánico',
-      price: '149.00',
-      originalPrice: '189.00',
-      discount: 21,
-      rating: 4,
-      reviews: 4,
-      brand: 'Maison',
-      image:
-        'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=400&auto=format&fit=crop',
-    },
-    {
-      name: 'Vestido Midi Smockeado',
-      price: '89.00',
-      originalPrice: '119.00',
-      discount: 25,
-      rating: 4,
-      reviews: 4,
-      brand: 'Maison',
-      image:
-        'https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=400&auto=format&fit=crop',
-    },
-    {
-      name: 'Blusa Floral Bordada',
-      price: '79.00',
-      originalPrice: '99.00',
-      discount: 20,
-      rating: 4,
-      reviews: 6,
-      brand: 'Solenne',
-      image:
-        'https://images.unsplash.com/photo-1564257631407-4deb1f99d992?q=80&w=400&auto=format&fit=crop',
-    },
-  ];
-  public designerProducts = [
-    {
-      name: 'Vestido Midi Camisero Botánico',
-      price: '139.00',
-      originalPrice: '179.00',
-      discount: 22,
-      rating: 4,
-      reviews: 4,
-      brand: 'Noctra',
-      image:
-        'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=400&auto=format&fit=crop',
-    },
-    {
-      name: 'Cardigan de Punto Fino Abotonado',
-      price: '109.90',
-      originalPrice: '149.90',
-      discount: 27,
-      rating: 4,
-      reviews: 4,
-      brand: 'Solenne',
-      image:
-        'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?q=80&w=400&auto=format&fit=crop',
-    },
-    {
-      name: 'Top de Punto Texturizado Sin Mangas',
-      price: '59.00',
-      originalPrice: '79.00',
-      discount: 25,
-      rating: 4,
-      reviews: 4,
-      brand: 'Valenne',
-      image:
-        'https://images.unsplash.com/photo-1485462537746-965f33f80883?q=80&w=400&auto=format&fit=crop',
-    },
-    {
-      name: 'Sudadera Paris Atelier Relaxed',
-      price: '99.90',
-      originalPrice: '129.90',
-      discount: 23,
-      rating: 4,
-      reviews: 4,
-      brand: 'Valenne',
-      image:
-        'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=400&auto=format&fit=crop',
-    },
-    {
-      name: 'Sudadera Paris Atelier Relaxed',
-      price: '99.90',
-      originalPrice: '129.90',
-      discount: 23,
-      rating: 4,
-      reviews: 4,
-      brand: 'Valenne',
-      image:
-        'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=400&auto=format&fit=crop',
-    },
-  ];
-
+  // ─── Beneficios ───────────────────────────────────────────────────────────────
   public benefits = [
     {
       label: 'Atención al cliente',
@@ -304,8 +97,56 @@ export class WomanComponent implements OnInit, OnDestroy {
     },
   ];
 
+  // ─── Lifecycle ────────────────────────────────────────────────────────────────
+  async ngOnInit() {
+    const targetCategories = ['tops y blusas', 'vestidos', 'artesanal', 'loungewear', 'disenador'];
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.startCountdown();
+      try {
+        const [products, categories] = await Promise.all([
+          this.productService.getProducts(),
+          this.categoryService.getCategories(),
+        ]);
+
+        this.products.set(products);
+
+        // Conteo real por categoría
+       this.categories.set(
+         categories
+           .filter((cat) => targetCategories.includes(cat.name.toLowerCase()))
+           .map((cat) => ({
+             ...cat,
+             count: products.filter((p) => p.category.toLowerCase() === cat.name.toLowerCase())
+               .length,
+           })),
+       );
+      } catch (error) {
+        console.error('Error cargando datos:', error);
+      } finally {
+        this.isLoading.set(false);
+      }
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.timer) clearInterval(this.timer);
+  }
+
+  // ─── Carrito ──────────────────────────────────────────────────────────────────
+  addToCart(product: Product) {
+    this.cartService.addItem({
+      productId: product.id,
+      productAttributeId: 0,
+      quantity: 1,
+      name: product.name,
+      price: product.price,
+      imageUrl: product.imageUrl,
+    });
+  }
+
+  // ─── Countdown ────────────────────────────────────────────────────────────────
   startCountdown() {
-    // Fecha fin — 24 horas desde ahora
     const end = new Date();
     end.setHours(end.getHours() + 24);
 
@@ -322,15 +163,5 @@ export class WomanComponent implements OnInit, OnDestroy {
       this.minutes.set(String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0'));
       this.seconds.set(String(Math.floor((diff % 60000) / 1000)).padStart(2, '0'));
     }, 1000);
-  }
-
-  public filteredDesignerProducts = computed(() => {
-    const tab = this.activeDesignerTab();
-    if (tab === 'Todos') return this.designerProducts;
-    return this.designerProducts.filter((p) => p.brand === tab);
-  });
-
-  ngOnDestroy() {
-    if (this.timer) clearInterval(this.timer);
   }
 }

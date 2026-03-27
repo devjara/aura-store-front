@@ -1,7 +1,7 @@
 <!-- ─── HERO WOMEN ──────────────────────────────────────────────────────────── -->
 <section class="relative w-full bg-[#e8ece9] overflow-hidden">
 
-  <!-- MOBILE — texto sobre imagen -->
+  <!-- MOBILE -->
   <div class="md:hidden relative w-full h-[100svh]">
     <img src="https://images.unsplash.com/photo-1574015974293-817f0ebebb74?q=80&w=973&auto=format&fit=crop" alt="Colección Mujer Aura" class="aura-img-hero">
     <div class="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
@@ -79,25 +79,21 @@
 <section class="w-full bg-white">
   <div class="aura-section">
     <div class="flex items-start justify-between mb-8 md:mb-12">
-      <div class="pointer-events-none select-none">
-        <span class="text-[1.5rem] sm:text-[5rem] md:text-[6rem] lg:text-[3rem] font-black uppercase text-gray-200 tracking-tighter leading-none whitespace-nowrap">
-          Categorias Top
-        </span>
-      </div>
+      <h2 class="aura-section-title">Nuestras Categorías Populares</h2>
       <p class="hidden md:block aura-text-xs text-gray-400 max-w-xs text-right leading-relaxed">Explora esenciales atemporales y favoritos de nuestras colecciones.</p>
     </div>
     <div class="aura-grid-categories">
-      @for (cat of categories; track cat.name) {
-        <div class="group cursor-pointer" [routerLink]="['/catalogo']">
-          <div class="aura-img-wrap mb-3">
-            <img [src]="cat.image" [alt]="cat.name" class="aura-img-category aura-img-zoom">
-          </div>
-          <div class="text-center">
-            <h3 class="aura-text-sm font-bold text-gray-900">{{ cat.name }}</h3>
-            <p class="aura-text-xs text-gray-400 mt-0.5">{{ cat.count }} Productos</p>
-          </div>
-        </div>
-      }
+     @for (cat of categories(); track cat.id) {
+  <div class="group cursor-pointer" [routerLink]="['/catalogo']">
+    <div class="aura-img-wrap mb-3">
+      <img [src]="cat.imageUrl" [alt]="cat.name" class="aura-img-category aura-img-zoom">
+    </div>
+    <div class="text-center">
+      <h3 class="aura-text-sm font-bold text-gray-900">{{ cat.name }}</h3>
+      <p class="aura-text-xs text-gray-400 mt-0.5"> Productos</p>
+    </div>
+  </div>
+}
     </div>
   </div>
 </section>
@@ -155,11 +151,7 @@
 <section class="w-full bg-white">
   <div class="aura-section">
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 md:mb-12">
-      <div class="pointer-events-none select-none">
-        <span class="text-[1.5rem] sm:text-[5rem] md:text-[6rem] lg:text-[3rem] font-black uppercase text-gray-200 tracking-tighter leading-none whitespace-nowrap">
-          Redefine tu guardaropa
-        </span>
-      </div>
+      <h2 class="aura-section-title">Redefine Tu Guardarropa</h2>
       <div class="flex items-center gap-4 sm:gap-6 overflow-x-auto scrollbar-hide pb-1">
         @for (tab of productTabs; track tab) {
           <button (click)="activeProductTab.set(tab)"
@@ -172,36 +164,42 @@
         }
       </div>
     </div>
+
     <div class="aura-grid-products">
-      @for (product of featuredProducts; track product.name) {
-        <div class="aura-card">
-          <div class="aura-card__image">
-            <img [src]="product.image" [alt]="product.name" class="aura-img-product aura-img-zoom">
-            @if (product.discount) { <span class="aura-card__badge">{{ product.discount }}%</span> }
-            <button class="aura-card__favorite">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
-            </button>
-            <div class="aura-card__overlay">
-              <button class="aura-card__action" (click)="addToCartFeatured(product)">Agregar al carrito</button>
+      @if (isLoading()) {
+        @for (s of skeletons; track s) {
+          <div class="aura-card aura-card--skeleton">
+            <div class="aura-card__image"></div>
+            <div class="aura-card__info">
+              <h3 class="aura-card__name">_</h3>
+              <div class="aura-card__prices">
+                <span class="aura-card__price">_</span>
+              </div>
+              <p class="aura-card__brand">_</p>
             </div>
           </div>
-          <div class="aura-card__info">
-            <div class="aura-card__rating">
-              @for (star of [1,2,3,4,5]; track star) {
-                <svg [class.text-yellow-400]="star <= product.rating" [class.text-gray-200]="star > product.rating" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                </svg>
-              }
-              <span>{{ product.rating }}.0 ({{ product.reviews }})</span>
+        }
+      } @else {
+        @for (product of featuredProducts(); track $index) {
+          <div class="aura-card">
+            <div class="aura-card__image">
+              <img [src]="product.imageUrl" [alt]="product.name" class="aura-img-product aura-img-zoom">
+              <button class="aura-card__favorite">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+              </button>
+              <div class="aura-card__overlay">
+                <button class="aura-card__action" (click)="addToCart(product)">Agregar al carrito</button>
+              </div>
             </div>
-            <h3 class="aura-card__name">{{ product.name }}</h3>
-            <div class="aura-card__prices">
-              <span class="aura-card__price">${{ product.price }}</span>
-              @if (product.originalPrice) { <span class="aura-card__price--original">${{ product.originalPrice }}</span> }
+            <div class="aura-card__info">
+              <h3 class="aura-card__name">{{ product.name }}</h3>
+              <div class="aura-card__prices">
+                <span class="aura-card__price">${{ product.price }}</span>
+              </div>
+              <p class="aura-card__brand">{{ product.category }}</p>
             </div>
-            <p class="aura-card__brand">{{ product.brand }}</p>
           </div>
-        </div>
+        }
       }
     </div>
   </div>
@@ -210,7 +208,7 @@
 <!-- ─── BANNER OFERTA ──────────────────────────────────────────────────────── -->
 <section class="w-full bg-white">
   <div class="aura-section" style="padding-block: var(--space-lg)">
-    <div class="relative w-full rounded-lg overflow-hidden" style="height: clamp(180px, 20vw, 280px)">
+    <div class="relative w-full rounded-2xl overflow-hidden" style="height: clamp(180px, 20vw, 280px)">
       <div class="absolute inset-0">
         <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=1471&auto=format&fit=crop" alt="Colección Destacada" class="aura-img-hero object-[center_30%]">
         <div class="absolute inset-0 bg-gradient-to-r from-[#8a8678]/95 via-[#8a8678]/70 to-transparent"></div>
@@ -234,11 +232,7 @@
 <section class="w-full bg-white">
   <div class="aura-section">
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 md:mb-12">
-      <div class="pointer-events-none select-none">
-        <span class="text-[1.5rem] sm:text-[5rem] md:text-[6rem] lg:text-[3rem] font-black uppercase text-gray-200 tracking-tighter leading-none whitespace-nowrap">
-          Top de Diseñador
-        </span>
-      </div>
+      <h2 class="aura-section-title">Colecciones de Diseñador</h2>
       <div class="flex items-center gap-4 sm:gap-6 overflow-x-auto scrollbar-hide pb-1">
         @for (tab of designerTabs; track tab) {
           <button (click)="activeDesignerTab.set(tab)"
@@ -251,36 +245,42 @@
         }
       </div>
     </div>
+
     <div class="aura-grid-products">
-      @for (product of filteredDesignerProducts(); track product.name) {
-        <div class="aura-card">
-          <div class="aura-card__image">
-            <img [src]="product.image" [alt]="product.name" class="aura-img-product aura-img-zoom">
-            @if (product.discount) { <span class="aura-card__badge">{{ product.discount }}%</span> }
-            <button class="aura-card__favorite">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
-            </button>
-            <div class="aura-card__overlay">
-              <button class="aura-card__action" (click)="addToCartFeatured(product)">Agregar al carrito</button>
+      @if (isLoading()) {
+        @for (s of skeletons; track s) {
+          <div class="aura-card aura-card--skeleton">
+            <div class="aura-card__image"></div>
+            <div class="aura-card__info">
+              <h3 class="aura-card__name">_</h3>
+              <div class="aura-card__prices">
+                <span class="aura-card__price">_</span>
+              </div>
+              <p class="aura-card__brand">_</p>
             </div>
           </div>
-          <div class="aura-card__info">
-            <div class="aura-card__rating">
-              @for (star of [1,2,3,4,5]; track star) {
-                <svg [class.text-yellow-400]="star <= product.rating" [class.text-gray-200]="star > product.rating" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                </svg>
-              }
-              <span>{{ product.rating }}.0 ({{ product.reviews }})</span>
+        }
+      } @else {
+        @for (product of filteredDesignerProducts(); track $index) {
+          <div class="aura-card">
+            <div class="aura-card__image">
+              <img [src]="product.imageUrl" [alt]="product.name" class="aura-img-product aura-img-zoom">
+              <button class="aura-card__favorite">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+              </button>
+              <div class="aura-card__overlay">
+                <button class="aura-card__action" (click)="addToCart(product)">Agregar al carrito</button>
+              </div>
             </div>
-            <h3 class="aura-card__name">{{ product.name }}</h3>
-            <div class="aura-card__prices">
-              <span class="aura-card__price">${{ product.price }}</span>
-              @if (product.originalPrice) { <span class="aura-card__price--original">${{ product.originalPrice }}</span> }
+            <div class="aura-card__info">
+              <h3 class="aura-card__name">{{ product.name }}</h3>
+              <div class="aura-card__prices">
+                <span class="aura-card__price">${{ product.price }}</span>
+              </div>
+              <p class="aura-card__brand">{{ product.category }}</p>
             </div>
-            <p class="aura-card__brand">{{ product.brand }}</p>
           </div>
-        </div>
+        }
       }
     </div>
   </div>
