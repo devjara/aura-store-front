@@ -1,0 +1,112 @@
+<!-- ─── HERO MEN ────────────────────────────────────────────────────────────── -->
+<section class="relative w-full overflow-hidden bg-[#0f0f0f]">
+
+  <!-- Fondo texturizado — grid pattern sutil -->
+  <div class="absolute inset-0 opacity-[0.04] pointer-events-none"
+       style="background-image: repeating-linear-gradient(0deg, #fff 0px, #fff 1px, transparent 1px, transparent 40px), repeating-linear-gradient(90deg, #fff 0px, #fff 1px, transparent 1px, transparent 40px);">
+  </div>
+
+  <!-- MOBILE — texto sobre imagen -->
+  <div class="md:hidden relative w-full h-[100svh]">
+    <img
+      src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=987&auto=format&fit=crop"
+      alt="Colección Hombre Aura"
+      class="aura-img-hero object-[center_15%]"
+      style="mix-blend-mode: luminosity; opacity: 0.75;">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/20"></div>
+    <div class="absolute bottom-0 left-0 right-0 px-6 pb-10 flex flex-col">
+      <p class="aura-eyebrow text-white/50 mb-3">Colección Hombre — 2025</p>
+      <h1 class="aura-font-sans font-black aura-text-5xl text-white leading-[0.95] uppercase mb-3">
+        El estilo <br/>no se explica,<br/><em class="not-italic text-[#F55216]">se porta.</em>
+      </h1>
+      <p class="aura-text-xs text-white/50 font-light leading-relaxed mb-6">
+        Prendas construidas para el hombre que sabe lo que quiere.
+      </p>
+      <div class="flex items-center gap-4 mb-6 border-t border-white/10 pt-4">
+        <div><p class="aura-text-sm font-black text-white">+1,800</p><p class="aura-eyebrow text-white/30 mt-0.5">Prendas vendidas</p></div>
+        <div class="w-px h-6 bg-white/10"></div>
+        <div><p class="aura-text-sm font-black text-white">97%</p><p class="aura-eyebrow text-white/30 mt-0.5">Satisfacción</p></div>
+        <div class="w-px h-6 bg-white/10"></div>
+        <div><p class="aura-text-sm font-black text-white">Envío</p><p class="aura-eyebrow text-white/30 mt-0.5">Gratis +$999</p></div>
+      </div>
+      <div class="flex items-center gap-3">
+        <a routerLink="/catalogo" class="inline-block bg-[#F55216] text-white aura-text-xs font-bold tracking-[0.3em] uppercase px-6 py-3 hover:bg-[#D4410E] transition-colors duration-300">
+          Comprar ahora
+        </a>
+        <a routerLink="/catalogo" class="inline-block border border-white/20 text-white aura-text-xs font-bold tracking-[0.3em] uppercase px-6 py-3 hover:border-white/50 transition-colors duration-300">
+          Ver colección
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESKTOP — imagen fullwidth con texto centrado como women -->
+  <div class="hidden md:flex h-[calc(100vh-64px)] items-center relative">
+
+    <!-- Imagen fullwidth con blend -->
+    <div class="absolute inset-0">
+      <img
+        src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=1920&auto=format&fit=crop"
+        alt="Colección Hombre Aura"
+        class="aura-img-hero object-[center_15%]"
+        style="mix-blend-mode: luminosity; opacity: 0.6;">
+      <!-- Gradiente central para legibilidad del texto -->
+      <div class="absolute inset-0"
+           style="background: linear-gradient(to right, #0f0f0f 0%, #0f0f0f80 35%, transparent 55%, #0f0f0f80 75%, #0f0f0f 100%)">
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f0f]/80 via-transparent to-[#0f0f0f]/40"></div>
+    </div>
+
+    <!-- Texto centrado — igual estructura que women desktop -->
+    <div class="relative z-10 w-full flex justify-center">
+      <div class="flex flex-col items-center text-center max-w-3xl px-8">
+
+        <p class="aura-eyebrow aura-eyebrow--men text-white/40 mb-6">Colección Hombre — 2025</p>
+
+        <h1 class="aura-font-serif aura-text-7xl font-normal text-white leading-[1.05] mb-6">
+          El estilo no se explica,<br/>
+          <em class="not-italic text-[#F55216]">se porta.</em>
+        </h1>
+
+        <p class="aura-subtitle aura-subtitle--men text-white mb-10 max-w-lg">
+          Prendas construidas para el hombre que sabe lo que quiere. Sin compromisos, sin explicaciones.
+        </p>
+
+        <div class="flex items-center gap-10 mb-10 border-t border-white/10 pt-8 w-full justify-center">
+          <div class="text-center">
+            <p class="aura-text-xl font-black text-white">+1,800</p>
+            <p class="aura-eyebrow text-white/30 mt-0.5">Prendas vendidas</p>
+          </div>
+          <div class="w-px h-8 bg-white/10"></div>
+          <div class="text-center">
+            <p class="aura-text-xl font-black text-white">97%</p>
+            <p class="aura-eyebrow text-white/30 mt-0.5">Satisfacción</p>
+          </div>
+          <div class="w-px h-8 bg-white/10"></div>
+          <div class="text-center">
+            <p class="aura-text-xl font-black text-white">Envío</p>
+            <p class="aura-eyebrow text-white/30 mt-0.5">Gratis +$999</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <a routerLink="/catalogo"
+            class="inline-block bg-[#F55216] text-white aura-text-xs font-bold tracking-[0.3em] uppercase px-8 py-4 hover:bg-[#D4410E] transition-colors duration-300 cursor-pointer">
+            Comprar ahora
+          </a>
+          <a routerLink="/catalogo"
+            class="inline-block border border-white/20 text-white aura-text-xs font-bold tracking-[0.3em] uppercase px-8 py-4 hover:border-white/50 hover:text-white transition-colors duration-300 cursor-pointer">
+            Ver colección
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Número decorativo -->
+    <div class="absolute bottom-6 right-8 pointer-events-none select-none z-10">
+      <span class="aura-text-hero font-black text-white/[0.04] leading-none">02</span>
+    </div>
+  </div>
+
+</section>
