@@ -110,3 +110,289 @@
   </div>
 
 </section>
+
+
+<!-- ─── BENEFICIOS ──────────────────────────────────────────────────────────── -->
+<section class="w-full bg-white border-b border-gray-100">
+  <div class="aura-section" style="padding-block: var(--space-lg)">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 justify-items-center">
+      @for (benefit of benefits; track benefit.label) {
+        <div class="flex items-center gap-3">
+          <svg class="w-8 h-8 flex-shrink-0 text-gray-700" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="benefit.icon"/>
+          </svg>
+          <div>
+            <p class="aura-text-xs font-bold text-gray-900">{{ benefit.label }}</p>
+            <p class="aura-text-xs text-gray-400">{{ benefit.description }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ─── CATEGORÍAS POPULARES ───────────────────────────────────────────────── -->
+<section class="w-full bg-white">
+  <div class="aura-section">
+    <div class="flex items-start justify-between mb-8 md:mb-12">
+      <h2 class="aura-section-title">Nuestras Categorías</h2>
+      <p class="hidden md:block aura-text-xs text-gray-400 max-w-xs text-right leading-relaxed">
+        Prendas construidas para cada ocasión.
+      </p>
+    </div>
+    <div class="aura-grid-categories">
+      @for (cat of categories(); track cat.id) {
+        <div class="group cursor-pointer" [routerLink]="['/catalogo']">
+          <div class="aura-img-wrap mb-3">
+            <img [src]="cat.imageUrl" [alt]="cat.name" class="aura-img-category aura-img-zoom">
+          </div>
+          <div class="text-center">
+            <h3 class="aura-text-sm font-bold text-gray-900">{{ cat.name }}</h3>
+            <p class="aura-text-xs text-gray-400 mt-0.5">{{ cat.count }} Productos</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ─── SPLIT SECTION — LOOKBOOK ──────────────────────────────────────────── -->
+<section class="w-full">
+  <div class="aura-grid-split">
+
+    <!-- Imagen izquierda -->
+    <div class="relative h-[300px] md:h-[480px] lg:h-[560px] overflow-hidden bg-[#0f0f0f]">
+      <img
+        src="https://images.unsplash.com/photo-1617137968427-85924c800a22?q=80&w=987&auto=format&fit=crop"
+        alt="Lookbook Hombre Aura"
+        class="aura-img-hero object-[center_10%]"
+        style="mix-blend-mode: luminosity; opacity: 0.8;">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+      <div class="absolute top-6 left-6 bg-[#F55216] text-white px-4 py-2">
+        <p class="aura-eyebrow text-white">Lookbook 2026</p>
+      </div>
+      <div class="absolute bottom-6 left-6 right-6">
+        <p class="aura-text-xs font-black uppercase tracking-[0.2em] text-white/50 mb-1">Look 01</p>
+        <p class="aura-text-lg font-black text-white uppercase leading-tight">The Urban <br/>Essential</p>
+      </div>
+    </div>
+
+    <!-- Contenido derecha — Lookbook -->
+    <div class="bg-[#111111] flex flex-col justify-center h-[480px] lg:h-[560px] px-8 sm:px-12 lg:px-16 xl:px-20 py-8">
+
+      <p class="aura-eyebrow text-white/30 mb-3">Colección Hombre — 2025</p>
+
+      <h2 class="aura-font-sans font-black text-white uppercase leading-tight mb-6"
+          style="font-size: clamp(1.5rem, 2.5vw, 2.5rem); letter-spacing: -0.02em">
+        Tres looks.<br/>
+        Una <em class="not-italic text-[#F55216]">identidad.</em>
+      </h2>
+
+      <p class="aura-text-xs text-white/40 font-light leading-relaxed mb-8">
+        Cada look está construido para adaptarse — de la oficina a la calle, del día a la noche. Sin esfuerzo, con intención.
+      </p>
+
+      <!-- Looks -->
+      <div class="flex flex-col gap-4 mb-8">
+
+        <div class="flex items-center gap-4 border-b border-white/10 pb-4 group cursor-pointer">
+          <div class="w-12 h-12 rounded-sm overflow-hidden flex-shrink-0 bg-white/5">
+            <img
+              src="https://images.unsplash.com/photo-1617137968427-85924c800a22?q=80&w=100&auto=format&fit=crop"
+              alt="Look 01" class="w-full h-full object-cover object-top">
+          </div>
+          <div class="flex-1">
+            <p class="aura-text-xs font-black text-white uppercase tracking-widest">Look 01 — The Urban Essential</p>
+            <p class="aura-text-xs text-white/30 mt-0.5">Camisa oxford · Pantalón chino · Sneakers</p>
+          </div>
+          <svg class="w-4 h-4 text-[#F55216] opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+
+        <div class="flex items-center gap-4 border-b border-white/10 pb-4 group cursor-pointer">
+          <div class="w-12 h-12 rounded-sm overflow-hidden flex-shrink-0 bg-white/5">
+            <img
+              src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=100&auto=format&fit=crop"
+              alt="Look 02" class="w-full h-full object-cover object-top">
+          </div>
+          <div class="flex-1">
+            <p class="aura-text-xs font-black text-white uppercase tracking-widest">Look 02 — The Weekend</p>
+            <p class="aura-text-xs text-white/30 mt-0.5">Hoodie · Jogger · Botas</p>
+          </div>
+          <svg class="w-4 h-4 text-[#F55216] opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+
+        <div class="flex items-center gap-4 group cursor-pointer">
+          <div class="w-12 h-12 rounded-sm overflow-hidden flex-shrink-0 bg-white/5">
+            <img
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop"
+              alt="Look 03" class="w-full h-full object-cover object-top">
+          </div>
+          <div class="flex-1">
+            <p class="aura-text-xs font-black text-white uppercase tracking-widest">Look 03 — The Sharp</p>
+            <p class="aura-text-xs text-white/30 mt-0.5">Blazer · Turtleneck · Dress pants</p>
+          </div>
+          <svg class="w-4 h-4 text-[#F55216] opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+
+      </div>
+
+      <a routerLink="/catalogo"
+        class="inline-block bg-[#F55216] text-white aura-text-xs font-bold tracking-[0.3em] uppercase px-8 py-4 hover:bg-[#D4410E] transition-colors duration-300 self-start">
+        Ver Lookbook
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── REDEFINE TU ESTILO ────────────────────────────────────────────────── -->
+<section class="w-full bg-white">
+  <div class="aura-section">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 md:mb-12">
+      <h2 class="aura-section-title">Redefine Tu Estilo</h2>
+      <div class="flex items-center gap-4 sm:gap-6 overflow-x-auto scrollbar-hide pb-1">
+        @for (tab of productTabs; track tab) {
+          <button (click)="activeProductTab.set(tab)"
+            class="aura-text-xs font-medium uppercase tracking-widest whitespace-nowrap transition-colors duration-200"
+            [class.text-gray-900]="activeProductTab() === tab"
+            [class.font-black]="activeProductTab() === tab"
+            [class.text-gray-400]="activeProductTab() !== tab">
+            {{ tab }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <div class="aura-grid-products">
+      @if (isLoading()) {
+        @for (s of skeletons; track s) {
+          <div class="aura-card aura-card--skeleton">
+            <div class="aura-card__image"></div>
+            <div class="aura-card__info">
+              <h3 class="aura-card__name">_</h3>
+              <div class="aura-card__prices">
+                <span class="aura-card__price">_</span>
+              </div>
+              <p class="aura-card__brand">_</p>
+            </div>
+          </div>
+        }
+      } @else {
+        @for (product of featuredProducts(); track $index) {
+          <div class="aura-card">
+            <div class="aura-card__image">
+              <img [src]="product.imageUrl" [alt]="product.name" class="aura-img-product aura-img-zoom">
+              <div class="aura-card__overlay">
+                <button class="aura-card__action" (click)="addToCart(product)">Agregar al carrito</button>
+              </div>
+            </div>
+            <div class="aura-card__info">
+              <h3 class="aura-card__name">{{ product.name }}</h3>
+              <div class="aura-card__prices">
+                <span class="aura-card__price">${{ product.price }}</span>
+              </div>
+              <p class="aura-card__brand">{{ product.category }}</p>
+            </div>
+          </div>
+        }
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ─── BANNER OFERTA ──────────────────────────────────────────────────────── -->
+<section class="w-full bg-white">
+  <div class="aura-section" style="padding-block: var(--space-lg)">
+    <div class="relative w-full overflow-hidden" style="height: clamp(180px, 20vw, 280px)">
+      <div class="absolute inset-0">
+        <img
+          src="https://images.unsplash.com/photo-1617137968427-85924c800a22?q=80&w=1471&auto=format&fit=crop"
+          alt="Colección Destacada Hombre"
+          class="aura-img-hero object-[center_20%]"
+          style="mix-blend-mode: luminosity; opacity: 0.7;">
+        <div class="absolute inset-0 bg-[#0f0f0f]/70"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-[#0f0f0f]/95 via-[#0f0f0f]/70 to-transparent"></div>
+      </div>
+      <div class="relative z-10 h-full flex items-center px-8 sm:px-12 lg:px-16">
+        <div class="max-w-lg">
+          <p class="aura-eyebrow text-white/40 mb-3">Colección Destacada</p>
+          <h2 class="aura-font-sans font-black text-white uppercase leading-tight mb-3"
+              style="font-size: clamp(1.5rem, 3vw, 2.5rem); letter-spacing: -0.02em">
+            Construido para <em class="not-italic text-[#F55216]">durar.</em>
+          </h2>
+          <p class="aura-text-xs text-white/50 font-light leading-relaxed mb-5 hidden sm:block">
+            Materiales seleccionados, cortes que se adaptan. Prendas que envejecen bien.
+          </p>
+          <a routerLink="/catalogo"
+            class="inline-flex items-center gap-2 text-white aura-text-xs font-bold uppercase tracking-[0.25em] border-b border-white/40 pb-0.5 hover:text-[#F55216] hover:border-[#F55216] transition-colors duration-200">
+            Comprar ahora
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── COLECCIONES DE DISEÑADOR ────────────────────────────────────────────── -->
+<section class="w-full bg-white">
+  <div class="aura-section">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 md:mb-12">
+      <h2 class="aura-section-title">Colecciones de Diseñador</h2>
+      <div class="flex items-center gap-4 sm:gap-6 overflow-x-auto scrollbar-hide pb-1">
+        @for (tab of designerTabs; track tab) {
+          <button (click)="activeDesignerTab.set(tab)"
+            class="aura-text-xs font-medium uppercase tracking-widest whitespace-nowrap transition-colors duration-200"
+            [class.text-gray-900]="activeDesignerTab() === tab"
+            [class.font-black]="activeDesignerTab() === tab"
+            [class.text-gray-400]="activeDesignerTab() !== tab">
+            {{ tab }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <div class="aura-grid-products">
+      @if (isLoading()) {
+        @for (s of skeletons; track s) {
+          <div class="aura-card aura-card--skeleton">
+            <div class="aura-card__image"></div>
+            <div class="aura-card__info">
+              <h3 class="aura-card__name">_</h3>
+              <div class="aura-card__prices">
+                <span class="aura-card__price">_</span>
+              </div>
+              <p class="aura-card__brand">_</p>
+            </div>
+          </div>
+        }
+      } @else {
+        @for (product of filteredDesignerProducts(); track $index) {
+          <div class="aura-card">
+            <div class="aura-card__image">
+              <img [src]="product.imageUrl" [alt]="product.name" class="aura-img-product aura-img-zoom">
+              <div class="aura-card__overlay">
+                <button class="aura-card__action" (click)="addToCart(product)">Agregar al carrito</button>
+              </div>
+            </div>
+            <div class="aura-card__info">
+              <h3 class="aura-card__name">{{ product.name }}</h3>
+              <div class="aura-card__prices">
+                <span class="aura-card__price">${{ product.price }}</span>
+              </div>
+              <p class="aura-card__brand">{{ product.category }}</p>
+            </div>
+          </div>
+        }
+      }
+    </div>
+  </div>
+</section>

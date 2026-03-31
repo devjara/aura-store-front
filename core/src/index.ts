@@ -20,10 +20,15 @@ export * from './lib/utils/console-protection.util';
 export * from './lib/hooks/use-catalog-filter';
 
 
+// Exportamos los servicios principales y el estado global
 export * from './lib/services/tenant/tenant.service';
 export * from './lib/services/product/product.service';
 export * from './lib/services/cart/cart.service';
 export * from './lib/services/category/category.service';
+export * from './lib/services/auth/auth.service';
+
 
 export type { FilterConfig, FilterOption, FilterState, FilterType } from './lib/models/filter.model';
 export type { CartItemView, CartItemVariation, Cart } from './lib/models/cart.model';
+export type { AuthContract  } from './lib/services/auth/auth.contract';
+export { AUTH_CONTRACT } from './lib/services/auth/auth.contract';

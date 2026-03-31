@@ -57,7 +57,7 @@ export class WomanComponent implements OnInit, OnDestroy {
 
   // ─── Productos computados ─────────────────────────────────────────────────────
   // Primeros 8 productos — sección "Redefine Tu Guardarropa"
-  public featuredProducts = computed(() => this.products().slice(0, 8));
+  public featuredProducts = computed(() => this.products().filter((p) => p.category.toLowerCase() === 'mujer').slice(0, 10));
 
   // Últimos productos — sección "Colecciones de Diseñador"
   public designerProducts = computed(() => this.products().slice(8, 16));

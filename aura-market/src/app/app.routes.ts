@@ -5,6 +5,7 @@ import { LayoutComponent } from './layouts/layout.component';
 import { WomanComponent } from './pages/woman/woman.component';
 import { MenComponent } from './pages/men/men.component';
 
+
 export const appRoutes: Route[] = [
   {
     path: '',
