@@ -197,9 +197,17 @@ export class PortalService implements PortalContract {
       firstName: dto.firstname,
       lastName: dto.lastname,
       address1: dto.address1,
+      address2: dto.address2 || '',
       city: dto.city,
+      state: dto.id_state || 'N/A',
+      country: dto.id_country || 'México',
       postcode: dto.postcode,
-      phone: dto.phone_mobile || dto.phone || ''
+      phone: dto.phone_mobile || dto.phone || '',
+      company: dto.company || '',
+      vatNumber: dto.vat_number || '',
+      dni: dto.dni || '',
+      // Si tiene Razón Social y no es el RFC genérico asumimos que requiere factura
+      requiresInvoice: !!dto.company && dto.vat_number !== 'XAXX010101000'
     };
   }
 }

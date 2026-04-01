@@ -7,14 +7,7 @@ export type StatusType = 'transit' | 'delivered' | 'processing' | 'hold' | 'defa
   selector: 'aura-status-badge',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <span [class]="'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold leading-none ' + config().cssClass">
-      @if (config().dot) {
-        <span class="w-1.5 h-1.5 rounded-full" [class]="config().dotClass"></span>
-      }
-      {{ text || config().label }}
-    </span>
-  `,
+  templateUrl: './status-badge.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatusBadgeComponent {

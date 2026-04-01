@@ -8,11 +8,17 @@ export interface PsAddressDto {
   alias: string;
   firstname: string;
   lastname: string;
+  company?: string;
   address1: string;
+  address2?: string;
   postcode: string;
   city: string;
+  id_state?: string;
+  id_country?: string;
   phone: string;
   phone_mobile?: string;
+  vat_number?: string;
+  dni?: string;
 }
 
 export interface PsAddressResponse {
