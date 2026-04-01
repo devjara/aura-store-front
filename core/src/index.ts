@@ -4,12 +4,16 @@ export * from './lib/models/category.model';
 export * from './lib/models/customer.model';
 export * from './lib/models/filter.state';
 export * from './lib/models/tenant.model';
+export * from './lib/models/order.model';
+export * from './lib/models/cart-rule.model';
 
 //Exportamos los DTOs
 export * from './lib/dto/ps-cart.dto';
 export * from './lib/dto/ps-product.dto';
 export * from './lib/dto/ps-api-response.dto';
 export * from './lib/dto/ps-language-string.dto';
+export * from './lib/dto/ps-order.dto';
+export * from './lib/dto/ps-cart-rule.dto';
 
 //Exportamos los servicios y utilidades
 export * from './lib/services/prestashop-api';
@@ -23,6 +27,8 @@ export * from './lib/services/tenant/tenant.service';
 export * from './lib/services/product/product.service';
 export * from './lib/services/cart/cart.service';
 export * from './lib/services/category/category.service';
+export * from './lib/services/portal/portal.contract';
+export * from './lib/services/portal/portal.service';
 export * from './lib/services/auth/auth.contract';
 export * from './lib/services/auth/auth.service';
 export * from './lib/guards/auth.guard';
