@@ -17,6 +17,10 @@ export const appRoutes: Route[] = [
       { path: 'men', component: MenComponent, title: 'Aura Market | Hombre'},
       { path: 'catalogo', component: CatalogComponent, title: 'Aura Market | Catálogo' },
       { path: 'auth', component: AuthComponent, title: 'Aura Market | Autenticación' },
+      { 
+        path: 'my-account', 
+        loadChildren: () => import('aura-portal-customer').then(m => m.auraPortalCustomerRoutes) 
+      }
     ]
   }
 ];

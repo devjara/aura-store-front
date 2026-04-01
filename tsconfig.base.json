@@ -15,7 +15,9 @@
       "shared-ui": ["shared-ui/src/index.ts"],
       "core": ["core/src/index.ts"],
       "@aura-store-front/core": ["core/src/index.ts"],
-      "@aura-store-front/shared-ui": ["shared-ui/src/index.ts"]
+      "@aura-store-front/shared-ui": ["shared-ui/src/index.ts"],
+      "@aura-store-front/aura-portal-customer": ["aura-portal-customer/src/index.ts"],
+      "aura-portal-customer": ["aura-portal-customer/src/index.ts"]
     }
   }
 }

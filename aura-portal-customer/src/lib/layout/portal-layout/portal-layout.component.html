@@ -1,0 +1,34 @@
+ <div class="min-h-screen bg-gray-50 flex flex-col md:flex-row shadow-sm">
+      <!-- Sidebar / Menú Lateral -->
+      <aside class="w-full md:w-72 bg-white border-r border-gray-100 p-6 flex flex-col">
+        <h2 class="text-xl font-semibold mb-8 text-gray-800 tracking-tight">Mi Espacio</h2>
+        <nav class="flex-1 space-y-2">
+          
+          <a routerLink="dashboard" routerLinkActive="bg-black text-white" 
+             class="block px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+            Resumen de Cuenta
+          </a>
+
+          <a routerLink="orders" routerLinkActive="bg-black text-white" 
+             class="block px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+            Mis Pedidos
+          </a>
+
+          <a routerLink="addresses" routerLinkActive="bg-black text-white" 
+             class="block px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+            Libreta de Direcciones
+          </a>
+
+          <a routerLink="settings" routerLinkActive="bg-black text-white" 
+             class="block px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+            Ajustes Personales
+          </a>
+
+        </nav>
+      </aside>
+
+      <!-- Contenido Principal Dinámico -->
+      <main class="flex-1 p-6 md:p-12 overflow-y-auto">
+        <router-outlet></router-outlet>
+      </main>
+    </div>

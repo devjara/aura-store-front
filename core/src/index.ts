@@ -1,4 +1,3 @@
-
 //Exportamos los modelos
 export * from './lib/models/product.model';
 export * from './lib/models/category.model';
@@ -19,14 +18,14 @@ export * from './lib/utils/prestashop-mapper.util';
 export * from './lib/utils/console-protection.util';
 export * from './lib/hooks/use-catalog-filter';
 
-
 // Exportamos los servicios principales y el estado global
 export * from './lib/services/tenant/tenant.service';
 export * from './lib/services/product/product.service';
 export * from './lib/services/cart/cart.service';
 export * from './lib/services/category/category.service';
+export * from './lib/services/auth/auth.contract';
 export * from './lib/services/auth/auth.service';
-
+export * from './lib/guards/auth.guard';
 
 export type { FilterConfig, FilterOption, FilterState, FilterType } from './lib/models/filter.model';
 export type { CartItemView, CartItemVariation, Cart } from './lib/models/cart.model';
