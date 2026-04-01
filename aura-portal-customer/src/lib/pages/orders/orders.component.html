@@ -1,0 +1,175 @@
+<div class="space-y-8 animate-fade-in pb-12">
+
+  @if (isLoading()) {
+    <div class="flex items-center justify-center p-24 text-slate-400">
+       Cargando detalles del pedido...
+    </div>
+  } @else if (!order()) {
+    <div class="bg-white border border-slate-100 rounded-3xl p-12 text-center shadow-sm">
+      <p class="font-bold text-slate-600 text-lg">Pedido no encontrado</p>
+      <button routerLink="../.." class="mt-4 text-slate-400 hover:text-slate-800 font-bold text-sm">Volver al historial</button>
+    </div>
+  } @else {
+    
+    <!-- Cabecera Top The Atrium -->
+    <div class="flex flex-col lg:flex-row justify-between lg:items-end gap-6">
+      <div>
+        <button routerLink="../.." class="flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-slate-800 uppercase tracking-widest transition-colors mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+          Volver a Mis Pedidos
+        </button>
+        <div class="flex items-center gap-4">
+          <h1 class="text-3xl font-black text-slate-800 tracking-tight">Pedido #{{ order()!.reference }}</h1>
+          <aura-status-badge 
+              [status]="getOrderStatusType(order()!.currentState)"
+              [text]="getOrderStatusText(order()!.currentState)">
+          </aura-status-badge>
+        </div>
+        <p class="text-slate-500 mt-2 font-medium">Realizado el {{ order()!.dateAdd | date:'fullDate' }}</p>
+      </div>
+
+      <div class="flex gap-3">
+        <button class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 font-bold rounded-xl hover:bg-slate-50 transition-colors shadow-sm text-sm">
+          Descargar Factura
+        </button>
+      </div>
+    </div>
+
+    <!-- Contenido Split (Termómetro + Recibo) -->
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+      
+      <!-- Bloque Izquierdo: Timeline & Info -->
+      <div class="xl:col-span-1 space-y-8">
+        
+        <!-- Timeline Tarjeta -->
+        <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm">
+           <h3 class="text-lg font-bold text-slate-800 tracking-tight mb-8">Estado del Paquete</h3>
+           
+           <div class="relative border-l-2 border-slate-100 ml-4 space-y-10">
+              @for (stage of getTimelineStages(order()!.currentState); track stage.step) {
+                <div class="relative pl-8">
+                  <!-- Custom Dot -->
+                   <div class="absolute -left-[11px] top-0 w-5 h-5 rounded-full flex items-center justify-center ring-4 ring-white"
+                        [ngClass]="{
+                          'bg-emerald-100': stage.done,
+                          'bg-slate-100': !stage.done && !stage.current,
+                          'bg-blue-100': stage.current && !stage.done
+                        }">
+                      <div class="w-2.5 h-2.5 rounded-full"
+                          [ngClass]="{
+                            'bg-emerald-500': stage.done,
+                            'bg-slate-300': !stage.done && !stage.current,
+                            'bg-blue-600': stage.current && !stage.done
+                          }"></div>
+                   </div>
+                   
+                   <h4 class="text-sm font-bold" 
+                       [ngClass]="stage.done || stage.current ? 'text-slate-800' : 'text-slate-400'">
+                     {{ stage.step }}
+                   </h4>
+                   @if (stage.current || stage.done) {
+                     <p class="text-xs text-slate-500 mt-1">
+                       {{ stage.step === 'Entregado' && !stage.done ? 'Pendiente' : (order()!.dateAdd | date:'mediumDate') }}
+                     </p>
+                   }
+                </div>
+              }
+           </div>
+        </div>
+
+        <!-- Addresses Card (Simulada para visual UI Atrium MVP) -->
+        <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm">
+           <h3 class="text-lg font-bold text-slate-800 tracking-tight mb-6">Información Logística</h3>
+           
+           <div class="space-y-6">
+             <div>
+               <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Dirección de Envío</p>
+               <p class="text-sm text-slate-600 font-medium leading-relaxed">
+                 Aura Market Central<br>
+                 Av. Reforma 222, Piso 4<br>
+                 CDMX, México, 06600
+               </p>
+             </div>
+             
+             <div>
+               <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Método de Pago</p>
+               <div class="flex items-center gap-2">
+                 <div class="w-8 h-6 bg-slate-100 rounded flex items-center justify-center text-slate-400">💳</div>
+                 <p class="text-sm text-slate-600 font-medium">{{ order()!.paymentMethod }}</p>
+               </div>
+             </div>
+           </div>
+        </div>
+
+      </div>
+
+      <!-- Bloque Derecho: Shipment Contents (Products Tabla) -->
+      <div class="xl:col-span-2 space-y-8">
+        
+        <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm">
+          <h2 class="text-xl font-bold text-slate-800 tracking-tight mb-8">Artículos Comprados</h2>
+          
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead class="border-b border-slate-100">
+                <tr>
+                  <th class="pb-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Producto</th>
+                  <th class="pb-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Precio Unitario</th>
+                  <th class="pb-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Cant.</th>
+                  <th class="pb-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-right">Total</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-50">
+                @for (item of order()!.items; track item.id) {
+                  <tr class="group">
+                    <td class="py-6">
+                      <div class="flex items-center gap-4">
+                        <div class="w-16 h-16 bg-slate-50 rounded-xl border border-slate-100 overflow-hidden flex-shrink-0">
+                          <!-- Box Placeholder The Atrium Style -->
+                          <img src="https://images.unsplash.com/photo-1616423640778-28d1b53229bd?auto=format&fit=crop&q=80&w=150&h=150" alt="Box" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                          <p class="text-sm font-bold text-slate-800">{{ item.name }}</p>
+                          <p class="text-xs text-slate-400 mt-0.5">ID Proc: {{ item.productId }}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="py-6 whitespace-nowrap">
+                      <span class="text-sm font-medium text-slate-600">{{ item.unitPrice | currency }}</span>
+                    </td>
+                    <td class="py-6 whitespace-nowrap">
+                      <span class="text-sm font-bold text-slate-800">{{ item.quantity }}</span>
+                    </td>
+                    <td class="py-6 whitespace-nowrap text-right">
+                      <span class="text-sm font-black text-slate-900">{{ item.totalPrice | currency }}</span>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Totales Financieros Summary Gris Base -->
+          <div class="mt-8 bg-slate-50 rounded-2xl p-6 border border-slate-100 space-y-3">
+             <div class="flex justify-between text-sm">
+               <span class="font-medium text-slate-500">Subtotal de Artículos</span>
+               <span class="font-bold text-slate-800">{{ (order()!.totalPaid - (order()!.totalShipping || 0)) | currency }}</span>
+             </div>
+             <div class="flex justify-between text-sm">
+               <span class="font-medium text-slate-500">Costo de Envío</span>
+               <span class="font-bold text-slate-800">{{ order()!.totalShipping | currency }}</span>
+             </div>
+             <div class="pt-4 mt-2 border-t border-slate-200 flex justify-between">
+               <span class="text-lg font-black text-slate-900">Total Pagado</span>
+               <span class="text-xl font-black text-slate-900">{{ order()!.totalPaid | currency }}</span>
+             </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  }
+
+</div>

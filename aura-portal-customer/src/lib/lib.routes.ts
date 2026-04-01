@@ -4,6 +4,8 @@ import { authGuard } from 'core';
 import { PortalLayoutComponent } from './layout/portal-layout/portal-layout.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { OrderHistoryComponent } from './pages/order-history/order-history.component';
+import { OrdersComponent } from './pages/orders/orders.component';
+import { RewardsComponent } from './pages/rewards/rewards.component';
 import { AddressBookComponent } from './pages/address-book/address-book.component';
 import { AccountSettingsComponent } from './pages/account-settings/account-settings.component';
 
@@ -19,8 +21,10 @@ export const auraPortalCustomerRoutes: Route[] = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'orders', component: OrderHistoryComponent },
+      { path: 'orders/:id', component: OrdersComponent },
       { path: 'addresses', component: AddressBookComponent },
       { path: 'settings', component: AccountSettingsComponent },
+      { path: 'rewards', component: RewardsComponent },
     ],
   },
 ];

@@ -1,29 +1,155 @@
-<div class="space-y-6">
-    <h1 class="text-3xl font-bold tracking-tight text-gray-900">Bienvenido {{ customerFirstName() }}</h1>
-    <p class="text-gray-500">Desde el panel de control de tu cuenta, puedes ver tus pedidos recientes y gestionar tus direcciones y contraseñas.</p>
+<div class="space-y-8 animate-fade-in pb-12">
+  <!-- Cabecera Top (Overview) -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+    <div>
+      <h1 class="text-3xl font-black text-slate-800 tracking-tight">Resumen</h1>
+      <p class="text-slate-500 mt-1">Bienvenido de nuevo, {{ customerFirstName() }}. Esto es lo que pasa hoy.</p>
+    </div>
+    <button class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 font-semibold rounded-lg hover:bg-slate-50 transition-colors shadow-sm text-sm">
+      Descargar Reporte
+    </button>
+  </div>
+
+  <!-- Fila de Tarjetas Métricas (Atrium Style) -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <!-- Active Orders -->
+    <aura-metric-card
+      title="Pedidos Activos"
+      [value]="activeOrdersCount()"
+      iconBoxClass="bg-blue-50 text-blue-600">
+      <svg icon xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z" /><path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd" /></svg>
+    </aura-metric-card>
+
+    <!-- Total Orders -->
+    <aura-metric-card
+      title="Total Histórico"
+      [value]="orders().length"
+      iconBoxClass="bg-slate-100 text-slate-600">
+      <svg icon xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd" /></svg>
+    </aura-metric-card>
+
+    <!-- Unpaid / Rewards (Adaptado) -->
+    <aura-metric-card
+      title="Cupones Disponibles"
+      [value]="rewardsCount()"
+      trendBadge="¡Usa pronto!"
+      iconBoxClass="bg-rose-50 text-rose-600">
+      <svg icon xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z" /></svg>
+    </aura-metric-card>
+
+    <!-- Saved Addresses -->
+    <aura-metric-card
+      title="Direcciones"
+      value="-"
+      iconBoxClass="bg-slate-100 text-slate-600">
+      <svg icon xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" /></svg>
+    </aura-metric-card>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+    <!-- Bloque Izquierdo (2 Columnas) -->
+    <div class="lg:col-span-2 space-y-8">
       
-      <!-- Card Órdenes Activas -->
-      <div class="p-6 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-          <h3 class="font-semibold text-lg text-gray-700">Pedidos Activos</h3>
-          <p class="text-4xl font-black mt-4 text-black">{{ activeOrdersCount() }}</p>
-          <p class="text-sm text-gray-400 mt-2">En preparación o tránsito</p>
+      <!-- Latest Order Summary Card -->
+      <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm relative overflow-hidden">
+        
+        <!-- Estado Badge en la Esquina Superior -->
+        <div class="absolute top-8 right-8">
+          @if (latestOrder()) {
+            <aura-status-badge [status]="getLatestOrderStatus(latestOrder()!.currentState)"></aura-status-badge>
+          }
+        </div>
+
+        <h2 class="text-xl font-bold text-slate-800 tracking-tight mb-8">Último Pedido</h2>
+
+        @if (latestOrder()) {
+          <!-- Detalles Resumen -->
+          <div class="flex flex-col sm:flex-row gap-8 items-start">
+            <div class="w-32 h-32 bg-slate-900 rounded-2xl flex-shrink-0 flex items-center justify-center text-white font-bold overflow-hidden">
+              <!-- Placeholder imagen negra como en The Atrium -->
+              <img src="https://images.unsplash.com/photo-1616423640778-28d1b53229bd?auto=format&fit=crop&q=80&w=200&h=200" alt="Box" class="w-full h-full object-cover">
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-12 flex-1 pt-2">
+              <div>
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">ID Orden</p>
+                <p class="text-lg font-black text-slate-800">#{{ latestOrder()!.reference }}</p>
+              </div>
+              <div>
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Fecha de Compra</p>
+                <p class="text-lg font-bold text-slate-800">{{ latestOrder()!.dateAdd | date:'mediumDate' }}</p>
+              </div>
+              <div>
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Monto Pagado</p>
+                <p class="text-lg font-bold text-slate-800">{{ latestOrder()!.totalPaid | currency }}</p>
+              </div>
+              <div>
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Entrega Estimada</p>
+                <p class="text-lg font-bold text-slate-800">{{ latestOrder()!.dateAdd | date:'EEEE' }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Tracker Strip -->
+          <div class="mt-8 bg-slate-50 rounded-xl p-4 flex items-center justify-between border border-slate-100">
+            <div class="flex items-center gap-3 text-slate-600 font-medium text-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
+              <span>El paquete está siendo procesado por aduanas.</span>
+            </div>
+            <button class="text-sm font-bold text-slate-900 hover:text-slate-600 transition-colors tracking-wide" routerLink="../orders">
+              Rastrear Envío
+            </button>
+          </div>
+        } @else {
+          <!-- Empty State -->
+           <div class="py-12 text-center text-slate-500">
+             <p>No tienes ningún pedido reciente.</p>
+           </div>
+        }
+
+      </div>
+    </div>
+
+    <!-- Bloque Derecho (1 Columna): Actividad Reciente -->
+    <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm relative">
+      <h2 class="text-xl font-bold text-slate-800 tracking-tight mb-8">Actividad Reciente</h2>
+      
+      <!-- Timeline "The Atrium" -->
+      <div class="relative border-l border-slate-100 ml-3 space-y-8">
+        
+        @for (activity of recentActivity(); track $index) {
+          <div class="relative pl-6">
+            <!-- Puntos de estado en Timeline -->
+            @if (activity.statusType === 'delivered') {
+              <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-blue-100 flex items-center justify-center ring-4 ring-white">
+                <div class="w-2 h-2 rounded-full bg-blue-600"></div>
+              </div>
+            } @else if (activity.statusType === 'processing') {
+              <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-slate-100 flex items-center justify-center ring-4 ring-white">
+                <div class="w-1.5 h-1.5 rounded-full bg-slate-400"></div>
+              </div>
+            } @else {
+              <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-emerald-100 flex items-center justify-center ring-4 ring-white">
+                <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+              </div>
+            }
+
+            <h4 class="text-sm font-bold text-slate-800">{{ activity.title }}</h4>
+            <p class="text-xs text-slate-500 mt-1">{{ activity.date | date:'medium' }}</p>
+          </div>
+        }
+        
       </div>
 
-      <!-- Card Histórico Total -->
-      <div class="p-6 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-          <h3 class="font-semibold text-lg text-gray-700">Total Compras</h3>
-          <p class="text-4xl font-black mt-4 text-black">{{ orders().length }}</p>
-          <p class="text-sm text-gray-400 mt-2">Histórico completo</p>
-      </div>
-
-      <!-- Card Recompensas -->
-      <div class="p-6 bg-emerald-50 border border-emerald-100 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-          <h3 class="font-semibold text-lg text-emerald-800">Cupones Disponibles</h3>
-          <p class="text-4xl font-black mt-4 text-emerald-600">{{ rewardsCount() }}</p>
-          <p class="text-sm text-emerald-600 mt-2 hover:underline cursor-pointer">Ver mi billetera →</p>
+      <div class="mt-8 text-center border-t border-slate-100 pt-6">
+         <button class="text-xs font-bold text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-colors">
+            Ver toda la actividad
+         </button>
       </div>
 
     </div>
+
+  </div>
 </div>

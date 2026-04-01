@@ -6,6 +6,7 @@ export * from './lib/models/filter.state';
 export * from './lib/models/tenant.model';
 export * from './lib/models/order.model';
 export * from './lib/models/cart-rule.model';
+export * from './lib/models/address.model';
 
 //Exportamos los DTOs
 export * from './lib/dto/ps-cart.dto';

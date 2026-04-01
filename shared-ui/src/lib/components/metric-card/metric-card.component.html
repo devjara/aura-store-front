@@ -1,0 +1,22 @@
+<div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col h-full hover:shadow-md transition-shadow">
+  <!-- Cabecera (Icono Izquierda / Badge Derecha) -->
+  <div class="flex justify-between items-start mb-6">
+    <!-- Contenedor del Icono -->
+    <div [class]="'w-10 h-10 rounded-lg flex items-center justify-center ' + iconBoxClass">
+      <ng-content select="[icon]"></ng-content>
+    </div>
+
+    <!-- Badge Opcional de Tendencia -->
+    @if (trendBadge) {
+      <div class="bg-emerald-50 text-emerald-600 px-2 py-1 rounded-full text-xs font-bold tracking-wide">
+        {{ trendBadge }}
+      </div>
+    }
+  </div>
+
+  <!-- Contenido Principal -->
+  <div class="mt-auto">
+    <h3 class="text-xs font-bold text-gray-500 tracking-wider uppercase mb-2">{{ title }}</h3>
+    <p class="text-3xl font-black text-slate-800">{{ value }}</p>
+  </div>
+</div>

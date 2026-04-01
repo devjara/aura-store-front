@@ -11,6 +11,9 @@ export { Navbar } from './lib/components/navbar/navbar';
 export { Footer } from './lib/components/footer/footer';
 export { Pagination } from './lib/components/pagination/pagination';
 
+export { MetricCardComponent } from './lib/components/metric-card/metric-card.component';
+export { StatusBadgeComponent } from './lib/components/status-badge/status-badge.component';
+
 
 
 // --- EXPORTAMOS LOS PIPES ---
