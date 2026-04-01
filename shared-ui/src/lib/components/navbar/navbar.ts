@@ -25,5 +25,6 @@ export class Navbar {
   }
 
   cartClick = output<void>();
+  userClick = output<void>();
 
 }

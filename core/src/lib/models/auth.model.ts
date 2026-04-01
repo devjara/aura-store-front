@@ -19,3 +19,12 @@ export interface LoginRequest {
   email: string;
   password: string; // ← "password" en dominio, se mapea a "passwd" en el DTO
 }
+
+/**
+ * Request de registro — modelo de dominio
+ */
+export interface RegisterRequest {
+  firstName?: string;
+  email: string;
+  password: string;
+}

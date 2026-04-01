@@ -10,6 +10,15 @@ export interface PsLoginRequestDto {
 }
 
 /**
+ * DTO de request para registro al endpoint auth.php
+ */
+export interface PsRegisterRequestDto {
+  firstname?: string;
+  email: string;
+  passwd: string;
+}
+
+/**
  * DTO de response del endpoint auth.php
  * Refleja exactamente lo que devuelve el PHP
  */

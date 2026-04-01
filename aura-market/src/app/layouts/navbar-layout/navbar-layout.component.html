@@ -6,7 +6,8 @@
   [cartItemCount]="cartItems().length"
   [containerClass]="'max-w-[1700px] mx-auto px-8 lg:px-[80px]'"
   [cartItemCount]="cartService.itemCount()"
-  (cartClick)="cartService.openCart()">
+  (cartClick)="cartService.openCart()"
+  (userClick)="goToAuth()">
 </aura-navbar>
 
 <aura-cart-drawer

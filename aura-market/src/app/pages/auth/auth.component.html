@@ -1,0 +1,234 @@
+<!-- ─── AUTH PAGE ─────────────────────────────────────────────────────────── -->
+<section class="w-full  min-h-[calc(100vh)] bg-white flex items-center justify-center py-12">
+  <div class="w-full max-w-md px-6 py-8">
+
+    <!-- Logo / Marca -->
+    <div class="text-center mb-10">
+      <p class="aura-eyebrow mb-2">Bienvenido a tu</p>
+      <h1 class="aura-font-sans font-black text-gray-900 uppercase tracking-[0.3em] aura-text-3xl">
+        Espacio
+      </h1>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex border-b border-gray-200 mb-8">
+      <button
+        (click)="setTab('login')"
+        class="flex-1 pb-3 aura-text-xs font-bold uppercase tracking-widest transition-colors duration-200"
+        [class.text-gray-900]="activeTab() === 'login'"
+        [class.border-b-2]="activeTab() === 'login'"
+        [class.border-gray-900]="activeTab() === 'login'"
+        [class.text-gray-400]="activeTab() !== 'login'">
+        Iniciar sesión
+      </button>
+      <button
+        (click)="setTab('register')"
+        class="flex-1 pb-3 aura-text-xs font-bold uppercase tracking-widest transition-colors duration-200"
+        [class.text-gray-900]="activeTab() === 'register'"
+        [class.border-b-2]="activeTab() === 'register'"
+        [class.border-gray-900]="activeTab() === 'register'"
+        [class.text-gray-400]="activeTab() !== 'register'">
+        Crear cuenta
+      </button>
+    </div>
+
+    <!-- ─── LOGIN FORM ──────────────────────────────────────────────────── -->
+    @if (activeTab() === 'login') {
+      
+      <!-- Contenido Original: Intro y Beneficios -->
+      <div class="mb-8">
+        <div class="bg-gray-50 px-5 py-4 border-l-2 border-gray-900 hover:bg-gray-100 transition-colors duration-300">
+          <p class="aura-text-sm font-bold text-gray-900 mb-2 uppercase tracking-wider">Tu Espacio Personal</p>
+          <p class="aura-text-xs text-gray-500 leading-relaxed">
+            Inicia sesión para descubrir recomendaciones basadas en tu estilo, crear listas de deseos y acceder antes que nadie a nuestras nuevas colecciones.
+          </p>
+        </div>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()" novalidate>
+
+        <!-- Email -->
+        <div class="mb-5">
+          <label for="login-email" class="aura-eyebrow text-gray-500 mb-2 block">Correo electrónico</label>
+          <input
+            id="login-email"
+            type="email"
+            formControlName="email"
+            placeholder="tu@email.com"
+            autocomplete="email"
+            class="w-full border border-gray-200 px-4 py-3 aura-text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:border-gray-900 transition-colors duration-200"
+            [class.border-red-400]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+          @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+            <p class="aura-text-xs text-red-400 mt-1">Ingresa un email válido.</p>
+          }
+        </div>
+
+        <!-- Password -->
+        <div class="mb-6">
+          <label for="login-password" class="aura-eyebrow text-gray-500 mb-2 block">
+            Contraseña
+          </label>
+          <div class="relative">
+            <input
+              id="login-password"
+              [type]="showPassword() ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="Mínimo 8 caracteres"
+              autocomplete="current-password"
+              class="w-full border border-gray-200 px-4 py-3 aura-text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:border-gray-900 transition-colors duration-200 pr-12"
+              [class.border-red-400]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+            <button
+              type="button"
+              (click)="togglePasswordVisibility()"
+              class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-900 transition-colors">
+              @if (showPassword()) {
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"/>
+                </svg>
+              } @else {
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+              }
+            </button>
+          </div>
+          @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+            <p class="aura-text-xs text-red-400 mt-1">Mínimo 8 caracteres.</p>
+          }
+        </div>
+
+        <!-- Error message -->
+        @if (errorMessage()) {
+          <div class="mb-5 px-4 py-3 bg-red-50 border border-red-200">
+            <p class="aura-text-xs text-red-500">{{ errorMessage() }}</p>
+          </div>
+        }
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          [disabled]="isLoading()"
+          class="w-full bg-gray-900 text-white aura-text-xs font-bold tracking-[0.3em] uppercase py-4 hover:bg-black transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+          @if (isLoading()) {
+            Iniciando sesión...
+          } @else {
+            Iniciar sesión
+          }
+        </button>
+
+      </form>
+
+      <!-- Contenido Original: Seguridad y Soporte -->
+      <div class="mt-8 text-center border-t border-gray-100 pt-6">
+        <div class="flex items-center justify-center gap-2 mb-3">
+          <svg class="w-4 h-4 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+          </svg>
+          <span class="aura-text-xs text-gray-900 uppercase tracking-[0.2em] font-bold">Conexión Segura</span>
+        </div>
+        <p class="aura-text-[11px] text-gray-400 leading-relaxed max-w-[280px] mx-auto">
+          Tus credenciales están encriptadas. Protegemos tu privacidad y no compartiremos tus datos con terceros sin tu consentimiento.
+        </p>
+      </div>
+    }
+
+    <!-- ─── REGISTER FORM ────────────────────────────────────────────────── -->
+    @if (activeTab() === 'register') {
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()" novalidate>
+
+        <!-- Nombre (opcional) -->
+        <div class="mb-5">
+          <label for="register-firstname" class="aura-eyebrow text-gray-500 mb-2 block">
+            Nombre <span class="text-gray-300 normal-case tracking-normal">(opcional)</span>
+          </label>
+          <input
+            id="register-firstname"
+            type="text"
+            formControlName="firstname"
+            placeholder="¿Cómo te llamamos?"
+            autocomplete="given-name"
+            class="w-full border border-gray-200 px-4 py-3 aura-text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:border-gray-900 transition-colors duration-200">
+        </div>
+
+        <!-- Email -->
+        <div class="mb-5">
+          <label for="register-email" class="aura-eyebrow text-gray-500 mb-2 block">
+            Correo electrónico
+          </label>
+          <input
+            id="register-email"
+            type="email"
+            formControlName="email"
+            placeholder="tu@email.com"
+            autocomplete="email"
+            class="w-full border border-gray-200 px-4 py-3 aura-text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:border-gray-900 transition-colors duration-200"
+            [class.border-red-400]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+          @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+            <p class="aura-text-xs text-red-400 mt-1">Ingresa un email válido.</p>
+          }
+        </div>
+
+        <!-- Password -->
+        <div class="mb-6">
+          <label for="register-password" class="aura-eyebrow text-gray-500 mb-2 block">
+            Contraseña
+          </label>
+          <div class="relative">
+            <input
+              id="register-password"
+              [type]="showPassword() ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="Mínimo 8 caracteres"
+              autocomplete="new-password"
+              class="w-full border border-gray-200 px-4 py-3 aura-text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:border-gray-900 transition-colors duration-200 pr-12"
+              [class.border-red-400]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+            <button
+              type="button"
+              (click)="togglePasswordVisibility()"
+              class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-900 transition-colors">
+              @if (showPassword()) {
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"/>
+                </svg>
+              } @else {
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+              }
+            </button>
+          </div>
+          @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+            <p class="aura-text-xs text-red-400 mt-1">Mínimo 8 caracteres.</p>
+          }
+        </div>
+
+        <!-- Error message -->
+        @if (errorMessage()) {
+          <div class="mb-5 px-4 py-3 bg-red-50 border border-red-200">
+            <p class="aura-text-xs text-red-500">{{ errorMessage() }}</p>
+          </div>
+        }
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          [disabled]="isLoading()"
+          class="w-full bg-gray-900 text-white aura-text-xs font-bold tracking-[0.3em] uppercase py-4 hover:bg-black transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+          @if (isLoading()) {
+            Creando cuenta...
+          } @else {
+            Crear cuenta
+          }
+        </button>
+
+        <!-- Términos -->
+        <p class="aura-text-xs text-gray-400 text-center mt-4 leading-relaxed">
+          Al crear una cuenta aceptas nuestros
+          <a href="#" class="text-gray-900 underline hover:text-gray-600">términos y condiciones</a>.
+        </p>
+
+      </form>
+    }
+
+  </div>
+</section>

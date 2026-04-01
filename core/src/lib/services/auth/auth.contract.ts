@@ -1,5 +1,5 @@
 import { computed, InjectionToken, Signal } from "@angular/core";
-import { AuthUser, LoginRequest } from "../../models/auth.model";
+import { AuthUser, LoginRequest, RegisterRequest } from "../../models/auth.model";
 
 /**
  * AuthContract — Contrato abstracto del servicio de autenticación.
@@ -73,6 +73,13 @@ export abstract class AuthContract {
    * Computed derivado de `currentUser`.
    */
   abstract isLoggedIn: Signal<boolean> | ReturnType<typeof computed>;
+
+  /**
+   * Registra un nuevo usuario con email, password y nombre.
+   * Cada implementación define cómo crea la cuenta.
+   * @param request
+   */
+  abstract register(request: RegisterRequest): Promise<AuthUser>;
 }
 
 export const AUTH_CONTRACT = new InjectionToken<AuthContract>('AUTH_CONTRACT');

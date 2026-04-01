@@ -1,10 +1,14 @@
-import { Injectable, inject, signal, computed } from '@angular/core';
+import { Injectable, inject, signal, computed, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { AuthUser, LoginRequest } from '../../models/auth.model';
+import { AuthUser, LoginRequest, RegisterRequest } from '../../models/auth.model';
 import { PsLoginRequestDto, PsLoginResponseDto } from '../../dto/ps-auth.dto';
 import { AuthBreaker } from '../../utils/auth.breaker';
 import { AuthContract } from './auth.contract';
+import { PsApiResponseDTO } from '../../dto/ps-api-response.dto';
+import { PsCustomerDTO } from '../../dto/ps-customer.dto';
+import { isPlatformBrowser } from '@angular/common';
+
 
 
 /**
@@ -23,6 +27,7 @@ import { AuthContract } from './auth.contract';
 @Injectable({ providedIn: 'root' })
 export class AuthService extends AuthContract {
   private http = inject(HttpClient);
+  private platform = inject(PLATFORM_ID);
 
   // Circuit Breaker - 3 Fallos abren el circuito, 60 segundos de timeout
   private breaker = new AuthBreaker(3, 60000); // Threshold: 3 fallos, Timeout: 60 segundos
@@ -47,6 +52,10 @@ export class AuthService extends AuthContract {
    * @throws `AUTH_ERROR`               — error genérico del servidor (500)
    */
   override async login(request: LoginRequest): Promise<AuthUser> {
+    if (!isPlatformBrowser(this.platform)) {
+        throw new Error('AUTH_SERVICE_UNAVAILABLE');
+    }
+    // Evitar acceso a localStorage en SSR
     if (this.breaker.isOpen()) {
       throw new Error('AUTH_SERVICE_UNAVAILABLE');
     }
@@ -67,16 +76,57 @@ export class AuthService extends AuthContract {
   }
 
   /**
+   * Registra un nuevo usuario basado en el endpoint auth.php de Prestashop.
+   */
+
+  override async register(request: RegisterRequest): Promise<AuthUser> {
+    if (!isPlatformBrowser(this.platform)) {
+      throw new Error('AUTH_SERVICE_UNAVAILABLE');
+    }
+
+    if(this.breaker.isOpen()) {
+      throw new Error('AUTH_SERVICE_UNAVAILABLE');
+    }
+
+    try
+    {
+      const xml = this.buildRegisterXml(request);
+      const response = await firstValueFrom(
+        this.http.post<any>('/api/customers', xml, {
+          headers: { 'Content-Type': 'application/xml' }
+        })
+      );
+
+      // 🚨 TRAMPA DE PRESTASHOP: Devuelve 201 Created en la cabecera, pero con "errors" en el JSON
+      if (response && (response.errors || response.prestashop?.errors)) {
+        const errorStr = JSON.stringify(response);
+        if (errorStr.includes('"code":140') || errorStr.includes('"code":"140"')) {
+          throw new Error('AUTH_EMAIL_ALREADY_EXISTS');
+        }
+        throw new Error('AUTH_ERROR');
+      }
+
+      this.breaker.recordSuccess();
+      return await this.login({ email: request.email, password: request.password });
+    } catch (error) {
+      this.breaker.recordFailure();
+      throw this.handleError(error);
+    }
+  }
+
+  /**
    * Cierra la sesión del usuario actual.
    * Limpia el signal y el localStorage.
    */
   override logout(): void {
+    if (!isPlatformBrowser(this.platform)) return;
     this.currentUser.set(null);
     localStorage.removeItem('aura_user');
   }
 
   // Restaurar sesion desde localStorage al iniciar la app
   private restoreSession(): void {
+    if(!isPlatformBrowser(this.platform)) return; // Evitar acceso a localStorage en SSR
     try {
       const stored = localStorage.getItem('aura_user');
       if (stored) {
@@ -110,7 +160,16 @@ export class AuthService extends AuthContract {
   // ─── Manejo de errores HTTP → errores de dominio ──────────────────────────
   private handleError(error: unknown): Error {
     if (error instanceof HttpErrorResponse) {
+      
+      // 🚨 TRAMPA DE PRESTASHOP: Lanza un estricto HTTP 500 cuando truena la validación (Email duplicado)
+      const errorBody = typeof error.error === 'object' ? JSON.stringify(error.error) : String(error.error || '');
+      if (errorBody.includes('140') && errorBody.toLowerCase().includes('correo')) {
+        return new Error('AUTH_EMAIL_ALREADY_EXISTS');
+      }
+
       switch (error.status) {
+        case 400:
+          return new Error('AUTH_EMAIL_ALREADY_EXISTS');
         case 401:
           return new Error('AUTH_INVALID_CREDENTIALS');
         case 429:
@@ -122,5 +181,22 @@ export class AuthService extends AuthContract {
       }
     }
     return new Error('AUTH_ERROR');
+  }
+
+  private buildRegisterXml(request: RegisterRequest) : string {
+    const firstName = request.firstName?.trim() || 'Cliente';
+    return `<?xml version="1.0" encoding="UTF-8"?>
+  <prestashop>
+    <customer>
+      <firstname><![CDATA[${firstName}]]></firstname>
+      <lastname><![CDATA[Aura]]></lastname>
+      <email><![CDATA[${request.email}]]></email>
+      <passwd><![CDATA[${request.password}]]></passwd>
+      <id_gender>0</id_gender>
+      <newsletter>0</newsletter>
+      <optin>0</optin>
+      <active>1</active>
+    </customer>
+  </prestashop>`;
   }
 }

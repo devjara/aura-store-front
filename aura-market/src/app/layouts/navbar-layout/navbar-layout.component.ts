@@ -44,6 +44,10 @@ export class NavbarLayoutComponent {
     ],
   };
 
+  goToAuth(): void {
+    this.router.navigate(['/auth']);
+  }
+
   goToCheckout() {
     //TODO: Logica para ir al checkout
   }
