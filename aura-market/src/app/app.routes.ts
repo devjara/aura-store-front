@@ -5,6 +5,7 @@ import { LayoutComponent } from './layouts/layout.component';
 import { WomanComponent } from './pages/woman/woman.component';
 import { MenComponent } from './pages/men/men.component';
 import { AuthComponent } from './pages/auth/auth.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
 
 
 export const appRoutes: Route[] = [
@@ -17,6 +18,7 @@ export const appRoutes: Route[] = [
       { path: 'men', component: MenComponent, title: 'Aura Market | Hombre'},
       { path: 'catalogo', component: CatalogComponent, title: 'Aura Market | Catálogo' },
       { path: 'auth', component: AuthComponent, title: 'Aura Market | Autenticación' },
+      { path: 'checkout', component: CheckoutComponent, title: 'Aura Market | Checkout Seguro' },
       { 
         path: 'my-account', 
         loadChildren: () => import('aura-portal-customer').then(m => m.auraPortalCustomerRoutes) 

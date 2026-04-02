@@ -17,6 +17,10 @@ export class Navbar {
   public links = input<NavLink[]>([]);
   public cartItemCount = input<number>(0);
   public containerClass = input<string>('');
+  public userInitial = input<string>('');
+  public isUserMenuOpen = input<boolean>(false);
+  public userName = input<string>('');
+  public userEmail = input<string>('');
 
   public isMobileMenuOpen = signal<boolean>(false);
 
@@ -26,5 +30,6 @@ export class Navbar {
 
   cartClick = output<void>();
   userClick = output<void>();
-
+  myAccountClick = output<void>();
+  logoutClick = output<void>();
 }

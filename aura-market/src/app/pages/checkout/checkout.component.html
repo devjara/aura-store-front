@@ -1,0 +1,348 @@
+<div class="min-h-screen bg-slate-50 pb-24 font-sans">
+
+   <!-- ─── HERO CHECKOUT ─────────────────────────────────────────────────── -->
+   <div class="relative overflow-hidden bg-gradient-to-br from-[#e8eef7] via-[#f0f5fc] to-white border-b border-slate-200/60 pt-24">
+
+      <!-- Patrón de líneas diagonales (decorativo) -->
+      <div class="absolute inset-0 opacity-[0.04]"
+           style="background-image: repeating-linear-gradient(
+             -45deg,
+             #1e3a5f 0px,
+             #1e3a5f 1px,
+             transparent 1px,
+             transparent 28px
+           );">
+      </div>
+
+      <!-- Contenido del Hero -->
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pb-14">
+
+         <!-- Badge -->
+         <div class="inline-flex items-center gap-2 mb-5">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#1e3a5f]"></span>
+            <span class="text-[10px] font-black uppercase tracking-[0.25em] text-[#1e3a5f]">Paso Final</span>
+         </div>
+
+         <!-- Headline -->
+         <h1 class="text-4xl md:text-5xl font-black text-[#0f2240] tracking-tight leading-tight mb-4">
+            Ya casi.<br class="hidden sm:block"> Tu pedido te espera.
+         </h1>
+
+         <!-- Subheadline -->
+         <p class="text-slate-500 text-sm md:text-base font-medium max-w-md leading-relaxed">
+            Estás a segundos de completar tu compra. Cada pieza de tu colección fue seleccionada para ti — solo falta confirmar.
+         </p>
+
+         <!-- Indicador de paso -->
+         <div class="mt-8 flex items-center gap-3">
+            <div class="flex items-center gap-2">
+               <div class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black"
+                    [ngClass]="currentStep() >= 1 ? 'bg-[#0f2240] text-white' : 'bg-slate-200 text-slate-400'">1</div>
+               <span class="text-[11px] font-bold uppercase tracking-wider"
+                     [ngClass]="currentStep() >= 1 ? 'text-[#0f2240]' : 'text-slate-400'">Datos de env&iacute;o</span>
+            </div>
+            <div class="w-8 h-px bg-slate-300"></div>
+            <div class="flex items-center gap-2">
+               <div class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black"
+                    [ngClass]="currentStep() >= 2 ? 'bg-[#0f2240] text-white' : 'bg-slate-200 text-slate-400'">2</div>
+               <span class="text-[11px] font-bold uppercase tracking-wider"
+                     [ngClass]="currentStep() >= 2 ? 'text-[#0f2240]' : 'text-slate-400'">M&eacute;todo de pago</span>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+         
+         <!-- Columna Izquierda: Bloques de Lógica -->
+         <div class="lg:col-span-7 xl:col-span-8 space-y-8">
+            
+            @if(currentStep() === 1) {
+              <!-- PASO 1: VALIDACIÓN DE INVITADOS Y ENVÍO -->
+              <div class="space-y-8 animate-fade-in">
+                
+                <!-- CONTACTO -->
+                <div class="bg-white rounded-3xl p-8 md:p-10 border border-slate-100 shadow-sm">
+                   <h2 class="text-xl font-black text-slate-800 mb-6 flex items-center gap-2">
+                     <span class="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center text-sm">1</span> 
+                     Tu Contacto
+                   </h2>
+                   
+                   @if(isLoggedIn()) {
+                      <div class="flex items-center gap-4 p-4 border border-emerald-100 bg-emerald-50 rounded-2xl">
+                         <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-emerald-600 font-bold shadow-sm">
+                            {{ currentUser()?.firstname?.charAt(0) }}
+                         </div>
+                         <div>
+                            <p class="text-sm font-bold text-emerald-800">{{ currentUser()?.firstname }} {{ currentUser()?.lastname }}</p>
+                            <p class="text-xs text-emerald-600 font-medium">{{ currentUser()?.email }}</p>
+                         </div>
+                      </div>
+                   } @else {
+                     <form [formGroup]="contactForm">
+                        <div class="relative">
+                           <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Correo Electrónico *</label>
+                           <input type="email" formControlName="email" placeholder="Para enviarte guía de rastreo"
+                                  class="block w-full px-4 py-3 bg-white border border-slate-200/70 shadow-sm text-slate-700 font-medium placeholder:text-slate-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-slate-900/5 focus:border-slate-400 transition-all sm:text-sm">
+                           @if(contactForm.get('email')?.invalid && contactForm.get('email')?.touched) {
+                              <p class="text-rose-500 text-[10px] font-bold mt-1.5 uppercase">Ingresa un correo válido.</p>
+                           }
+                        </div>
+                     </form>
+                   }
+                </div>
+
+                <!-- DOMICILIO RÁPIDO -->
+                <div class="bg-white rounded-3xl p-8 md:p-10 border border-slate-100 shadow-sm">
+                   <h2 class="text-xl font-black text-slate-800 mb-6 flex items-center gap-2">
+                     <span class="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center text-sm">2</span> 
+                     ¿A dónde lo enviamos?
+                   </h2>
+                   
+                   <form [formGroup]="shippingForm" class="space-y-6">
+                      <!-- Nombres -->
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                         <div>
+                           <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Nombre *</label>
+                           <input type="text" formControlName="firstName"
+                                  [ngClass]="{'border-rose-400 bg-rose-50 focus:border-rose-500': shippingForm.get('firstName')?.invalid && shippingForm.get('firstName')?.dirty}"
+                                  class="block w-full px-4 py-3 bg-white border border-slate-200/70 shadow-sm text-slate-700 font-medium rounded-xl focus:ring-4 focus:ring-slate-900/5 transition-all sm:text-sm">
+                           @if(shippingForm.get('firstName')?.invalid && shippingForm.get('firstName')?.dirty) {
+                              <p class="text-rose-500 text-[10px] font-bold mt-1.5 uppercase flex items-center gap-1">
+                                 ⚠️
+                                 @if(shippingForm.get('firstName')?.hasError('xssInjection') || shippingForm.get('firstName')?.hasError('sqlInjection')) {
+                                   Contenido no permitido detectado.
+                                 } @else {
+                                   Solo letras y espacios.
+                                 }
+                              </p>
+                           }
+                         </div>
+                         <div>
+                           <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Apellidos *</label>
+                           <input type="text" formControlName="lastName"
+                                  [ngClass]="{'border-rose-400 bg-rose-50 focus:border-rose-500': shippingForm.get('lastName')?.invalid && shippingForm.get('lastName')?.dirty}"
+                                  class="block w-full px-4 py-3 bg-white border border-slate-200/70 shadow-sm text-slate-700 font-medium rounded-xl focus:ring-4 focus:ring-slate-900/5 transition-all sm:text-sm">
+                           @if(shippingForm.get('lastName')?.invalid && shippingForm.get('lastName')?.dirty) {
+                              <p class="text-rose-500 text-[10px] font-bold mt-1.5 uppercase flex items-center gap-1">
+                                 ⚠️
+                                 @if(shippingForm.get('lastName')?.hasError('xssInjection') || shippingForm.get('lastName')?.hasError('sqlInjection')) {
+                                   Contenido no permitido detectado.
+                                 } @else {
+                                   Solo letras y espacios.
+                                 }
+                              </p>
+                           }
+                         </div>
+                      </div>
+
+                      <!-- Dirección -->
+                      <div>
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Dirección y Número *</label>
+                        <input type="text" formControlName="address"
+                               [ngClass]="{'border-rose-400 bg-rose-50': shippingForm.get('address')?.invalid && shippingForm.get('address')?.dirty}"
+                               class="block w-full px-4 py-3 bg-white border border-slate-200/70 shadow-sm text-slate-700 font-medium rounded-xl focus:ring-4 focus:ring-slate-900/5 transition-all sm:text-sm">
+                        @if(shippingForm.get('address')?.invalid && shippingForm.get('address')?.dirty) {
+                           <p class="text-rose-500 text-[10px] font-bold mt-1.5 uppercase flex items-center gap-1">
+                              @if(shippingForm.get('address')?.hasError('xssInjection') || shippingForm.get('address')?.hasError('sqlInjection')) {
+                                ⚠️ Contenido peligroso detectado en la dirección.
+                              } @else {
+                                Dirección requerida.
+                              }
+                           </p>
+                        }
+                      </div>
+
+                      <!-- Contacto y Ubicación (Grilla 2x2) -->
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                         <!-- Row 1: Teléfono y CP -->
+                         <div>
+                           <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Teléfono *</label>
+                           <input type="number" formControlName="phone" 
+                                  placeholder="10 dígitos" inputmode="numeric" pattern="[0-9]*"
+                                  [ngClass]="{'border-rose-400 bg-rose-50': shippingForm.get('phone')?.invalid && shippingForm.get('phone')?.dirty}"
+                                  class="block w-full px-4 py-3 bg-white border border-slate-200/70 shadow-sm text-slate-700 font-medium placeholder:text-slate-300 rounded-xl focus:ring-4 focus:ring-slate-900/5 transition-all sm:text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                           @if(shippingForm.get('phone')?.invalid && shippingForm.get('phone')?.dirty) {
+                              <p class="text-rose-500 text-[10px] font-bold mt-1.5 uppercase">⚠️ 10 dígitos numéricos requeridos.</p>
+                           }
+                         </div>
+                         <div>
+                           <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Código Postal *</label>
+                           <input type="number" formControlName="zip"
+                                  placeholder="5 dígitos" inputmode="numeric" pattern="[0-9]*"
+                                  [ngClass]="{'border-rose-400 bg-rose-50': shippingForm.get('zip')?.invalid && shippingForm.get('zip')?.dirty}"
+                                  class="block w-full px-4 py-3 bg-white border border-slate-200/70 shadow-sm text-slate-700 font-medium rounded-xl focus:ring-4 focus:ring-slate-900/5 transition-all sm:text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                           @if(shippingForm.get('zip')?.invalid && shippingForm.get('zip')?.dirty) {
+                              <p class="text-rose-500 text-[10px] font-bold mt-1.5 uppercase">⚠️ CP de 5 dígitos requerido.</p>
+                           }
+                         </div>
+
+                         <!-- Row 2: Ciudad y Estado -->
+                         <div>
+                           <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Ciudad *</label>
+                           <input type="text" formControlName="city"
+                                  [ngClass]="{'border-rose-400 bg-rose-50': shippingForm.get('city')?.invalid && shippingForm.get('city')?.dirty}"
+                                  class="block w-full px-4 py-3 bg-white border border-slate-200/70 shadow-sm text-slate-700 font-medium rounded-xl focus:ring-4 focus:ring-slate-900/5 transition-all sm:text-sm">
+                           @if(shippingForm.get('city')?.invalid && shippingForm.get('city')?.dirty) {
+                              <p class="text-rose-500 text-[10px] font-bold mt-1.5 uppercase">⚠️ Ciudad requerida. Solo letras.</p>
+                           }
+                         </div>
+                         <div>
+                           <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Estado *</label>
+                           <input type="text" formControlName="state"
+                                  [ngClass]="{'border-rose-400 bg-rose-50': shippingForm.get('state')?.invalid && shippingForm.get('state')?.dirty}"
+                                  class="block w-full px-4 py-3 bg-white border border-slate-200/70 shadow-sm text-slate-700 font-medium rounded-xl focus:ring-4 focus:ring-slate-900/5 transition-all sm:text-sm">
+                           @if(shippingForm.get('state')?.invalid && shippingForm.get('state')?.dirty) {
+                              <p class="text-rose-500 text-[10px] font-bold mt-1.5 uppercase">⚠️ Estado requerido. Solo letras.</p>
+                           }
+                         </div>
+                      </div>
+                      
+                      <div class="pt-4 flex justify-end">
+                         <button type="button" (click)="advanceToPayment()"
+                                 [disabled]="shippingForm.invalid || (!isLoggedIn() && contactForm.invalid)"
+                                 [ngClass]="{
+                                   'bg-slate-300 text-slate-400 cursor-not-allowed shadow-none': shippingForm.invalid || (!isLoggedIn() && contactForm.invalid),
+                                   'bg-slate-900 hover:bg-slate-800 text-white shadow-md active:scale-95': shippingForm.valid && (isLoggedIn() || contactForm.valid)
+                                 }"
+                                 class="font-bold py-3 px-8 rounded-xl transition-all text-sm flex items-center gap-2">
+                            Continuar a Pago
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                         </button>
+                      </div>
+                   </form>
+                </div>
+              </div>
+            }
+
+            @if(currentStep() === 2) {
+              <!-- PASO 2: ACORDEÓN DE METODOS DE PAGO -->
+              <div class="bg-white rounded-3xl p-8 md:p-10 border border-slate-100 shadow-sm animate-fade-in-right">
+                 
+                 <!-- Header con Regreso -->
+                 <div class="flex items-center gap-4 mb-8">
+                    <button (click)="goBackToShipping()" class="w-10 h-10 bg-slate-50 border border-slate-100 rounded-full flex items-center justify-center text-slate-500 hover:text-slate-900 transition-colors">
+                       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" /></svg>
+                    </button>
+                    <h2 class="text-xl font-black text-slate-800 flex items-center gap-2">
+                       <span class="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center text-sm">3</span> 
+                       ¿Cómo quieres pagar?
+                    </h2>
+                 </div>
+
+                 <!-- Acordeón Básico Listado (MOCKS HASTA INTERVENCIÓN DE SDK) -->
+                 <div class="space-y-4">
+                    
+                    <!-- Checkout Bricks (MercadoPago Tarjeta) -->
+                    <label class="group relative flex border border-slate-200 bg-slate-50 hover:bg-slate-100 p-6 rounded-2xl cursor-pointer transition-colors focus-within:ring-2 focus-within:ring-slate-900/20">
+                       <input type="radio" name="payment_method" [checked]="selectedPaymentMethod() === 'CARD'" (change)="selectedPaymentMethod.set('CARD')" class="h-5 w-5 mt-0.5 text-slate-900 border-slate-300 focus:ring-slate-500 cursor-pointer">
+                       <div class="ml-4 flex-1">
+                          <span class="block text-sm font-black text-slate-900">Tarjeta de Crédito / Débito</span>
+                          <span class="block text-xs font-medium text-slate-500 mt-1">Visa, Mastercard, Amex. Meses sin intereses.</span>
+                          
+                          <!-- Espacio reservado para inyectar Brick -->
+                          <div id="cardPaymentBrick_container" [class.hidden]="selectedPaymentMethod() !== 'CARD'" class="mt-4 p-2 min-h-[150px] border border-dashed border-slate-300 rounded-xl bg-white text-center text-slate-400 text-xs transition-all">
+                             Cargando pasarela bancaria segura...
+                          </div>
+                       </div>
+                    </label>
+
+                    <!-- PayPal Smart Button -->
+                    <label class="group relative flex border border-slate-200 hover:bg-slate-50 p-6 rounded-2xl cursor-pointer transition-colors focus-within:ring-2 focus-within:ring-slate-900/20">
+                       <input type="radio" name="payment_method" [checked]="selectedPaymentMethod() === 'PAYPAL'" (change)="selectedPaymentMethod.set('PAYPAL')" class="h-5 w-5 mt-0.5 text-slate-900 border-slate-300 focus:ring-slate-500 cursor-pointer">
+                       <div class="ml-4 flex-1">
+                          <span class="block text-sm font-black text-slate-900 text-[#003087]">PayPal</span>
+                          <span class="block text-xs font-medium text-slate-500 mt-1">Paga rápido y seguro con tu billetera electrónica.</span>
+                          
+                          <!-- Espacio reservado para inyectar SDK PayPal -->
+                          <div class="mt-4 p-4 transition-all" [class.hidden]="selectedPaymentMethod() !== 'PAYPAL'">
+                             <div id="paypal-button-container"></div>
+                          </div>
+                       </div>
+                    </label>
+
+                    <!-- Pago por Referencia (OXXO/Transferencia) -->
+                    <label class="group relative flex border border-slate-200 hover:bg-slate-50 p-6 rounded-2xl cursor-pointer transition-colors focus-within:ring-2 focus-within:ring-slate-900/20">
+                       <input type="radio" name="payment_method" [checked]="selectedPaymentMethod() === 'CASH'" (change)="selectedPaymentMethod.set('CASH')" class="h-5 w-5 mt-0.5 text-slate-900 border-slate-300 focus:ring-slate-500 cursor-pointer">
+                       <div class="ml-4 flex-1">
+                          <span class="block text-sm font-black text-slate-900">Pago en Efectivo o Transferencia SPEI</span>
+                          <span class="block text-xs font-medium text-slate-500 mt-1">Paga en OXXO, 7-Eleven o ventanilla bancaria.</span>
+                          
+                          <div class="mt-4 p-4 bg-emerald-50 text-emerald-800 text-sm font-bold rounded-xl border border-emerald-100 text-center transition-all" [class.hidden]="selectedPaymentMethod() !== 'CASH'">
+                             Tu referencia de pago será enviada al correo registrado en un momento. ¡Tienes 24 hrs para pagarla!
+                          </div>
+                       </div>
+                    </label>
+
+                 </div>
+
+              </div>
+            }
+
+         </div>
+
+         <!-- Columna Derecha: Tarjeta Estática (Order Summary) -->
+         <div class="lg:col-span-5 xl:col-span-4">
+            <div class="sticky top-[88px]">
+            <div class="bg-black rounded-3xl p-8 shadow-xl text-white">
+               
+               <h3 class="text-xl font-black mb-8 border-b border-slate-800 pb-4">Tu Pedido</h3>
+               
+               <!-- Items List con scrollbar personalizado -->
+               <div class="space-y-4 mb-8 max-h-[280px] overflow-y-auto pr-1"
+                    style="scrollbar-width: thin; scrollbar-color: #475569 #1e293b;">
+                  @for(item of cartService.items(); track item.productId) {
+                     <div class="flex gap-4 items-center">
+                        <div class="w-16 h-16 bg-slate-800 rounded-xl overflow-hidden flex-shrink-0">
+                           <img [src]="item.imageUrl" [alt]="item.name" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                           <p class="text-sm font-bold text-slate-100 truncate">{{ item.name }}</p>
+                           <p class="text-xs font-medium text-slate-400 mt-0.5">Cant: {{ item.quantity }}</p>
+                        </div>
+                        <div class="text-sm font-black text-white whitespace-nowrap">
+                           ${{ (item.price * item.quantity).toFixed(2) }}
+                        </div>
+                     </div>
+                  }
+               </div>
+
+               <!-- Calculations -->
+               <div class="space-y-4 text-sm font-medium text-slate-400 mb-6">
+                  <div class="flex justify-between">
+                     <span>Subtotal</span>
+                     <span class="text-slate-200 font-bold">${{ cartService.subtotal().toFixed(2) }}</span>
+                  </div>
+                  <div class="flex justify-between">
+                     <span>Envío</span>
+                     <span class="text-emerald-400 font-bold">Gratis</span>
+                  </div>
+               </div>
+               
+               <div class="border-t border-slate-800 pt-6 flex justify-between items-end mb-8 relative">
+                  <span class="text-slate-300 font-bold uppercase tracking-widest text-[10px]">Total MXN</span>
+                  <span class="block text-3xl font-black text-white decoration-emerald-500 underline decoration-4 underline-offset-4">${{ cartService.subtotal().toFixed(2) }}</span>
+               </div>
+               
+               <!-- Acción Global -->
+               @if(currentStep() === 2 && selectedPaymentMethod() === 'CASH') {
+                  <button (click)="processGeneralPayment()"
+                          class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-black tracking-wide py-4 rounded-xl transition-all shadow-lg shadow-emerald-500/20 text-sm disabled:opacity-50 flex items-center justify-center gap-2">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" /></svg>
+                     Generar Referencia de Pago
+                  </button>
+               }
+               <p class="text-center text-[10px] text-slate-500 font-bold mt-4 flex items-center justify-center gap-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                  Pago 100% Seguro por Stripe y MP
+               </p>
+            </div>
+            </div>
+         </div>
+
+      </div>
+
+   </div>
+</div>

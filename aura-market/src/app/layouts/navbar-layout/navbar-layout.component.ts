@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, inject, signal } from '@angular/core';
 import { Navbar, CartDrawer } from '@aura-store-front/shared-ui';
-import { CartItemView, CartService, CategoryService, ProductService } from '@aura-store-front/core';
-import { Router } from '@angular/router';
+import { CartItemView, CartService, CategoryService, ProductService, AUTH_CONTRACT } from '@aura-store-front/core';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'aura-navbar-layout',
-  imports: [CommonModule, Navbar, CartDrawer],
+  imports: [CommonModule, RouterModule, Navbar, CartDrawer],
   standalone: true,
   templateUrl: './navbar-layout.component.html',
   styleUrl: './navbar-layout.component.scss',
@@ -17,10 +17,25 @@ export class NavbarLayoutComponent {
   private categoryService = inject(CategoryService);
   private router = inject(Router);
   public cartService = inject(CartService);
+  private authContract = inject(AUTH_CONTRACT);
 
   // Estado
   public isCartOpen = signal<boolean>(false);
   public cartItems = signal<CartItemView[]>([]);
+  public isUserMenuOpen = signal<boolean>(false);
+
+  // Auth signals (delegados al contrato)
+  public isLoggedIn = this.authContract.isLoggedIn;
+  public currentUser = this.authContract.currentUser;
+
+  /** Iniciales del usuario para el avatar (nombre o email) */
+  public get userInitial(): string {
+    const user = this.currentUser();
+    if (!user) return '';
+    if (user.firstname) return user.firstname.charAt(0).toUpperCase();
+    if (user.email) return user.email.charAt(0).toUpperCase();
+    return '?';
+  }
 
   // ─── Shortcut Ctrl+Shift+R — invalida caché y recarga ────────────────────────
   // Solo para desarrollo — fuerza recarga del catálogo sin esperar TTL
@@ -48,7 +63,27 @@ export class NavbarLayoutComponent {
     this.router.navigate(['/auth']);
   }
 
+  goToMyAccount(): void {
+    this.isUserMenuOpen.set(false);
+    this.router.navigate(['/my-account']);
+  }
+
+  toggleUserMenu(): void {
+    this.isUserMenuOpen.update(v => !v);
+  }
+
+  closeUserMenu(): void {
+    this.isUserMenuOpen.set(false);
+  }
+
+  logout(): void {
+    this.authContract.logout();
+    this.isUserMenuOpen.set(false);
+    this.router.navigate(['/']);
+  }
+
   goToCheckout() {
-    //TODO: Logica para ir al checkout
+    this.cartService.closeCart();
+    this.router.navigate(['/checkout']);
   }
 }

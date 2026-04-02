@@ -21,6 +21,10 @@ export * from './lib/services/prestashop-api';
 export * from './lib/interceptors/api-interceptor';
 export * from './lib/utils/prestashop-mapper.util';
 export * from './lib/utils/console-protection.util';
+export * from './lib/utils/security.constants';
+export * from './lib/utils/security.validators';
+export * from './lib/utils/sanitizer.util';
+export * from './lib/interceptors/security.interceptor';
 export * from './lib/hooks/use-catalog-filter';
 
 // Exportamos los servicios principales y el estado global

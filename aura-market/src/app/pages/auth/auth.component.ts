@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AUTH_CONTRACT } from 'core';
@@ -8,7 +9,7 @@ type AuthTab = 'login' | 'register';
 
 @Component({
   selector: 'aura-auth',
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   standalone: true,
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],

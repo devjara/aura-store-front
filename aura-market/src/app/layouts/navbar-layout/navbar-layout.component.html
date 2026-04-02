@@ -3,12 +3,22 @@
   [announcementText]="storeConfig.announcement"
   [announcementLinkText]="storeConfig.announcementLink"
   [links]="storeConfig.menu"
-  [cartItemCount]="cartItems().length"
   [containerClass]="'max-w-[1700px] mx-auto px-8 lg:px-[80px]'"
   [cartItemCount]="cartService.itemCount()"
+  [userInitial]="userInitial"
+  [isUserMenuOpen]="isUserMenuOpen()"
+  [userName]="(currentUser()?.firstname || '') + ' ' + (currentUser()?.lastname || '')"
+  [userEmail]="currentUser()?.email || ''"
   (cartClick)="cartService.openCart()"
-  (userClick)="goToAuth()">
+  (userClick)="isLoggedIn() ? toggleUserMenu() : goToAuth()"
+  (myAccountClick)="goToMyAccount()"
+  (logoutClick)="logout()">
 </aura-navbar>
+
+<!-- Backdrop para cerrar el dropdown al hacer clic afuera -->
+@if(isLoggedIn() && isUserMenuOpen()) {
+  <div class="fixed inset-0 z-40" (click)="closeUserMenu()"></div>
+}
 
 <aura-cart-drawer
   [isOpen]="cartService.isOpen()"
