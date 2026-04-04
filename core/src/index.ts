@@ -7,6 +7,7 @@ export * from './lib/models/tenant.model';
 export * from './lib/models/order.model';
 export * from './lib/models/cart-rule.model';
 export * from './lib/models/address.model';
+export * from './lib/models/checkout-payload.model';
 
 //Exportamos los DTOs
 export * from './lib/dto/ps-cart.dto';
@@ -32,13 +33,17 @@ export * from './lib/services/tenant/tenant.service';
 export * from './lib/services/product/product.service';
 export * from './lib/services/cart/cart.service';
 export * from './lib/services/category/category.service';
-export * from './lib/services/portal/portal.contract';
+export * from './lib/contracts/portal.contract';
 export * from './lib/services/portal/portal.service';
-export * from './lib/services/auth/auth.contract';
+export * from './lib/contracts/auth.contract';
 export * from './lib/services/auth/auth.service';
 export * from './lib/guards/auth.guard';
+export * from './lib/contracts/order.contract';
+export * from './lib/services/order/order.service';
 
 export type { FilterConfig, FilterOption, FilterState, FilterType } from './lib/models/filter.model';
 export type { CartItemView, CartItemVariation, Cart } from './lib/models/cart.model';
-export type { AuthContract  } from './lib/services/auth/auth.contract';
-export { AUTH_CONTRACT } from './lib/services/auth/auth.contract';
+export type { AuthContract  } from './lib/contracts/auth.contract';
+export { AUTH_CONTRACT } from './lib/contracts/auth.contract';
+export type { OrderContract } from './lib/contracts/order.contract';
+export { ORDER_CONTRACT } from './lib/contracts/order.contract';

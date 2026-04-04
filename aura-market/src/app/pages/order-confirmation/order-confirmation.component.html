@@ -1,0 +1,150 @@
+<!-- ─── PÁGINA DE CONFIRMACIÓN DE ORDEN ──────────────────────────────────── -->
+<div class="min-h-screen bg-slate-50 font-sans">
+
+  <!-- Hero superior verde -->
+  <div class="bg-gradient-to-br from-emerald-600 to-emerald-800 pt-28 pb-20 px-4 text-center relative overflow-hidden">
+
+    <!-- Círculos decorativos -->
+    <div class="absolute -top-20 -right-20 w-80 h-80 bg-white/5 rounded-full"></div>
+    <div class="absolute -bottom-10 -left-10 w-60 h-60 bg-white/5 rounded-full"></div>
+
+    <div class="relative max-w-xl mx-auto">
+      <!-- Ícono de check -->
+      <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-emerald-900/20">
+        <svg class="w-10 h-10 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+        </svg>
+      </div>
+
+      <h1 class="text-3xl md:text-4xl font-black text-white mb-3">¡Pedido Confirmado!</h1>
+      <p class="text-emerald-100 font-medium text-sm md:text-base">
+        Tu orden fue registrada exitosamente en nuestro sistema.
+      </p>
+
+      <!-- Referencia -->
+      <div class="mt-8 inline-flex items-center gap-3 bg-white/10 backdrop-blur border border-white/20 rounded-2xl px-6 py-4">
+        <div class="text-left">
+          <p class="text-emerald-200 text-[10px] font-black uppercase tracking-widest">Número de Pedido</p>
+          <p class="text-white text-xl font-black tracking-widest mt-0.5">{{ reference() }}</p>
+        </div>
+        <svg class="w-5 h-5 text-emerald-300 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenido central -->
+  <div class="max-w-2xl mx-auto px-4 -mt-6 pb-24">
+
+    <!-- Card principal -->
+    <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
+
+      <!-- Próximos pasos según método de pago -->
+      @if (isCash) {
+        <!-- OXXO / SPEI -->
+        <div class="p-8 border-b border-slate-100">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center">
+              <svg class="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-black text-slate-900 text-sm">Pago pendiente</p>
+              <p class="text-slate-500 text-xs font-medium">Tienes 24 horas para completar tu pago</p>
+            </div>
+          </div>
+          <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 text-sm text-amber-800 font-medium leading-relaxed">
+            Tu referencia de pago llegará a tu correo en los próximos minutos. Puedes realizarlo en OXXO, 7-Eleven o mediante transferencia SPEI.
+          </div>
+        </div>
+      } @else {
+        <!-- Tarjeta o PayPal — pago inmediato -->
+        <div class="p-8 border-b border-slate-100">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center">
+              <svg class="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-black text-slate-900 text-sm">Pago recibido</p>
+              <p class="text-slate-500 text-xs font-medium">Tu pedido está siendo procesado</p>
+            </div>
+          </div>
+          <div class="bg-emerald-50 border border-emerald-100 rounded-2xl p-4 text-sm text-emerald-800 font-medium leading-relaxed">
+            Recibirás un correo de confirmación con los detalles de tu pedido y la guía de rastreo en cuanto se prepare tu envío.
+          </div>
+        </div>
+      }
+
+      <!-- Timeline de estados -->
+      <div class="p-8 border-b border-slate-100">
+        <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6">¿Qué sigue?</p>
+        <div class="space-y-5">
+          <div class="flex gap-4">
+            <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm font-bold text-slate-900">Pedido registrado</p>
+              <p class="text-xs text-slate-500 font-medium mt-0.5">Tu orden está en el sistema con referencia {{ reference() }}</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+                 [class]="isCash ? 'bg-slate-100' : 'bg-emerald-100'">
+              <svg class="w-4 h-4" [class]="isCash ? 'text-slate-400' : 'text-emerald-600'" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 00-2 2v4a2 2 0 002 2h8a2 2 0 002-2v-4a2 2 0 00-2-2H6zm1 2a1 1 0 011-1h6a1 1 0 010 2H8a1 1 0 01-1-1zm0 3a1 1 0 011-1h6a1 1 0 010 2H8a1 1 0 01-1-1z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm font-bold" [class]="isCash ? 'text-slate-400' : 'text-slate-900'">Pago confirmado</p>
+              <p class="text-xs text-slate-500 font-medium mt-0.5">
+                {{ isCash ? 'Pendiente — realiza tu pago antes de 24 hrs' : 'Cargo procesado exitosamente' }}
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm font-bold text-slate-400">En camino</p>
+              <p class="text-xs text-slate-500 font-medium mt-0.5">Recibirás tu guía de rastreo por correo</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Acciones -->
+      <div class="p-8 flex flex-col sm:flex-row gap-3">
+        @if (isLoggedIn()) {
+          <button (click)="goToOrders()"
+                  class="flex-1 bg-slate-900 hover:bg-black text-white font-black text-xs uppercase tracking-[0.2em] py-4 rounded-xl transition-colors">
+            Ver Mis Pedidos
+          </button>
+        }
+        <button (click)="goToCatalog()"
+                class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-black text-xs uppercase tracking-[0.2em] py-4 rounded-xl transition-colors">
+          Seguir Comprando
+        </button>
+      </div>
+    </div>
+
+    <!-- Nota de seguridad -->
+    <p class="text-center text-[11px] text-slate-400 font-medium mt-6 flex items-center justify-center gap-1.5">
+      <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+      </svg>
+      Transacción protegida con cifrado de extremo a extremo
+    </p>
+  </div>
+</div>

@@ -1,11 +1,16 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AUTH_CONTRACT, CartService, AuraValidators, SECURITY_LIMITS, sanitizeFormPayload, sanitizeEmail } from '@aura-store-front/core';
+import { Router } from '@angular/router';
+import {
+  AUTH_CONTRACT, CartService, AuraValidators, SECURITY_LIMITS,
+  sanitizeFormPayload, sanitizeEmail,
+  ORDER_CONTRACT, CheckoutPayload
+} from '@aura-store-front/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-// ¡TUS LLAVES MAESTRAS DEL SANDBOX! 🔑
+// ¡Temporal: LLaves de prueba! 🔑
 const MERCADO_PAGO_PUBLIC_KEY = 'TEST-d11ae4fb-fb7c-4f4f-accc-40d8d7eaf68f';
 const PAYPAL_CLIENT_ID = 'ATPuQkBISVu-IPT_Bcia6m0pJ-kJRinudvV_5FkGmZBecC9C1Zm6t-_HuC0Y909o_hFyFE-jqUbcSgBE';
 
@@ -18,20 +23,24 @@ declare var window: any;
   templateUrl: './checkout.component.html'
 })
 export class CheckoutComponent implements OnInit {
-  private fb = inject(FormBuilder);
-  private auth = inject(AUTH_CONTRACT);
-  public cartService = inject(CartService);
-  private document = inject(DOCUMENT);
+  private fb          = inject(FormBuilder);
+  private auth        = inject(AUTH_CONTRACT);
+  private orderService = inject(ORDER_CONTRACT);
+  private router      = inject(Router);
+  public  cartService = inject(CartService);
+  private document   = inject(DOCUMENT);
 
   // Estados
-  public isLoggedIn = this.auth.isLoggedIn;
+  public isLoggedIn  = this.auth.isLoggedIn;
   public currentUser = this.auth.currentUser;
-  
-  public currentStep = signal<1 | 2>(1); // 1: Contacto/Envío, 2: Pago
+
+  public currentStep           = signal<1 | 2>(1);
   public selectedPaymentMethod = signal<'CARD' | 'PAYPAL' | 'CASH'>('CARD');
-  public isLoadingGateways = signal<boolean>(false);
-  
-  // Anti Brute-Force: debounce en el botón de pago para evitar spam de requests
+  public isLoadingGateways     = signal<boolean>(false);
+  public isPlacingOrder        = signal<boolean>(false);
+  public orderError            = signal<string | null>(null);
+
+  // Anti Brute-Force: debounce en el botón de pago
   private readonly paymentClick$ = new Subject<void>();
   
 
@@ -135,12 +144,77 @@ export class CheckoutComponent implements OnInit {
     this.currentStep.set(1);
   }
 
+  // ============== CONSTRUCCIÓN DEL PAYLOAD ============== //
+
+  private buildPayload(): CheckoutPayload {
+    const safeShipping = sanitizeFormPayload(this.shippingForm.value);
+    const user = this.currentUser();
+    const isGuest = !this.isLoggedIn();
+    const email = isGuest
+      ? sanitizeEmail(this.contactForm.value.email)
+      : sanitizeEmail(user?.email ?? '');
+
+    return {
+      customer: {
+        email,
+        firstName: safeShipping['firstName'],
+        lastName:  safeShipping['lastName'],
+        isGuest,
+        customerId: isGuest ? undefined : user?.id,
+        dni: 'XAXX010101000'
+      },
+      shipping: {
+        address: safeShipping['address'],
+        city:    safeShipping['city'],
+        state:   safeShipping['state'],
+        zip:     safeShipping['zip'],
+        phone:   safeShipping['phone'],
+      },
+      cart: this.cartService.items().map(i => ({
+        productId: i.productId,
+        quantity:  i.quantity,
+        price:     i.price,
+        productName: i.name,
+      })),
+      payment: { method: this.selectedPaymentMethod() },
+      total: this.cartService.subtotal(),
+    };
+  }
+
+  /** Maneja errores del OrderService con mensajes legibles */
+  private handleOrderError(error: unknown): void {
+    if (error instanceof Error) {
+      switch (error.message) {
+        case 'ORDER_CUSTOMER_EXISTS':
+          this.orderError.set('Este correo ya tiene una cuenta. Inicia sesión para continuar.');
+          break;
+        case 'ORDER_PAYMENT_FAILED':
+          this.orderError.set('El pago no pudo procesarse. Verifica los datos de tu tarjeta.');
+          break;
+        case 'ORDER_STOCK_UNAVAILABLE':
+          this.orderError.set('Uno o más productos ya no tienen stock disponible.');
+          break;
+        default:
+          this.orderError.set('Ocurrió un error al procesar tu pedido. Intenta de nuevo.');
+      }
+    }
+    this.isPlacingOrder.set(false);
+  }
+
   // ============== FUNCIONES GENERALES DE PAGO ============== //
 
-  public processGeneralPayment() {
-    if (this.selectedPaymentMethod() === 'CASH') {
-      console.log('Generando referencia de OXXO / Transferencia vía PrestaShop...');
-      alert('¡Simulación Exitosa! Aquí Angular mandaría la orden al Backend indicando pago offline. La referencia llegaría a ' + this.contactForm.get('email')?.value);
+  public async processGeneralPayment() {
+    if (this.selectedPaymentMethod() !== 'CASH' || this.isPlacingOrder()) return;
+    this.isPlacingOrder.set(true);
+    this.orderError.set(null);
+    try {
+      const confirmation = await this.orderService.placeOrder(this.buildPayload());
+      this.cartService.items.set([]);
+      this.router.navigate(['/orden/confirmacion', confirmation.reference], {
+        state: { paymentMethod: 'CASH' }
+      });
+    } catch (error) {
+      this.handleOrderError(error);
     }
   }
 
@@ -188,15 +262,24 @@ export class CheckoutComponent implements OnInit {
           console.log('MercadoPago Brick renderizado.');
         },
         onSubmit: (cardFormData: any) => {
-          // AQUI EL TARJETAZO FUE PROCESADO
-          // Generar Promise que manda el 'cardFormData.token' al Backend (PrestaShop API) para consolidar Orden
-          return new Promise((resolve, reject) => {
-            console.log('Token de MercadoPago capturado, listo para el Backend:', cardFormData);
-            resolve(true); 
+          // Token de MercadoPago capturado — enviar al backend para procesar el cargo
+          this.isPlacingOrder.set(true);
+          this.orderError.set(null);
+          const payload = this.buildPayload();
+          payload.payment = { method: 'CARD', token: cardFormData.token };
+
+          return this.orderService.placeOrder(payload).then(confirmation => {
+            this.cartService.items.set([]);
+            this.router.navigate(['/orden/confirmacion', confirmation.reference], {
+              state: { paymentMethod: 'CARD' }
+            });
+          }).catch(error => {
+            this.handleOrderError(error);
+            return Promise.reject(error);
           });
         },
         onError: (error: any) => {
-          console.error(error);
+          console.error('[MercadoPago Brick Error]', error);
         }
       }
     });
@@ -217,10 +300,21 @@ export class CheckoutComponent implements OnInit {
         });
       },
       onApprove: (data: any, actions: any) => {
-        // El cliente aceptó el pago en su cuenta de PayPal
-        return actions.order.capture().then((details: any) => {
-          console.log('Pago de PayPal completado por:', details.payer.name.given_name);
-          // AQUI NOTIFICAR A PRESTASHOP DEL EXITO DE PAYPAL (ID Transaction)
+        // Cliente aceptó el pago — capturar y crear orden en PrestaShop
+        return actions.order.capture().then(async (details: any) => {
+          this.isPlacingOrder.set(true);
+          this.orderError.set(null);
+          const payload = this.buildPayload();
+          payload.payment = { method: 'PAYPAL', transactionId: details.id };
+          try {
+            const confirmation = await this.orderService.placeOrder(payload);
+            this.cartService.items.set([]);
+            this.router.navigate(['/orden/confirmacion', confirmation.reference], {
+              state: { paymentMethod: 'PAYPAL' }
+            });
+          } catch (error) {
+            this.handleOrderError(error);
+          }
         });
       }
     }).render('#paypal-button-container');

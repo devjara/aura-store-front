@@ -1,7 +1,7 @@
 import { InjectionToken } from '@angular/core';
-import { Order, OrderDetail } from '../../models/order.model';
-import { CartRule } from '../../models/cart-rule.model';
-import { Address } from '../../models/address.model';
+import { Order, OrderDetail } from '../models/order.model';
+import { CartRule } from '../models/cart-rule.model';
+import { Address } from '../models/address.model';
 
 export interface PortalContract {
   /**

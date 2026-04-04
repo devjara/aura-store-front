@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, filter } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 
-import { PortalContract } from './portal.contract';
+import { PortalContract } from '../../contracts/portal.contract';
 import { TenantService } from '../tenant/tenant.service';
 
 // DTOs (Lo que llega nativo de PrestaShop)
@@ -19,6 +19,7 @@ import { Address } from '../../models/address.model';
 @Injectable({
   providedIn: 'root',
 })
+
 export class PortalService implements PortalContract {
   private http = inject(HttpClient);
   private tenantService = inject(TenantService);

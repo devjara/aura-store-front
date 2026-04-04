@@ -1,5 +1,5 @@
 import { computed, InjectionToken, Signal } from "@angular/core";
-import { AuthUser, LoginRequest, RegisterRequest } from "../../models/auth.model";
+import { AuthUser, LoginRequest, RegisterRequest } from "../models/auth.model";
 
 /**
  * AuthContract — Contrato abstracto del servicio de autenticación.

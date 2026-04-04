@@ -20,7 +20,7 @@ export interface Address {
   requiresInvoice?: boolean;
   company?: string;   // Razón Social
   vatNumber?: string; // RFC
-  dni?: string;       // Uso CFDI / Identificación
+  dni?: string | 'XAXX010101000';       // Uso CFDI / Identificación
 }
 
 // Catálogo Inmutable Centralizado

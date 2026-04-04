@@ -5,4 +5,5 @@ export interface Customer
     lastName: string;
     email: string;
     active: boolean;
+    is_guest: boolean;
 }

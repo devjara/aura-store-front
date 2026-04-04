@@ -4,9 +4,7 @@ import { firstValueFrom } from 'rxjs';
 import { AuthUser, LoginRequest, RegisterRequest } from '../../models/auth.model';
 import { PsLoginRequestDto, PsLoginResponseDto } from '../../dto/ps-auth.dto';
 import { AuthBreaker } from '../../utils/auth.breaker';
-import { AuthContract } from './auth.contract';
-import { PsApiResponseDTO } from '../../dto/ps-api-response.dto';
-import { PsCustomerDTO } from '../../dto/ps-customer.dto';
+import { AuthContract } from '../../contracts/auth.contract';
 import { isPlatformBrowser } from '@angular/common';
 
 
