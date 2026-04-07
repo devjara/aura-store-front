@@ -40,6 +40,9 @@ export * from './lib/services/auth/auth.service';
 export * from './lib/guards/auth.guard';
 export * from './lib/contracts/order.contract';
 export * from './lib/services/order/order.service';
+export * from './lib/services/stock/stock.service';
+export * from './lib/models/stock-available.model';
+export * from './lib/dto/ps-stock-available.dto';
 
 export type { FilterConfig, FilterOption, FilterState, FilterType } from './lib/models/filter.model';
 export type { CartItemView, CartItemVariation, Cart } from './lib/models/cart.model';

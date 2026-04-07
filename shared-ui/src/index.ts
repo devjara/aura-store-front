@@ -2,6 +2,7 @@
 // export { SharedUi } from './lib/shared-ui/shared-ui'; 
 
 // --- EXPORTAMOS LOS COMPONENTES ---
+export { ProductDetail } from './lib/components/product-detail/product-detail';
 export { ProductCard } from './lib/components/product-card/product-card';
 export { Filter } from './lib/components/filter/filter';
 export { CartDrawer } from './lib/components/cart-drawer/cart-drawer';

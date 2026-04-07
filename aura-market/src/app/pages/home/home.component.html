@@ -30,7 +30,7 @@
 
   <div class="flex items-center justify-between mb-6 md:mb-10">
     <div class="pointer-events-none select-none">
-      <span class="text-[4rem] sm:text-[5rem] md:text-[6rem] lg:text-[7rem] font-black uppercase text-gray-200 tracking-tighter leading-none whitespace-nowrap">
+      <span class="text-[3rem] sm:text-[4rem] md:text-[5rem] lg:text-[5rem] font-black uppercase text-gray-200 tracking-tighter leading-none whitespace-nowrap">
         NUEVAS LLEGADAS
       </span>
     </div>
@@ -136,7 +136,7 @@
 <section class="w-full bg-[#f5f5f3] px-4 sm:px-8 lg:px-16 xl:px-24 2xl:px-32 py-12 md:py-16 lg:py-24">
 
   <div class="mb-2 pointer-events-none select-none">
-    <span class="text-[4rem] sm:text-[5rem] md:text-[6rem] lg:text-[7rem] font-black uppercase text-gray-200 tracking-tighter leading-none whitespace-nowrap">
+    <span class="text-[3rem] sm:text-[4rem] md:text-[5rem] lg:text-[5rem] font-black uppercase text-gray-200 tracking-tighter leading-none whitespace-nowrap">
       XIV COLECCION
     </span>
   </div>
@@ -219,12 +219,107 @@
   </div>
 </section>
 
+<!-- ─── COMUNIDAD AURA ──────────────────────────────────────────────────────── -->
+<section class="w-full relative overflow-hidden">
+
+  <!-- Imagen de fondo -->
+  <div class="absolute inset-0 z-0">
+    <img
+      src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?q=80&w=2070&auto=format&fit=crop"
+      alt="Aura Community"
+      class="w-full h-full object-cover object-center opacity-40"
+    />
+    <div class="absolute inset-0 bg-[#0a0a0a]/70"></div>
+  </div>
+
+  <!-- Contenido -->
+  <div class="relative z-10 w-full px-4 sm:px-8 lg:px-16 xl:px-24 2xl:px-32 py-20 md:py-28 lg:py-36">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+      <!-- Columna izquierda -->
+      <div>
+        <p class="text-[#F55216] text-[12px] font-bold tracking-[0.3em] uppercase mb-6">La Comunidad</p>
+        <h2 class="text-white text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tighter leading-[0.9] mb-8">
+          El Estilo<br/>No Se<br/>
+          <span class="relative inline-block">
+            <span class="relative z-10">Compra.</span>
+            <svg class="absolute -inset-2 top-1" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+              <ellipse cx="100" cy="30" rx="98" ry="27" stroke="#F55216" stroke-width="3"/>
+            </svg>
+          </span>
+        </h2>
+
+        <div class="flex flex-col gap-3 mb-10">
+          <div class="flex items-center gap-3">
+            <svg class="w-4 h-4 text-[#F55216] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span class="text-gray-300 text-xs tracking-widest uppercase font-medium">Drops exclusivos para miembros</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <svg class="w-4 h-4 text-[#F55216] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span class="text-gray-300 text-xs tracking-widest uppercase font-medium">Acceso anticipado a colecciones</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <svg class="w-4 h-4 text-[#F55216] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span class="text-gray-300 text-xs tracking-widest uppercase font-medium">Piezas de archivo sin stock límite</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a routerLink="/register" class="inline-block bg-[#F55216] hover:bg-[#D4410E] text-white text-xs font-black tracking-[0.2em] uppercase px-10 py-5 transition-colors duration-300 text-center">
+            Unirse Ahora
+          </a>
+          <a routerLink="/catalogo" class="inline-block border border-white/30 hover:border-white text-white text-xs font-black tracking-[0.2em] uppercase px-10 py-5 transition-colors duration-300 text-center">
+            Ver Colección
+          </a>
+        </div>
+      </div>
+
+      <!-- Columna derecha — Stats -->
+      <div class="flex flex-col gap-8 lg:pl-12 lg:border-l lg:border-white/10">
+
+        <p class="text-gray-400 text-[15px]  leading-relaxed font-light max-w-lg">
+          Aura no es solo ropa. Es una declaración. Cada pieza que usas comunica precisión, intención y una visión del mundo que pocos se atreven a sostener.
+        </p>
+
+        <div class="w-16 h-px bg-white/20"></div>
+
+        <div class="grid grid-cols-2 gap-8">
+          <div>
+            <span class="text-white text-5xl md:text-6xl font-black tracking-tighter leading-none">XIV</span>
+            <p class="text-gray-500 text-[14px] font-bold tracking-[0.2em] uppercase mt-2">Colecciones</p>
+          </div>
+          <div>
+            <span class="text-white text-5xl md:text-6xl font-black tracking-tighter leading-none">001</span>
+            <p class="text-gray-500 text-[14px] font-bold tracking-[0.2em] uppercase mt-2">Drop Activo</p>
+          </div>
+          <div>
+            <span class="text-[#F55216] text-5xl md:text-6xl font-black tracking-tighter leading-none">∞</span>
+            <p class="text-gray-500 text-[14px] font-bold tracking-[0.2em] uppercase mt-2">Estilo propio</p>
+          </div>
+          <div>
+            <span class="text-white text-5xl md:text-6xl font-black tracking-tighter leading-none">0</span>
+            <p class="text-gray-500 text-[14px] font-bold tracking-[0.2em] uppercase mt-2">Tendencias seguidas</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</section>
+
 <!-- ─── LO MÁS COMPRADO ────────────────────────────────────────────────────── -->
 <section class="w-full bg-[#f5f5f3] px-4 sm:px-8 lg:px-16 xl:px-24 2xl:px-32 py-12 md:py-16 lg:py-24">
 
   <div class="mb-8 md:mb-12 pointer-events-none select-none flex items-center justify-between">
-    <span class="text-[4rem] sm:text-[5rem] md:text-[6rem] lg:text-[7rem] font-black uppercase text-gray-200 tracking-tighter leading-none whitespace-nowrap">
-      LO MÁS COMPRADO
+    <span class="text-[3rem] sm:text-[4rem] md:text-[5rem] lg:text-[5rem] font-black uppercase text-gray-200 tracking-tighter leading-none whitespace-nowrap">
+      Tus Redes
     </span>
     <div class="hidden lg:flex items-center gap-2 pointer-events-auto">
       <button (click)="scrollLeftPopular()" class="w-9 h-9 border border-gray-300 flex items-center justify-center hover:border-black hover:bg-black hover:text-white transition-all duration-200">
@@ -341,3 +436,4 @@
     </div>
   </div>
 </section>
+

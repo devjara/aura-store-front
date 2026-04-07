@@ -1,0 +1,118 @@
+@if (product) {
+<article class="pd">
+
+  <!-- Layout principal: imagen + detalles -->
+  <div class="aura-grid-split">
+
+    <!-- Columna imagen -->
+    <div class="pd__image-col">
+      @if (product.stock > 0 && product.stock < 10) {
+        <span class="pd__badge pd__badge--low">
+          Últimas {{ product.stock }} unidades
+        </span>
+      }
+      @if (product.stock === 0) {
+        <span class="pd__badge pd__badge--sold">Agotado</span>
+      }
+      <img [src]="product.imageUrl" [alt]="product.name" />
+    </div>
+
+    <!-- Columna detalles -->
+    <div class="pd__details-col">
+      <p class="aura-eyebrow">{{ product.category }}</p>
+
+      <h1 class="pd__title">{{ product.name }}</h1>
+
+      <p class="pd__price">{{ product.price | currency:'MXN':'symbol':'1.0-0' }}</p>
+
+      <hr class="pd__divider" />
+
+      <h3 class="aura-text-xs font-bold uppercase tracking-widest text-gray-900 mb-3">Descripción Breve</h3>
+      <p class="aura-subtitle pd__desc">
+        {{ cleanDescription }}
+      </p>
+
+      <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+        <div class="flex items-center gap-2">
+          <span class="pd__stock-dot"
+            [class.pd__stock-dot--low]="product.stock > 0 && product.stock < 10"
+            [class.pd__stock-dot--out]="product.stock === 0">
+          </span>
+          <span class="pd__stock-label" style="margin: 0;">
+            @if (product.stock === 0) { Sin stock }
+            @else if (product.stock < 10) { {{ product.stock }} unidades disponibles }
+            @else { En stock }
+          </span>
+        </div>
+        
+        <div class="flex items-center gap-2 bg-gray-50 px-3 py-1.5 border border-gray-200">
+          <svg class="w-4 h-4 text-[#F55216]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+          </svg>
+          <span class="aura-text-xs font-bold uppercase tracking-[0.15em] text-gray-700">Entrega Gratuita</span>
+        </div>
+      </div>
+
+      <div class="pd__cta">
+       
+        <div class="pd__qty">
+          <button (click)="decreaseQuantity()" [disabled]="quantity <= 1" aria-label="Disminuir cantidad">&minus;</button>
+          <span>{{ quantity }}</span>
+          <button (click)="increaseQuantity()" [disabled]="product.stock !== undefined && product.stock !== null && quantity >= product.stock" aria-label="Aumentar cantidad">+</button>
+        </div>
+        
+        <button class="pd__btn"
+                [disabled]="product.stock === 0"
+                (click)="addToCart()">
+          {{ product.stock === 0 ? 'Sin stock' : 'Agregar al carrito' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Descripción Larga -->
+  @if (product.longDescription) {
+  <section class="pd__long-desc aura-section aura-section--half-py">
+    <div class="w-full">
+      <h2 class="aura-section-title pd__long-desc-title">Información Detallada</h2>
+      <div [innerHTML]="product.longDescription"></div>
+    </div>
+  </section>
+  }
+
+  <!-- Sección relacionados -->
+  @if (relatedProducts?.length) {
+  <section class="pd__related aura-section">
+    <div class="pd__related-header">
+      <h2 class="aura-section-title">Relacionados</h2>
+      <span class="pd__related-count">{{ relatedProducts.length }} productos</span>
+    </div>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+      @for (item of relatedProducts; track item.id) {
+      <div class="aura-card"
+           tabindex="0"
+           role="button"
+           [attr.aria-label]="'Ver ' + item.name"
+           (click)="onViewRelated(item)"
+           (keyup.enter)="onViewRelated(item)">
+        <div class="aura-card__image">
+          <img [src]="item.imageUrl" [alt]="item.name" loading="lazy" />
+          <div class="aura-card__overlay">
+            <button class="aura-card__action">Ver detalles</button>
+          </div>
+        </div>
+        <div class="aura-card__info">
+          <h3 class="aura-card__name">{{ item.name }}</h3>
+          <div class="aura-card__prices">
+            <span class="aura-card__price">{{ item.price | currency:'MXN':'symbol':'1.0-0' }}</span>
+          </div>
+          <p class="aura-card__brand">{{ item.category }}</p>
+        </div>
+      </div>
+      }
+    </div>
+  </section>
+  }
+
+</article>
+}

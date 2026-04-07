@@ -1,0 +1,31 @@
+@if (!isLoading()) {
+<div class="w-full bg-[#f5f5f3] min-h-screen pt-4 sm:pt-8 md:pt-12 pb-16 px-4 md:px-8 xl:px-16">
+  
+  @if(product()) {
+    <div class="max-w-[1400px] mx-auto bg-white shadow-xl shadow-black/5">
+      <aura-product-detail 
+        [product]="product()" 
+        [relatedProducts]="relatedProducts()" 
+        (add)="onAddToCart($event)"
+        (viewProduct)="onViewProduct($event)">
+      </aura-product-detail>
+    </div>
+  } @else {
+    <div class="max-w-[1400px] mx-auto py-24 text-center">
+      <h2 class="text-gray-900 text-3xl font-black uppercase tracking-widest mb-4">Producto no encontrado</h2>
+      <p class="text-gray-500 mb-8">El artículo que buscas ya no se encuentra disponible o no existe.</p>
+      <a routerLink="/catalogo" class="inline-block bg-[#F55216] text-white text-xs font-bold tracking-[0.2em] uppercase px-8 py-4 hover:bg-[#D4410E] transition-colors duration-300">
+        Volver al catálogo
+      </a>
+    </div>
+  }
+
+</div>
+}
+
+<!-- Estado de Carga UI -->
+@if (isLoading()) {
+<div class="w-full bg-[#f5f5f3] min-h-screen flex items-center justify-center">
+  <div class="w-12 h-12 border-4 border-gray-200 border-t-[#F55216] border-r-[#F55216] rounded-full animate-spin"></div>
+</div>
+}

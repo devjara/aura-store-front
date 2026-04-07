@@ -18,8 +18,8 @@ export class HomeComponent implements OnInit {
   @ViewChild('carousel') carouselRef!: ElementRef<HTMLDivElement>;
 
   public newArrivals = signal<Product[]>([]);
-  public tabs = ['ALL', 'Men', 'Women', 'Kid'];
   public activeTab = signal<string>('ALL');
+  public tabs = ['ALL', 'Hombres', 'Mujeres', 'Kids']; // Adjusting to Spanish context given standard catalog
 
   async ngOnInit() {
     //SSR: Solo pedimos datos si estamos en el navegador real
@@ -74,4 +74,6 @@ export class HomeComponent implements OnInit {
   scrollRightPopular() {
     document.getElementById('carouselPopular')?.scrollBy({ left: 400, behavior: 'smooth' });
   }
+
+ 
 }

@@ -285,11 +285,11 @@
         }
       } @else {
         @for (product of featuredProducts(); track $index) {
-          <div class="aura-card">
+          <div class="aura-card cursor-pointer" [routerLink]="['/product', product.id]">
             <div class="aura-card__image">
               <img [src]="product.imageUrl" [alt]="product.name" class="aura-img-product aura-img-zoom">
               <div class="aura-card__overlay">
-                <button class="aura-card__action" (click)="addToCart(product)">Agregar al carrito</button>
+                <button class="aura-card__action" (click)="addToCart(product); $event.stopPropagation()">Agregar al carrito</button>
               </div>
             </div>
             <div class="aura-card__info">
@@ -376,11 +376,11 @@
         }
       } @else {
         @for (product of filteredDesignerProducts(); track $index) {
-          <div class="aura-card">
+          <div class="aura-card cursor-pointer" [routerLink]="['/product', product.id]">
             <div class="aura-card__image">
               <img [src]="product.imageUrl" [alt]="product.name" class="aura-img-product aura-img-zoom">
               <div class="aura-card__overlay">
-                <button class="aura-card__action" (click)="addToCart(product)">Agregar al carrito</button>
+                <button class="aura-card__action" (click)="addToCart(product); $event.stopPropagation()">Agregar al carrito</button>
               </div>
             </div>
             <div class="aura-card__info">
@@ -396,3 +396,4 @@
     </div>
   </div>
 </section>
+

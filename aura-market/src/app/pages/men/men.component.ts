@@ -8,9 +8,9 @@ import {
   PLATFORM_ID,
   signal,
 } from '@angular/core';
-import { CartService, Category, CategoryService, Product, ProductService } from 'core';
 import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { CartService, Category, CategoryService, Product, ProductService } from '@aura-store-front/core';
 
 type CategoryWithCount = Category & { count: number };
 
@@ -81,7 +81,7 @@ export class MenComponent implements OnInit {
 
   // ─── Lifecycle ────────────────────────────────────────────────────────────────
   async ngOnInit() {
-    const targetCategories = ['c_performance', 'outerwear', 'h_urbano', 'tailoring', 'loungewear'];
+    const targetCategories = ['performance', 'outerwear', 'h_urbano', 'tailoring', 'loungewear'];
     if (isPlatformBrowser(this.platformId)) {
       try {
         const [products, categories] = await Promise.all([

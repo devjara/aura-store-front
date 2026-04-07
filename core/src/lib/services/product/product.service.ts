@@ -119,6 +119,7 @@ export class ProductService {
       id:           item.id,
       name:         this.extractText(item.name),
       description:  this.extractText(item.description_short),
+      longDescription: this.extractText(item.description),
       price:        parseFloat(item.price) || 0,
       imageUrl:     imageUrl,
       category:     categoryName,
