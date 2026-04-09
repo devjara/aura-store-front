@@ -41,6 +41,12 @@ export * from './lib/guards/auth.guard';
 export * from './lib/contracts/order.contract';
 export * from './lib/services/order/order.service';
 export * from './lib/services/stock/stock.service';
+export * from './lib/services/payment/payment-strategy.service';
+export * from './lib/contracts/payment.contract';
+export * from './lib/services/payment/strategies/mercadopago.strategy';
+export * from './lib/services/payment/strategies/paypal.strategy';
+export * from './lib/services/payment/strategies/stripe.strategy';
+export * from './lib/config/api-endpoints.config';
 export * from './lib/models/stock-available.model';
 export * from './lib/dto/ps-stock-available.dto';
 

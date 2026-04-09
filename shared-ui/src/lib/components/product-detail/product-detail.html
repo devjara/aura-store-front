@@ -29,7 +29,7 @@
 
       <h3 class="aura-text-xs font-bold uppercase tracking-widest text-gray-900 mb-3">Descripción Breve</h3>
       <p class="aura-subtitle pd__desc">
-        {{ cleanDescription }}
+        {{ (product.description | stripHtml) || 'Una pieza meticulosamente diseñada, construida con la precisión característica de Aura.' }}
       </p>
 
       <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
@@ -81,7 +81,7 @@
   }
 
   <!-- Sección relacionados -->
-  @if (relatedProducts?.length) {
+  @if (relatedProducts.length) {
   <section class="pd__related aura-section">
     <div class="pd__related-header">
       <h2 class="aura-section-title">Relacionados</h2>

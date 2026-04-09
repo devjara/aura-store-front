@@ -9,6 +9,7 @@ import { PsApiResponseDTO } from '../../dto/ps-api-response.dto';
 import { PsCategoryDto } from '../../dto/ps-category.dto';
 import { PsProductDto } from '../../dto/ps-product.dto';
 import { PsLanguageStringDto } from '../../dto/ps-language-string.dto';
+import { API_ENDPOINTS } from '../../config/api-endpoints.config';
 
 @Injectable({
   providedIn: 'root',
@@ -45,7 +46,7 @@ export class ProductService {
       const apiKey = this.tenantService.getApiKey();
 
       // 1️⃣ PRIMERO: Descargamos el "Diccionario" de Categorías
-      const catResponse = await firstValueFrom(this.http.get<PsApiResponseDTO<PsCategoryDto>>(`${apiUrl}/categories`, {
+      const catResponse = await firstValueFrom(this.http.get<PsApiResponseDTO<PsCategoryDto>>(`${apiUrl}${API_ENDPOINTS.CATEGORIES}`, {
           params: { display: 'full', output_format: 'JSON' },
         }),
       );
@@ -57,7 +58,7 @@ export class ProductService {
       }
 
       // 2️⃣ SEGUNDO: Descargamos los Productos
-      const prodResponse = await firstValueFrom(this.http.get<PsApiResponseDTO<PsProductDto>>(`${apiUrl}/products`, {
+      const prodResponse = await firstValueFrom(this.http.get<PsApiResponseDTO<PsProductDto>>(`${apiUrl}${API_ENDPOINTS.PRODUCTS}`, {
           params: { display: 'full', output_format: 'JSON' },
         }),
       );

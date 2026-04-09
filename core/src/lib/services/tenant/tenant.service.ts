@@ -79,9 +79,9 @@ export class TenantService {
    * Retorna string vacío si el tenant aún no ha cargado.
    */
   getApiUrl(): string {
-    const url = this.tenant()?.apiUrl ?? '';
-    console.log('🔍 getApiUrl():', url, '| tenant:', this.tenant());
-    return url;
+    const rawUrl = this.tenant()?.apiUrl ?? '';
+    const cleanUrl = rawUrl.replace(/\/$/, '');
+    return cleanUrl;
   }
 
   /**

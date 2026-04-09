@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser, ViewportScroller } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductDetail } from '@aura-store-front/shared-ui';
 import { Product, ProductService, CartService, StockService, OutOfStockBehavior } from '@aura-store-front/core';
@@ -12,12 +12,13 @@ import { firstValueFrom } from 'rxjs';
   templateUrl: './detailproduct.component.html',
   styleUrl: './detailproduct.component.scss',
 })
-export class Detailproduct implements OnInit {
+export class DetailProductComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private productService = inject(ProductService);
   private cartService = inject(CartService);
   private stockService = inject(StockService);
+  private viewportScroller = inject(ViewportScroller);
   private platformId = inject(PLATFORM_ID);
 
   public product = signal<Product | null>(null);
@@ -78,8 +79,10 @@ export class Detailproduct implements OnInit {
       console.error('Error cargando producto:', error);
     } finally {
       this.isLoading.set(false);
-      // Opcional: scrollear al tope suavemente
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Opcional: scrollear al tope suavemente via ViewportScroller
+      if (isPlatformBrowser(this.platformId)) {
+        this.viewportScroller.scrollToPosition([0, 0]);
+      }
     }
   }
 

@@ -6,7 +6,7 @@
  * y lo pasa al OrderService sin conocer los detalles de la API de PS.
  */
 
-export type PaymentMethod = 'CARD' | 'PAYPAL' | 'CASH';
+export type PaymentMethod = 'CARD' | 'PAYPAL' | 'STRIPE' | 'CASH';
 
 export interface CheckoutCustomer {
   email: string;

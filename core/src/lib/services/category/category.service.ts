@@ -9,6 +9,7 @@ import { CacheUtil } from '../../utils/cache.util';
 import { PsApiResponseDTO } from '../../dto/ps-api-response.dto';
 import { PsCategoryDto } from '../../dto/ps-category.dto';
 import { PsLanguageStringDto } from '../../dto/ps-language-string.dto';
+import { API_ENDPOINTS } from '../../config/api-endpoints.config';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
@@ -46,7 +47,7 @@ export class CategoryService {
 
 
       const response = await firstValueFrom(
-        this.http.get<PsApiResponseDTO<PsCategoryDto>>(`${apiUrl}/categories`, {
+        this.http.get<PsApiResponseDTO<PsCategoryDto>>(`${apiUrl}${API_ENDPOINTS.CATEGORIES}`, {
           params: { display: 'full', output_format: 'JSON' },
         }),
       );

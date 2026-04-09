@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product } from '@aura-store-front/core'; 
+import { StripHtmlPipe } from '../../pipes/strip-html.pipe';
 
 @Component({
   selector: 'aura-product-detail',
-  imports: [CommonModule],
+  imports: [CommonModule, StripHtmlPipe],
   standalone: true,
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.scss',
@@ -17,16 +18,6 @@ export class ProductDetail {
 
   @Output() add = new EventEmitter<{product: Product, quantity: number}>();
   @Output() viewProduct = new EventEmitter<Product>();
-
-  get cleanDescription(): string {
-    if (!this.product?.description) {
-      return 'Una pieza meticulosamente diseñada, construida con la precisión característica de Aura.';
-    }
-    // Strip HTML tags and replace common entities
-    let text = this.product.description.replace(/<[^>]*>?/gm, '');
-    text = text.replace(/&nbsp;/g, ' ').trim();
-    return text;
-  }
 
   addToCart() {
     if (this.product) {

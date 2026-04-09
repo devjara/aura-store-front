@@ -3,37 +3,21 @@
    <!-- ─── HERO CHECKOUT ─────────────────────────────────────────────────── -->
    <div class="relative overflow-hidden bg-gradient-to-br from-[#e8eef7] via-[#f0f5fc] to-white border-b border-slate-200/60 pt-24">
 
-      <!-- Patrón de líneas diagonales (decorativo) -->
       <div class="absolute inset-0 opacity-[0.04]"
-           style="background-image: repeating-linear-gradient(
-             -45deg,
-             #1e3a5f 0px,
-             #1e3a5f 1px,
-             transparent 1px,
-             transparent 28px
-           );">
+           style="background-image: repeating-linear-gradient(-45deg,#1e3a5f 0px,#1e3a5f 1px,transparent 1px,transparent 28px);">
       </div>
 
-      <!-- Contenido del Hero -->
       <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pb-14">
-
-         <!-- Badge -->
          <div class="inline-flex items-center gap-2 mb-5">
             <span class="w-1.5 h-1.5 rounded-full bg-[#1e3a5f]"></span>
             <span class="text-[10px] font-black uppercase tracking-[0.25em] text-[#1e3a5f]">Paso Final</span>
          </div>
-
-         <!-- Headline -->
          <h1 class="text-4xl md:text-5xl font-black text-[#0f2240] tracking-tight leading-tight mb-4">
             Ya casi.<br class="hidden sm:block"> Tu pedido te espera.
          </h1>
-
-         <!-- Subheadline -->
          <p class="text-slate-500 text-sm md:text-base font-medium max-w-md leading-relaxed">
             Estás a segundos de completar tu compra. Cada pieza de tu colección fue seleccionada para ti — solo falta confirmar.
          </p>
-
-         <!-- Indicador de paso -->
          <div class="mt-8 flex items-center gap-3">
             <div class="flex items-center gap-2">
                <div class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black"
@@ -53,23 +37,20 @@
    </div>
 
    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
-
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-         
-         <!-- Columna Izquierda: Bloques de Lógica -->
+
+         <!-- Columna Izquierda -->
          <div class="lg:col-span-7 xl:col-span-8 space-y-8">
-            
+
             @if(currentStep() === 1) {
-              <!-- PASO 1: VALIDACIÓN DE INVITADOS Y ENVÍO -->
               <div class="space-y-8 animate-fade-in">
-                
+
                 <!-- CONTACTO -->
                 <div class="bg-white rounded-3xl p-8 md:p-10 border border-slate-100 shadow-sm">
                    <h2 class="text-xl font-black text-slate-800 mb-6 flex items-center gap-2">
-                     <span class="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center text-sm">1</span> 
+                     <span class="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center text-sm">1</span>
                      Tu Contacto
                    </h2>
-                   
                    @if(isLoggedIn()) {
                       <div class="flex items-center gap-4 p-4 border border-emerald-100 bg-emerald-50 rounded-2xl">
                          <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-emerald-600 font-bold shadow-sm">
@@ -94,15 +75,13 @@
                    }
                 </div>
 
-                <!-- DOMICILIO RÁPIDO -->
+                <!-- DOMICILIO -->
                 <div class="bg-white rounded-3xl p-8 md:p-10 border border-slate-100 shadow-sm">
                    <h2 class="text-xl font-black text-slate-800 mb-6 flex items-center gap-2">
-                     <span class="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center text-sm">2</span> 
+                     <span class="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center text-sm">2</span>
                      ¿A dónde lo enviamos?
                    </h2>
-                   
                    <form [formGroup]="shippingForm" class="space-y-6">
-                      <!-- Nombres -->
                       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                          <div>
                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Nombre *</label>
@@ -110,13 +89,10 @@
                                   [ngClass]="{'border-rose-400 bg-rose-50 focus:border-rose-500': shippingForm.get('firstName')?.invalid && shippingForm.get('firstName')?.dirty}"
                                   class="block w-full px-4 py-3 bg-white border border-slate-200/70 shadow-sm text-slate-700 font-medium rounded-xl focus:ring-4 focus:ring-slate-900/5 transition-all sm:text-sm">
                            @if(shippingForm.get('firstName')?.invalid && shippingForm.get('firstName')?.dirty) {
-                              <p class="text-rose-500 text-[10px] font-bold mt-1.5 uppercase flex items-center gap-1">
-                                 ⚠️
+                              <p class="text-rose-500 text-[10px] font-bold mt-1.5 uppercase flex items-center gap-1">⚠️
                                  @if(shippingForm.get('firstName')?.hasError('xssInjection') || shippingForm.get('firstName')?.hasError('sqlInjection')) {
                                    Contenido no permitido detectado.
-                                 } @else {
-                                   Solo letras y espacios.
-                                 }
+                                 } @else { Solo letras y espacios. }
                               </p>
                            }
                          </div>
@@ -126,19 +102,14 @@
                                   [ngClass]="{'border-rose-400 bg-rose-50 focus:border-rose-500': shippingForm.get('lastName')?.invalid && shippingForm.get('lastName')?.dirty}"
                                   class="block w-full px-4 py-3 bg-white border border-slate-200/70 shadow-sm text-slate-700 font-medium rounded-xl focus:ring-4 focus:ring-slate-900/5 transition-all sm:text-sm">
                            @if(shippingForm.get('lastName')?.invalid && shippingForm.get('lastName')?.dirty) {
-                              <p class="text-rose-500 text-[10px] font-bold mt-1.5 uppercase flex items-center gap-1">
-                                 ⚠️
+                              <p class="text-rose-500 text-[10px] font-bold mt-1.5 uppercase flex items-center gap-1">⚠️
                                  @if(shippingForm.get('lastName')?.hasError('xssInjection') || shippingForm.get('lastName')?.hasError('sqlInjection')) {
                                    Contenido no permitido detectado.
-                                 } @else {
-                                   Solo letras y espacios.
-                                 }
+                                 } @else { Solo letras y espacios. }
                               </p>
                            }
                          </div>
                       </div>
-
-                      <!-- Dirección -->
                       <div>
                         <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Dirección y Número *</label>
                         <input type="text" formControlName="address"
@@ -148,20 +119,14 @@
                            <p class="text-rose-500 text-[10px] font-bold mt-1.5 uppercase flex items-center gap-1">
                               @if(shippingForm.get('address')?.hasError('xssInjection') || shippingForm.get('address')?.hasError('sqlInjection')) {
                                 ⚠️ Contenido peligroso detectado en la dirección.
-                              } @else {
-                                Dirección requerida.
-                              }
+                              } @else { Dirección requerida. }
                            </p>
                         }
                       </div>
-
-                      <!-- Contacto y Ubicación (Grilla 2x2) -->
                       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                         <!-- Row 1: Teléfono y CP -->
                          <div>
                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Teléfono *</label>
-                           <input type="number" formControlName="phone" 
-                                  placeholder="10 dígitos" inputmode="numeric" pattern="[0-9]*"
+                           <input type="number" formControlName="phone" placeholder="10 dígitos" inputmode="numeric" pattern="[0-9]*"
                                   [ngClass]="{'border-rose-400 bg-rose-50': shippingForm.get('phone')?.invalid && shippingForm.get('phone')?.dirty}"
                                   class="block w-full px-4 py-3 bg-white border border-slate-200/70 shadow-sm text-slate-700 font-medium placeholder:text-slate-300 rounded-xl focus:ring-4 focus:ring-slate-900/5 transition-all sm:text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
                            @if(shippingForm.get('phone')?.invalid && shippingForm.get('phone')?.dirty) {
@@ -170,16 +135,13 @@
                          </div>
                          <div>
                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Código Postal *</label>
-                           <input type="number" formControlName="zip"
-                                  placeholder="5 dígitos" inputmode="numeric" pattern="[0-9]*"
+                           <input type="number" formControlName="zip" placeholder="5 dígitos" inputmode="numeric" pattern="[0-9]*"
                                   [ngClass]="{'border-rose-400 bg-rose-50': shippingForm.get('zip')?.invalid && shippingForm.get('zip')?.dirty}"
                                   class="block w-full px-4 py-3 bg-white border border-slate-200/70 shadow-sm text-slate-700 font-medium rounded-xl focus:ring-4 focus:ring-slate-900/5 transition-all sm:text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
                            @if(shippingForm.get('zip')?.invalid && shippingForm.get('zip')?.dirty) {
                               <p class="text-rose-500 text-[10px] font-bold mt-1.5 uppercase">⚠️ CP de 5 dígitos requerido.</p>
                            }
                          </div>
-
-                         <!-- Row 2: Ciudad y Estado -->
                          <div>
                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Ciudad *</label>
                            <input type="text" formControlName="city"
@@ -199,7 +161,6 @@
                            }
                          </div>
                       </div>
-                      
                       <div class="pt-4 flex justify-end">
                          <button type="button" (click)="advanceToPayment()"
                                  [disabled]="shippingForm.invalid || (!isLoggedIn() && contactForm.invalid)"
@@ -218,79 +179,127 @@
             }
 
             @if(currentStep() === 2) {
-              <!-- PASO 2: ACORDEÓN DE METODOS DE PAGO -->
               <div class="bg-white rounded-3xl p-8 md:p-10 border border-slate-100 shadow-sm animate-fade-in-right">
-                 
-                 <!-- Header con Regreso -->
+
                  <div class="flex items-center gap-4 mb-8">
                     <button (click)="goBackToShipping()" class="w-10 h-10 bg-slate-50 border border-slate-100 rounded-full flex items-center justify-center text-slate-500 hover:text-slate-900 transition-colors">
                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" /></svg>
                     </button>
                     <h2 class="text-xl font-black text-slate-800 flex items-center gap-2">
-                       <span class="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center text-sm">3</span> 
+                       <span class="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center text-sm">3</span>
                        ¿Cómo quieres pagar?
                     </h2>
                  </div>
 
-                 <!-- Acordeón Básico Listado (MOCKS HASTA INTERVENCIÓN DE SDK) -->
+                 <!-- Error global de pasarela -->
+                 @if(orderError()) {
+                   <div class="mb-6 p-4 bg-rose-50 border border-rose-200 rounded-2xl text-rose-700 text-sm font-bold">
+                     ⚠️ {{ orderError() }}
+                   </div>
+                 }
+
                  <div class="space-y-4">
-                    
-                    <!-- Checkout Bricks (MercadoPago Tarjeta) -->
-                    <label class="group relative flex border border-slate-200 bg-slate-50 hover:bg-slate-100 p-6 rounded-2xl cursor-pointer transition-colors focus-within:ring-2 focus-within:ring-slate-900/20">
-                       <input type="radio" name="payment_method" [checked]="selectedPaymentMethod() === 'CARD'" (change)="selectedPaymentMethod.set('CARD')" class="h-5 w-5 mt-0.5 text-slate-900 border-slate-300 focus:ring-slate-500 cursor-pointer">
+
+                    <!-- ── STRIPE (método activo por defecto) ───────────────────────── -->
+                    <label class="group relative flex border p-6 rounded-2xl cursor-pointer transition-colors focus-within:ring-2 focus-within:ring-slate-900/20"
+                           [ngClass]="selectedPaymentMethod() === 'STRIPE' ? 'border-slate-900 bg-slate-50' : 'border-slate-200 hover:bg-slate-50'">
+                       <input type="radio" name="payment_method"
+                              [checked]="selectedPaymentMethod() === 'STRIPE'"
+                              (change)="selectPaymentMethod('STRIPE')"
+                              class="h-5 w-5 mt-0.5 text-slate-900 border-slate-300 focus:ring-slate-500 cursor-pointer">
                        <div class="ml-4 flex-1">
-                          <span class="block text-sm font-black text-slate-900">Tarjeta de Crédito / Débito</span>
-                          <span class="block text-xs font-medium text-slate-500 mt-1">Visa, Mastercard, Amex. Meses sin intereses.</span>
-                          
-                          <!-- Espacio reservado para inyectar Brick -->
-                          <div id="cardPaymentBrick_container" [class.hidden]="selectedPaymentMethod() !== 'CARD'" class="mt-4 p-2 min-h-[150px] border border-dashed border-slate-300 rounded-xl bg-white text-center text-slate-400 text-xs transition-all">
-                             Cargando pasarela bancaria segura...
+                          <div class="flex items-center gap-2">
+                             <span class="block text-sm font-black text-slate-900">Tarjeta de Crédito / Débito</span>
+                             <span class="text-[10px] font-bold uppercase tracking-wider bg-slate-900 text-white px-2 py-0.5 rounded-full">Stripe</span>
+                          </div>
+                          <span class="block text-xs font-medium text-slate-500 mt-1">Visa, Mastercard, Amex — pago seguro.</span>
+
+                          <!-- Spinner mientras carga el SDK -->
+                          @if(isLoadingGateways() && selectedPaymentMethod() === 'STRIPE') {
+                            <div class="mt-4 flex items-center gap-2 text-slate-400 text-xs">
+                              <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                              </svg>
+                              Cargando pasarela segura...
+                            </div>
+                          }
+
+                          <div id="stripe-payment-container"
+                               class="mt-4 transition-all overflow-hidden"
+                               [style.visibility]="selectedPaymentMethod() === 'STRIPE' ? 'visible' : 'hidden'"
+                               [style.max-height]="selectedPaymentMethod() === 'STRIPE' ? '400px' : '0'">
                           </div>
                        </div>
                     </label>
 
-                    <!-- PayPal Smart Button -->
-                    <label class="group relative flex border border-slate-200 hover:bg-slate-50 p-6 rounded-2xl cursor-pointer transition-colors focus-within:ring-2 focus-within:ring-slate-900/20">
-                       <input type="radio" name="payment_method" [checked]="selectedPaymentMethod() === 'PAYPAL'" (change)="selectedPaymentMethod.set('PAYPAL')" class="h-5 w-5 mt-0.5 text-slate-900 border-slate-300 focus:ring-slate-500 cursor-pointer">
+                    <!-- ── MERCADO PAGO ──────────────────────────────────────────────── -->
+                    <label class="group relative flex border p-6 rounded-2xl cursor-pointer transition-colors focus-within:ring-2 focus-within:ring-slate-900/20"
+                           [ngClass]="selectedPaymentMethod() === 'CARD' ? 'border-slate-900 bg-slate-50' : 'border-slate-200 hover:bg-slate-50'">
+                       <input type="radio" name="payment_method"
+                              [checked]="selectedPaymentMethod() === 'CARD'"
+                              (change)="selectPaymentMethod('CARD')"
+                              class="h-5 w-5 mt-0.5 text-slate-900 border-slate-300 focus:ring-slate-500 cursor-pointer">
                        <div class="ml-4 flex-1">
-                          <span class="block text-sm font-black text-slate-900 text-[#003087]">PayPal</span>
+                          <span class="block text-sm font-black text-slate-900">Tarjeta — MercadoPago</span>
+                          <span class="block text-xs font-medium text-slate-500 mt-1">Visa, Mastercard, Amex. Meses sin intereses.</span>
+                          <div id="cardPaymentBrick_container"
+                               class="mt-4 transition-all overflow-hidden"
+                               [style.visibility]="selectedPaymentMethod() === 'CARD' ? 'visible' : 'hidden'"
+                               [style.max-height]="selectedPaymentMethod() === 'CARD' ? '600px' : '0'">
+                          </div>
+                       </div>
+                    </label>
+
+                    <!-- ── PAYPAL ────────────────────────────────────────────────────── -->
+                    <label class="group relative flex border p-6 rounded-2xl cursor-pointer transition-colors focus-within:ring-2 focus-within:ring-slate-900/20"
+                           [ngClass]="selectedPaymentMethod() === 'PAYPAL' ? 'border-slate-900 bg-slate-50' : 'border-slate-200 hover:bg-slate-50'">
+                       <input type="radio" name="payment_method"
+                              [checked]="selectedPaymentMethod() === 'PAYPAL'"
+                              (change)="selectPaymentMethod('PAYPAL')"
+                              class="h-5 w-5 mt-0.5 text-slate-900 border-slate-300 focus:ring-slate-500 cursor-pointer">
+                       <div class="ml-4 flex-1">
+                          <span class="block text-sm font-black text-[#003087]">PayPal</span>
                           <span class="block text-xs font-medium text-slate-500 mt-1">Paga rápido y seguro con tu billetera electrónica.</span>
-                          
-                          <!-- Espacio reservado para inyectar SDK PayPal -->
-                          <div class="mt-4 p-4 transition-all" [class.hidden]="selectedPaymentMethod() !== 'PAYPAL'">
+                          <div class="mt-4 transition-all overflow-hidden"
+                               [style.visibility]="selectedPaymentMethod() === 'PAYPAL' ? 'visible' : 'hidden'"
+                               [style.max-height]="selectedPaymentMethod() === 'PAYPAL' ? '200px' : '0'">
                              <div id="paypal-button-container"></div>
                           </div>
                        </div>
                     </label>
 
-                    <!-- Pago por Referencia (OXXO/Transferencia) -->
-                    <label class="group relative flex border border-slate-200 hover:bg-slate-50 p-6 rounded-2xl cursor-pointer transition-colors focus-within:ring-2 focus-within:ring-slate-900/20">
-                       <input type="radio" name="payment_method" [checked]="selectedPaymentMethod() === 'CASH'" (change)="selectedPaymentMethod.set('CASH')" class="h-5 w-5 mt-0.5 text-slate-900 border-slate-300 focus:ring-slate-500 cursor-pointer">
+                    <!-- ── EFECTIVO / SPEI ───────────────────────────────────────────── -->
+                    <label class="group relative flex border p-6 rounded-2xl cursor-pointer transition-colors focus-within:ring-2 focus-within:ring-slate-900/20"
+                           [ngClass]="selectedPaymentMethod() === 'CASH' ? 'border-slate-900 bg-slate-50' : 'border-slate-200 hover:bg-slate-50'">
+                       <input type="radio" name="payment_method"
+                              [checked]="selectedPaymentMethod() === 'CASH'"
+                              (change)="selectPaymentMethod('CASH')"
+                              class="h-5 w-5 mt-0.5 text-slate-900 border-slate-300 focus:ring-slate-500 cursor-pointer">
                        <div class="ml-4 flex-1">
                           <span class="block text-sm font-black text-slate-900">Pago en Efectivo o Transferencia SPEI</span>
                           <span class="block text-xs font-medium text-slate-500 mt-1">Paga en OXXO, 7-Eleven o ventanilla bancaria.</span>
-                          
-                          <div class="mt-4 p-4 bg-emerald-50 text-emerald-800 text-sm font-bold rounded-xl border border-emerald-100 text-center transition-all" [class.hidden]="selectedPaymentMethod() !== 'CASH'">
-                             Tu referencia de pago será enviada al correo registrado en un momento. ¡Tienes 24 hrs para pagarla!
-                          </div>
+                          @if(selectedPaymentMethod() === 'CASH') {
+                            <div class="mt-4 p-4 bg-emerald-50 text-emerald-800 text-sm font-bold rounded-xl border border-emerald-100 text-center">
+                               Tu referencia de pago será enviada al correo registrado. ¡Tienes 24 hrs para pagarla!
+                            </div>
+                          }
                        </div>
                     </label>
 
                  </div>
-
               </div>
             }
 
          </div>
 
-         <!-- Columna Derecha: Tarjeta Estática (Order Summary) -->
+         <!-- Columna Derecha: Order Summary -->
          <div class="lg:col-span-5 xl:col-span-4">
             <div class="sticky top-[88px]">
             <div class="bg-black rounded-3xl p-8 shadow-xl text-white">
-               
+
                <h3 class="text-xl font-black mb-8 border-b border-slate-800 pb-4">Tu Pedido</h3>
-               
-               <!-- Items List con scrollbar personalizado -->
+
                <div class="space-y-4 mb-8 max-h-[280px] overflow-y-auto pr-1"
                     style="scrollbar-width: thin; scrollbar-color: #475569 #1e293b;">
                   @for(item of cartService.items(); track item.productId) {
@@ -309,7 +318,6 @@
                   }
                </div>
 
-               <!-- Calculations -->
                <div class="space-y-4 text-sm font-medium text-slate-400 mb-6">
                   <div class="flex justify-between">
                      <span>Subtotal</span>
@@ -320,20 +328,20 @@
                      <span class="text-emerald-400 font-bold">Gratis</span>
                   </div>
                </div>
-               
-               <div class="border-t border-slate-800 pt-6 flex justify-between items-end mb-8 relative">
+
+               <div class="border-t border-slate-800 pt-6 flex justify-between items-end mb-8">
                   <span class="text-slate-300 font-bold uppercase tracking-widest text-[10px]">Total MXN</span>
                   <span class="block text-3xl font-black text-white decoration-emerald-500 underline decoration-4 underline-offset-4">${{ cartService.subtotal().toFixed(2) }}</span>
                </div>
-               
-               <!-- Acción Global -->
+
                @if(currentStep() === 2 && selectedPaymentMethod() === 'CASH') {
-                  <button (click)="processGeneralPayment()"
+                  <button (click)="processGeneralPayment()" [disabled]="isPlacingOrder()"
                           class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-black tracking-wide py-4 rounded-xl transition-all shadow-lg shadow-emerald-500/20 text-sm disabled:opacity-50 flex items-center justify-center gap-2">
                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" /></svg>
-                     Generar Referencia de Pago
+                     {{ isPlacingOrder() ? 'Procesando...' : 'Generar Referencia de Pago' }}
                   </button>
                }
+
                <p class="text-center text-[10px] text-slate-500 font-bold mt-4 flex items-center justify-center gap-1">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
                   Pago 100% Seguro por Stripe y MP
@@ -343,6 +351,5 @@
          </div>
 
       </div>
-
    </div>
 </div>

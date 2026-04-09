@@ -5,6 +5,7 @@ import { TenantService } from "../tenant/tenant.service";
 import { toObservable } from '@angular/core/rxjs-interop';
 import { StockAvailable, OutOfStockBehavior } from "../../models/stock-available.model";
 import { StockAvailableResponseDto, StockAvailableListResponseDto, PsStockAvailableDto } from "../../dto/ps-stock-available.dto";
+import { API_ENDPOINTS } from "../../config/api-endpoints.config";
 
 @Injectable({ providedIn: 'root' })
 export class StockService {
@@ -50,7 +51,7 @@ export class StockService {
       switchMap(tenant => {
         if (!tenant) throw new Error('Tenant is required');
         return this.http.get<StockAvailableResponseDto>(
-          `${tenant.apiUrl}/stock_availables/${stockId}`,
+          `${tenant.apiUrl}${API_ENDPOINTS.STOCK}/${stockId}`,
           {
             headers: this.headers(tenant.apiKey),
             params: { output_format: 'JSON' }
@@ -67,7 +68,7 @@ export class StockService {
       switchMap(tenant => {
         if (!tenant) throw new Error('Tenant is required');
         return this.http.get<StockAvailableListResponseDto>(
-          `${tenant.apiUrl}/stock_availables`,
+          `${tenant.apiUrl}${API_ENDPOINTS.STOCK}`,
           {
             headers: this.headers(tenant.apiKey),
             params: {
@@ -90,7 +91,7 @@ export class StockService {
       switchMap(tenant => {
         if (!tenant) throw new Error('Tenant is required');
         return this.http.get<StockAvailableListResponseDto>(
-          `${tenant.apiUrl}/stock_availables`,
+          `${tenant.apiUrl}${API_ENDPOINTS.STOCK}`,
           {
             headers: this.headers(tenant.apiKey),
             params: {
